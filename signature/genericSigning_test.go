@@ -10,7 +10,7 @@ import (
 	"crypto/rand"
 	"errors"
 	"fmt"
-	"gitlab.com/elixxir/crypto/signature/rsa"
+	"gitlab.com/xx_network/crypto/signature/rsa"
 	"testing"
 )
 
