@@ -15,8 +15,8 @@ import (
 	"errors"
 	"github.com/mitchellh/go-homedir"
 	jww "github.com/spf13/jwalterweatherman"
-	"gitlab.com/elixxir/crypto/signature/rsa"
 	"gitlab.com/elixxir/primitives/utils"
+	"gitlab.com/xx_network/crypto/signature/rsa"
 	"google.golang.org/grpc/credentials"
 	"strings"
 )
