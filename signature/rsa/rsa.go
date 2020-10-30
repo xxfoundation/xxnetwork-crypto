@@ -19,8 +19,8 @@ package rsa
 import (
 	"crypto"
 	gorsa "crypto/rsa"
-	"gitlab.com/elixxir/crypto/hash"
-	"gitlab.com/elixxir/crypto/large"
+	"gitlab.com/xx_network/crypto/large"
+	_ "golang.org/x/crypto/blake2b"
 	"io"
 )
 
@@ -134,7 +134,7 @@ func NewDefaultOptions() *Options {
 	return &Options{
 		gorsa.PSSOptions{
 			SaltLength: gorsa.PSSSaltLengthEqualsHash,
-			Hash:       hash.CMixHash,
+			Hash:       crypto.BLAKE2b_256,
 		},
 	}
 }
