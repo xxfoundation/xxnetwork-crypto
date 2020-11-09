@@ -11,6 +11,7 @@ import (
 	"encoding/gob"
 	"math/big"
 	"math/rand"
+	"reflect"
 	"testing"
 )
 
@@ -148,6 +149,28 @@ func TestNewIntFromUInt(t *testing.T) {
 	if actual != expected {
 		t.Error("NewIntFromUInt: expected", expected,
 			"got", actual)
+	}
+}
+
+// TestNewIntFromBits shows that a new int can be constructed from a word array
+func TestNewIntFromBits(t *testing.T) {
+	expected := Bits{
+		// dead beef isn't good! end animal agriculture!
+		0xdeadbeeffeedbacc,
+		// once you go to the back, it's not a tea cafe after all
+		0x7eacafefacade00f,
+	}
+	i := NewIntFromBits(expected)
+
+	// As you can see reading this test's output, due to the reversal done
+	// during TextVerbose the second word comes first
+	// But, for Bits and for CGBN it's in the same little-endian order in the underlying memory
+	t.Log(i.TextVerbose(16, 0))
+
+	actual := i.Bits()
+
+	if !reflect.DeepEqual(expected, actual) {
+		t.Errorf("ints differed. expected: %+v, got %+v", expected, actual)
 	}
 }
 
