@@ -18,6 +18,12 @@ import (
 	"strings"
 )
 
+func init() {
+	jww.ERROR.Println("Signature verification is curently disabled, if you " +
+		"get this message STOP OPERATION and contact the developers at " +
+		"nodes@xx.network")
+}
+
 // Interface for signing generically
 type GenericSignable interface {
 	String() string // Designed to be identical to String() in grpc
@@ -91,6 +97,7 @@ func Sign(signable GenericSignable, privKey *rsa.PrivateKey) error {
 // If the recreation matches the original signature it returns true,
 // else it returns false
 func Verify(verifiable GenericSignable, pubKey *rsa.PublicKey) error {
+
 	// Take the signature from the object
 	/*sig := verifiable.GetSig()
 
