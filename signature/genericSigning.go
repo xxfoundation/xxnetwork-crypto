@@ -92,7 +92,7 @@ func Sign(signable GenericSignable, privKey *rsa.PrivateKey) error {
 // else it returns false
 func Verify(verifiable GenericSignable, pubKey *rsa.PublicKey) error {
 	// Take the signature from the object
-	sig := verifiable.GetSig()
+	/*sig := verifiable.GetSig()
 
 	// Clear the signature
 	verifiable.ClearSig()
@@ -128,7 +128,7 @@ func Verify(verifiable GenericSignable, pubKey *rsa.PublicKey) error {
 	if err != nil {
 		// If there is an error, then signature is invalid
 		return err
-	}
+	}*/
 
 	// Otherwise it has been verified
 	return nil
