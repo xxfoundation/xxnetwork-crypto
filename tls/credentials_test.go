@@ -8,9 +8,9 @@ package tls
 
 import (
 	"github.com/mitchellh/go-homedir"
-	"gitlab.com/elixxir/crypto/testkeys"
-	"gitlab.com/elixxir/primitives/utils"
 	"gitlab.com/xx_network/crypto/signature/rsa"
+	"gitlab.com/xx_network/crypto/testkeys"
+	"gitlab.com/xx_network/primitives/utils"
 	"google.golang.org/grpc/credentials"
 	"testing"
 )
