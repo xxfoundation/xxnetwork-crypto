@@ -347,6 +347,18 @@ func TestSetUint64(t *testing.T) {
 	}
 }
 
+// This test will fail on 32-bit machines
+// Tests that SetBits sets an integer
+func TestInt_SetBits(t *testing.T) {
+	expected := NewIntFromString("1245967457601407658012964425109124356120693", 10)
+	actual := NewInt(int64(99))
+	actual.SetBits(Bits{5168612429366960245, 10501165033672452302, 3661})
+
+	if actual.Cmp(expected) != 0 {
+		t.Errorf("expected %v, got %v", expected.Text(16), actual.Text(16))
+	}
+}
+
 // -------------- TEST Converters -------------- //
 
 // BigInt converts the Int to a *big.Int representation
@@ -1214,6 +1226,17 @@ func TestTextVerbose(t *testing.T) {
 		if actual != expected[i] {
 			t.Errorf("Test of TextVerbose failed, got: %v,"+
 				"expected: %v", actual, expected[i])
+		}
+	}
+}
+
+func TestInt_Bits(t *testing.T) {
+	testInt := NewIntFromString("867530918239450598372829049587", 10)
+	actual := testInt.Bits()
+	expected := Bits{12503998451923825395, 47028945312}
+	for i := 0; i < len(actual); i++ {
+		if actual[i] != expected[i] {
+			t.Errorf("Bits differed at index %v. Got %v, expected %v", i, actual[i], expected[i])
 		}
 	}
 }
