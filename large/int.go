@@ -14,6 +14,10 @@ import (
 // Type large.Int will extend Go's big.Int structure
 type Int big.Int
 
+// Slice of words
+// Can be used to access underlying word array for faster CUDA staging
+type Bits []big.Word
+
 // -------------- Constructors -------------- //
 
 // NewInt allocates and returns a new Int set to x.
@@ -57,6 +61,13 @@ func NewMaxInt() *Int {
 func NewIntFromUInt(i uint64) *Int {
 	s := new(Int)
 	s.SetUint64(i)
+	return s
+}
+
+// NewIntFromBits creates a new Int from a Bits
+func NewIntFromBits(b Bits) *Int {
+	s := new(Int)
+	s.SetBits(b)
 	return s
 }
 
@@ -107,6 +118,12 @@ func (z *Int) SetInt64(x int64) *Int {
 // SetUint64 sets z to the value of the passed uint64
 func (z *Int) SetUint64(x uint64) *Int {
 	(*big.Int)(z).SetUint64(x)
+	return z
+}
+
+// SetBits sets z to the passed word array
+func (z *Int) SetBits(x Bits) *Int {
+	(*big.Int)(z).SetBits(x)
 	return z
 }
 
@@ -310,6 +327,12 @@ func (z *Int) LeftpadBytes(length uint64) []byte {
 	leftpaddedBytes = append(leftpaddedBytes, b...)
 
 	return leftpaddedBytes
+}
+
+// Returns the underlying big int's word slice
+// Used for copying to gpumaths input
+func (z *Int) Bits() Bits {
+	return (*big.Int)(z).Bits()
 }
 
 // -------------- String representation getters -------------- //
