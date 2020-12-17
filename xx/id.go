@@ -9,9 +9,9 @@ package xx
 
 import (
 	"github.com/pkg/errors"
-	"gitlab.com/elixxir/crypto/hash"
 	"gitlab.com/xx_network/crypto/signature/rsa"
 	"gitlab.com/xx_network/primitives/id"
+	"golang.org/x/crypto/blake2b"
 )
 
 // NewID creates a new ID by hashing the public key with a random 256-bit number
@@ -38,7 +38,7 @@ func NewID(key *rsa.PublicKey, salt []byte, idType id.Type) (*id.ID, error) {
 		return nil, errors.New("Unsupported ID Type")
 	}
 
-	h, err := hash.NewCMixHash()
+	h, err := blake2b.New256(nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "Could not instantiate CMixHash")
 	}
