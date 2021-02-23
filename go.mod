@@ -7,7 +7,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/jwalterweatherman v1.1.0
 	github.com/zeebo/blake3 v0.0.4
-	gitlab.com/xx_network/primitives v0.0.4-0.20210215192713-e32335847d4f
+	gitlab.com/xx_network/primitives v0.0.4-0.20210219231511-983054dbee36
 	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad
 	google.golang.org/grpc v1.31.0
 )
