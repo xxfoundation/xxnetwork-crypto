@@ -1,8 +1,14 @@
+////////////////////////////////////////////////////////////////////////////////////////////
+// Copyright © 2020 xx network SEZC                                                       //
+//                                                                                        //
+// Use of this source code is governed by a license that can be found in the LICENSE file //
+////////////////////////////////////////////////////////////////////////////////////////////
+
 package shuffle
 
 import (
-	"gitlab.com/xx_network/comms/crypto/hasher"
-	"gitlab.com/xx_network/comms/crypto/randomness"
+	"gitlab.com/xx_network/crypto/hasher"
+	"gitlab.com/xx_network/crypto/randomness"
 	"math/big"
 )
 
