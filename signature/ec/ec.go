@@ -24,6 +24,9 @@ const (
 
 	// Error returned when passed in data is unable to be unmarshalled
 	invalidKeySize = "invalid EC key size"
+
+	// Type of key this package will adhere to
+	keyType = "ed25519"
 )
 
 // PrivateKey is a wrapper of  containing both an ed25519 private key
@@ -68,6 +71,15 @@ func (priv *PrivateKey) fromBytes(data []byte) error {
 	return nil
 }
 
+// KeyType returns the PrivateKey type
+// as a string. For this case, it will
+// be the constant "edd25519
+// in this case the constant variable
+// whose value is "ed25519".
+func (priv *PrivateKey) KeyType() string {
+	return keyType
+}
+
 // GetPublic returns a copy of PrivateKey's PublicKey
 func (priv *PrivateKey) GetPublic() *PublicKey {
 	data := make([]byte, PublicKeySize)
@@ -109,6 +121,15 @@ func (pub *PublicKey) fromBytes(data []byte) error {
 
 	copy(pub.pubKey[:], data[:])
 	return nil
+}
+
+// KeyType returns the PublicKey type
+// as a string. For this case, it will
+// be the constant "edd25519
+// in this case the constant variable
+// whose value is "ed25519".
+func (pub *PublicKey) KeyType() string {
+	return keyType
 }
 
 // NewKeyPair creates an ed25519 keypair wrapped around
