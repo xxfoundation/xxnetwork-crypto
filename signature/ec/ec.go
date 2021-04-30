@@ -81,8 +81,8 @@ func (priv *PrivateKey) KeyType() string {
 }
 
 // GetPublic returns a copy of PrivateKey's PublicKey
-func (priv *PrivateKey) GetPublic() PublicKey {
-	return priv.pubKey
+func (priv *PrivateKey) GetPublic() *PublicKey {
+	return &priv.pubKey
 }
 
 // PrivateKey is a wrapper of  containing both an ed25519 public key.
@@ -167,7 +167,7 @@ func LoadPublicKey(data string) (*PublicKey, error) {
 		return nil, err
 	}
 
-	return &pubKey, nil
+	return pubKey, nil
 }
 
 // LoadPrivateKey loads a base64 string into a PrivateKey
