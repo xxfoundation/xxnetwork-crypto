@@ -151,6 +151,11 @@ func (priv *PrivateKey) KeyType() string {
 	return keyType
 }
 
+// Stringer function for PrivateKey
+func (priv *PrivateKey) String() string {
+	return base64.StdEncoding.EncodeToString(priv.privKey[:])
+}
+
 // GetPublic returns a copy of PrivateKey's PublicKey
 func (priv *PrivateKey) GetPublic() *PublicKey {
 	return priv.pubKey.DeepCopy()
