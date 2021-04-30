@@ -81,10 +81,8 @@ func (priv *PrivateKey) KeyType() string {
 }
 
 // GetPublic returns a copy of PrivateKey's PublicKey
-func (priv *PrivateKey) GetPublic() *PublicKey {
-	data := make([]byte, PublicKeySize)
-	copy(data, priv.pubKey.pubKey[:])
-	return &PublicKey{pubKey: data}
+func (priv *PrivateKey) GetPublic() PublicKey {
+	return priv.pubKey
 }
 
 // PrivateKey is a wrapper of  containing both an ed25519 public key.
