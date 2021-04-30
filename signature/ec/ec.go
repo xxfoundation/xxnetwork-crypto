@@ -167,7 +167,7 @@ func LoadPublicKey(data string) (*PublicKey, error) {
 		return nil, err
 	}
 
-	return pubKey, nil
+	return &pubKey, nil
 }
 
 // LoadPrivateKey loads a base64 string into a PrivateKey

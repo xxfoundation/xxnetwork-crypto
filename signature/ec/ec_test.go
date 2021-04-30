@@ -69,7 +69,7 @@ func TestEcSmoke(t *testing.T) {
 
 	// Check that the signature is verified properly
 	publicKey := privKey.GetPublic()
-	if !Verify(publicKey, data, signature) {
+	if !Verify(&publicKey, data, signature) {
 		t.Fatalf("EC Smoke test error: " +
 			"Could not verify signature.")
 	}
@@ -147,11 +147,11 @@ func TestLoadPublicKey(t *testing.T) {
 			"Failed to load public key from string: %v", err)
 	}
 
-	if !reflect.DeepEqual(received, expected) {
+	if !reflect.DeepEqual(received, &expected) {
 		t.Fatalf("LoadPublicKey error: "+
 			"Unexpected key mismatch."+
 			"\n\tExpected: %v"+
-			"\n\tReceived: %v", expected, received)
+			"\n\tReceived: %v", &expected, received)
 	}
 
 	encoded := received.MarshalText()
