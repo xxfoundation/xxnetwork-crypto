@@ -15,8 +15,8 @@ import (
 
 const (
 	privKeyEncoded = `uVAt6d+y3XW699L3THlcoTA2utw2dhoqnX6821x6OcnOliwX84eajmp45IZ+STw0dUl8uJtZwDKDuHVX6ZpGzg==`
-
-	pubKeyEncoded = `zpYsF/OHmo5qeOSGfkk8NHVJfLibWcAyg7h1V+maRs4=`
+	expectedPubKey = `ebVWLo/mVPlAeLES6KmLp5AfhTrmlb7X4OORC60ElmQ=`
+	pubKeyEncoded  = `zpYsF/OHmo5qeOSGfkk8NHVJfLibWcAyg7h1V+maRs4=`
 )
 
 type CountingReader struct {
@@ -176,5 +176,74 @@ func TestLoadPublicKeyFromString_Error(t *testing.T) {
 	if err == nil {
 		t.Errorf("LoadPublicKey error path failed, " +
 			"Expected error path, should be invalid eddsa key")
+	}
+}
+
+// Unit test of both PublicKey and PrivateKey's KeyType() method
+func TestKeyTpe(t *testing.T) {
+	pk, err := NewKeyPair(rand.Reader)
+	if err != nil {
+		t.Fatalf("LoadPublicKey error: "+
+			"Failed to create a test key: %v", err)
+	}
+
+	if pk.KeyType() != keyType {
+		t.Errorf("KeyType error: "+
+			"Unexpected value returned from PrivateKey.KeyType()."+
+			"\n\tExpected: %v"+
+			"\n\tReceived: %v", keyType, pk.KeyType())
+	}
+
+	publicKey := pk.GetPublic()
+	if publicKey.KeyType() != keyType {
+		t.Errorf("KeyType error: "+
+			"Unexpected value returned from PublicKey.KeyType()."+
+			"\n\tExpected: %v"+
+			"\n\tReceived: %v", keyType, publicKey.KeyType())
+	}
+}
+
+// Unit test of both PublicKey and PrivateKey's Marshal() method
+func TestMarshal(t *testing.T) {
+	pk, err := NewKeyPair(rand.Reader)
+	if err != nil {
+		t.Fatalf("LoadPublicKey error: "+
+			"Failed to create a test key: %v", err)
+	}
+
+	if !bytes.Equal(pk.Marshal(), pk.privKey[:]) {
+		t.Errorf("Marshal error: "+
+			"Did not return expected byte data."+
+			"\n\tExpected: %v"+
+			"\n\tReceived: %v", pk.privKey[:], pk.Marshal())
+	}
+
+	publicKey := pk.GetPublic()
+	if !bytes.Equal(publicKey.Marshal(), pk.pubKey.pubKey[:]) {
+		t.Errorf("Marshal error: "+
+			"Unexpected value returned from PublicKey.Marshal()."+
+			"\n\tExpected: %v"+
+			"\n\tReceived: %v", pk.pubKey.pubKey[:], publicKey.Marshal())
+	}
+
+}
+
+// Smoke test
+func TestPublicKey_String(t *testing.T) {
+	notRand := &CountingReader{count: 0}
+
+	pk, err := NewKeyPair(notRand)
+	if err != nil {
+		t.Fatalf("LoadPublicKey error: "+
+			"Failed to create a test key: %v", err)
+	}
+
+	publicKey := pk.GetPublic()
+
+	if publicKey.String() != expectedPubKey {
+		t.Errorf("String() error: "+
+			"Unexpected value returned from PublicKey.String()"+
+			"\n\tExpected: %v"+
+			"\n\tReceived: %v", pubKeyEncoded, publicKey.String())
 	}
 }

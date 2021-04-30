@@ -29,6 +29,70 @@ const (
 	keyType = "ed25519"
 )
 
+// PrivateKey is a wrapper of  containing both an ed25519 public key.
+// Wrapper provides additional functionality on top of Go's library
+type PublicKey struct {
+	pubKey ed25519.PublicKey
+}
+
+// MarshalText returns a base64 encoded string of the PublicKey.
+// Adheres to the TextMarshaler interface defined
+// in https://golang.org/pkg/encoding/
+func (pub *PublicKey) MarshalText() string {
+	return base64.StdEncoding.EncodeToString(pub.pubKey[:])
+}
+
+// UnmarshalText deserializes a base64-encoded string into the PublicKey.
+// Adheres to the TextMarshaler interface defined
+// in https://golang.org/pkg/encoding/
+func (pub *PublicKey) UnmarshalText(data string) error {
+	keyBytes, err := base64.StdEncoding.DecodeString(data)
+	if err != nil {
+		return err
+	}
+
+	return pub.Unmarshal(keyBytes)
+}
+
+// Unmarshal deserializes a byte slice into the PrivateKey
+func (pub *PublicKey) Unmarshal(data []byte) error {
+	if len(data) != PublicKeySize {
+		return errors.New(invalidKeySize)
+	}
+
+	copy(pub.pubKey[:], data[:])
+	return nil
+}
+
+// Marshal serializes a PublicKey into a byte slice
+func (pub *PublicKey) Marshal() []byte {
+	return pub.pubKey[:]
+}
+
+// DeepCopy returns a new PublicKey with identical data
+// as this PublicKey
+func (pub *PublicKey) DeepCopy() *PublicKey {
+	data := make([]byte, PublicKeySize)
+	copy(data[:], pub.pubKey[:])
+
+	return &PublicKey{pubKey: data}
+
+}
+
+// Stringer function for PublicKey
+func (pub *PublicKey) String() string {
+	return base64.StdEncoding.EncodeToString(pub.pubKey[:])
+}
+
+// KeyType returns the PublicKey type
+// as a string. For this case, it will
+// be the constant "edd25519
+// in this case the constant variable
+// whose value is "ed25519".
+func (pub *PublicKey) KeyType() string {
+	return keyType
+}
+
 // PrivateKey is a wrapper of  containing both an ed25519 private key
 // and its associated public key. Wrapper provides additional functionality
 // on top of Go's library
@@ -53,12 +117,11 @@ func (priv *PrivateKey) UnmarshalText(data string) error {
 		return err
 	}
 
-	return priv.fromBytes(keyBytes)
+	return priv.Unmarshal(keyBytes)
 }
 
-// fromBytes is a helper function which deserializes
-// a byte slice into the PrivateKey
-func (priv *PrivateKey) fromBytes(data []byte) error {
+// Unmarshal deserializes a byte slice into the PrivateKey
+func (priv *PrivateKey) Unmarshal(data []byte) error {
 	if len(data) != PrivateKeySize {
 		return errors.New(invalidKeySize)
 	}
@@ -69,6 +132,14 @@ func (priv *PrivateKey) fromBytes(data []byte) error {
 	priv.pubKey.pubKey = priv.privKey.Public().(ed25519.PublicKey)
 
 	return nil
+}
+
+// Marshal serializes a PrivateKey into a byte slice
+func (priv *PrivateKey) Marshal() []byte {
+	data := make([]byte, PrivateKeySize)
+	copy(data[:], priv.privKey[:])
+
+	return data[:]
 }
 
 // KeyType returns the PrivateKey type
@@ -82,52 +153,7 @@ func (priv *PrivateKey) KeyType() string {
 
 // GetPublic returns a copy of PrivateKey's PublicKey
 func (priv *PrivateKey) GetPublic() *PublicKey {
-	return &priv.pubKey
-}
-
-// PrivateKey is a wrapper of  containing both an ed25519 public key.
-// Wrapper provides additional functionality on top of Go's library
-type PublicKey struct {
-	pubKey ed25519.PublicKey
-}
-
-// MarshalText returns a base64 encoded string of the PublicKey.
-// Adheres to the TextMarshaler interface defined
-// in https://golang.org/pkg/encoding/
-func (pub *PublicKey) MarshalText() string {
-	return base64.StdEncoding.EncodeToString(pub.pubKey[:])
-}
-
-// UnmarshalText deserializes a base64-encoded string into the PublicKey.
-// Adheres to the TextMarshaler interface defined
-// in https://golang.org/pkg/encoding/
-func (pub *PublicKey) UnmarshalText(data string) error {
-	keyBytes, err := base64.StdEncoding.DecodeString(data)
-	if err != nil {
-		return err
-	}
-
-	return pub.fromBytes(keyBytes)
-}
-
-// fromBytes is a helper function which deserializes
-// a byte slice into the PublicKey
-func (pub *PublicKey) fromBytes(data []byte) error {
-	if len(data) != PublicKeySize {
-		return errors.New(invalidKeySize)
-	}
-
-	copy(pub.pubKey[:], data[:])
-	return nil
-}
-
-// KeyType returns the PublicKey type
-// as a string. For this case, it will
-// be the constant "edd25519
-// in this case the constant variable
-// whose value is "ed25519".
-func (pub *PublicKey) KeyType() string {
-	return keyType
+	return priv.pubKey.DeepCopy()
 }
 
 // NewKeyPair creates an ed25519 keypair wrapped around
