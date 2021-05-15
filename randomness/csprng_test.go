@@ -19,8 +19,8 @@ var (
 	r           *big.Int // variable for the random value obtained from the PRF
 	simulations = 5000000
 	s           = []byte("321f485cffb6027f14b7764e8795d6feea5eeeccdc9c08b9487d7b90") // Random value for the PRF
-	h           = hasher.BLAKE2.New()
-	h2          = hasher.BLAKE3.New()
+	h           = hasher.BLAKE2B_256.New()
+	h2          = hasher.BLAKE3_256.New()
 	seed        = PRF(h, s)
 )
 

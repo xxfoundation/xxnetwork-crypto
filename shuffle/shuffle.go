@@ -29,9 +29,9 @@ func SeededShuffle(size int, seed []byte) []int {
 		j   int
 		max *big.Int
 		// Blake2 is used to hash the seed when shuffling each position
-		h = hasher.BLAKE2.New()
+		h = hasher.BLAKE2B_256.New()
 		// Blake3 is used as a PRF to obtain verifiable random numbers
-		h2 = hasher.BLAKE3.New()
+		h2 = hasher.BLAKE3_256.New()
 		s  = seed
 	)
 
