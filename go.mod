@@ -11,4 +11,5 @@ require (
 	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad
 	golang.org/x/sys v0.0.0-20210319071255-635bc2c9138d // indirect
 	google.golang.org/grpc v1.31.0
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )
