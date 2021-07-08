@@ -49,20 +49,6 @@ func LoadCertificate(certContents string) (*x509.Certificate, error) {
 	return cert, nil
 }
 
-//err.Error()[:45] == "This is the error message I expect"
-// this is supposed to return an error?
-
-//if err == nil { t.Errorf("Expected error, got nothing") }
-//if the error has nothing it returns that message?
-
-//expectedErrStr = “This is the error message I expect”
-//but how do we use this
-
-//if err.Error()[:len(expectedErrStr)] == expectedErrStr
-//
-//strings.cmp
-
-//t.Errorf(err)
 // LoadRSAPrivateKey takes a pem encoded private key (ie the contents of a private key file),
 // parses it and outputs an x509 private key object
 func LoadRSAPrivateKey(privContents string) (*gorsa.PrivateKey, error) {
