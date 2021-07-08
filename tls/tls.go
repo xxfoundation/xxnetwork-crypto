@@ -13,8 +13,9 @@ import (
 	gorsa "crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
-	"errors"
+	"github.com/pkg/errors"
 	"gitlab.com/xx_network/crypto/signature/rsa"
+	"time"
 )
 
 // LoadCertificate takes a pem encoded certificate (ie the contents of a crt file),
@@ -31,9 +32,37 @@ func LoadCertificate(certContents string) (*x509.Certificate, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	//defines the time test
+	timeTest := time.Now()
+	//returns an error if above bounds
+	if timeTest.After(cert.NotAfter) {
+		return nil, errors.Errorf("Cannot load cert, it is expired: %s", cert.NotAfter)
+		//we return the expired cert message here
+
+	}
+	//displays an error if the bounds are below bounds
+	if timeTest.Before(cert.NotBefore) {
+		return nil, errors.Errorf("Cannot load cert, it is not yet valid: %s", cert.NotBefore)
+	}
+	//returns the certification
 	return cert, nil
 }
 
+//err.Error()[:45] == "This is the error message I expect"
+// this is supposed to return an error?
+
+//if err == nil { t.Errorf("Expected error, got nothing") }
+//if the error has nothing it returns that message?
+
+//expectedErrStr = “This is the error message I expect”
+//but how do we use this
+
+//if err.Error()[:len(expectedErrStr)] == expectedErrStr
+//
+//strings.cmp
+
+//t.Errorf(err)
 // LoadRSAPrivateKey takes a pem encoded private key (ie the contents of a private key file),
 // parses it and outputs an x509 private key object
 func LoadRSAPrivateKey(privContents string) (*gorsa.PrivateKey, error) {

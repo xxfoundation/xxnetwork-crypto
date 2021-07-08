@@ -12,13 +12,14 @@ import (
 	gorsa "crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
-	"errors"
 	"github.com/mitchellh/go-homedir"
+	"github.com/pkg/errors"
 	jww "github.com/spf13/jwalterweatherman"
 	"gitlab.com/xx_network/crypto/signature/rsa"
 	"gitlab.com/xx_network/primitives/utils"
 	"google.golang.org/grpc/credentials"
 	"strings"
+	"time"
 )
 
 // getFullPath is a helper method which resolves ~ used in relative paths
@@ -105,8 +106,16 @@ func NewPublicKeyFromPEM(certPEMblock []byte) (*rsa.PublicKey, error) {
 	var cert *x509.Certificate
 	cert, err := x509.ParseCertificate(block.Bytes)
 	if err != nil {
+
 		jww.ERROR.Printf("Error parsing PEM into certificate: %+v", err)
 		return nil, err
+	}
+	timeTest := time.Now()
+	if timeTest.After(cert.NotAfter) {
+		return nil, errors.Errorf("Cannot load cert, it is expired: %s", cert.NotAfter)
+	}
+	if timeTest.Before(cert.NotBefore) {
+		return nil, errors.Errorf("Cannot load cert, it is not yet valid: %s", cert.NotBefore)
 	}
 
 	//From the cert, get it's public key
