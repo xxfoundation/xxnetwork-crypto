@@ -1,0 +1,234 @@
+diff --git a/tls/credentials.go b/tls/credentials.go
+index 75f0a65..adff798 100644
+--- a/tls/credentials.go
++++ b/tls/credentials.go
+@@ -12,13 +12,14 @@ import (
+ 	gorsa "crypto/rsa"
+ 	"crypto/x509"
+ 	"encoding/pem"
+-	"errors"
+ 	"github.com/mitchellh/go-homedir"
+ 	jww "github.com/spf13/jwalterweatherman"
+ 	"gitlab.com/xx_network/crypto/signature/rsa"
+ 	"gitlab.com/xx_network/primitives/utils"
+ 	"google.golang.org/grpc/credentials"
+ 	"strings"
++	"time"
++	"github.com/pkg/errors"
+ )
+ 
+ // getFullPath is a helper method which resolves ~ used in relative paths
+@@ -50,7 +51,6 @@ func NewCredentialsFromPEM(certificate string, nameOverride string) (credentials
+ 	}
+ 	return credentials.NewClientTLSFromCert(pool, nameOverride), nil
+ }
+-
+ // NewCredentialsFromFile creates a TransportCredentials object from the contents of a file
+ // Accepts a nameOverride for use in test environments
+ func NewCredentialsFromFile(filePath string, nameOverride string) (credentials.TransportCredentials, error) {
+@@ -105,9 +105,17 @@ func NewPublicKeyFromPEM(certPEMblock []byte) (*rsa.PublicKey, error) {
+ 	var cert *x509.Certificate
+ 	cert, err := x509.ParseCertificate(block.Bytes)
+ 	if err != nil {
++
+ 		jww.ERROR.Printf("Error parsing PEM into certificate: %+v", err)
+ 		return nil, err
+ 	}
++	timeTest := time.Now()
++	if timeTest.After(cert.NotAfter) {
++		return nil,errors.Errorf("Cannot load cert, it is expired: %s", cert.NotAfter)
++	}
++	if timeTest.Before(cert.NotBefore) {
++		return nil,errors.Errorf("Cannot load cert, it is not yet valid: %s", cert.NotBefore)
++	}
+ 
+ 	//From the cert, get it's public key
+ 	rsaPublicKey := cert.PublicKey.(*gorsa.PublicKey)
+diff --git a/tls/tls.go b/tls/tls.go
+index 18a08b0..d7ecb7b 100644
+--- a/tls/tls.go
++++ b/tls/tls.go
+@@ -13,8 +13,9 @@ import (
+ 	gorsa "crypto/rsa"
+ 	"crypto/x509"
+ 	"encoding/pem"
+-	"errors"
++	"github.com/pkg/errors"
+ 	"gitlab.com/xx_network/crypto/signature/rsa"
++	"time"
+ )
+ 
+ // LoadCertificate takes a pem encoded certificate (ie the contents of a crt file),
+@@ -31,7 +32,18 @@ func LoadCertificate(certContents string) (*x509.Certificate, error) {
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return cert, nil
++	//defines the time test
++	timeTest := time.Now()
++	//returns an error if above bounds
++	if timeTest.After(cert.NotAfter) {
++		return nil,errors.Errorf("Cannot load cert, it is expired: %s", cert.NotAfter)
++	}
++	//displays an error if the bounds are below bounds
++	if timeTest.Before(cert.NotBefore) {
++		return nil,errors.Errorf("Cannot load cert, it is not yet valid: %s", cert.NotBefore)
++	}
++	//returns the certification
++	return cert,nil
+ }
+ 
+ // LoadRSAPrivateKey takes a pem encoded private key (ie the contents of a private key file),
+diff --git a/tls/tls_test.go b/tls/tls_test.go
+index fb9ed50..8b2eefd 100644
+--- a/tls/tls_test.go
++++ b/tls/tls_test.go
+@@ -11,104 +11,57 @@ import (
+ )
+ 
+ const DsaCert = `-----BEGIN CERTIFICATE-----
+-MIIF9TCCBZsCFE/LjtsZBCSzA+YaevuBzt31OKEZMAsGCWCGSAFlAwQDAjBFMQsw
+-CQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJu
+-ZXQgV2lkZ2l0cyBQdHkgTHRkMB4XDTIwMDIwNDE5NDk0MFoXDTIwMDMwNTE5NDk0
+-MFowRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoM
+-GEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDCCBMYwggM5BgcqhkjOOAQBMIIDLAKC
+-AYEAnXElIhIttYgTEmvyUHS3sj3eHBIVDT3b0xRn0K04hHyDZwb21jZJp33sjcff
+-YLsi3UhZQSssk1uHansp7XxE0z72l9Vn1BHhXJemfdfJdVOUiPL1M1jovzsn5RxQ
+-QaWzsa/uEwMvaHO0IaYSL2nZESbAVOJswikod49Leg1WtUvj2Hz30fWuPCowmrKI
+-9hmh7PLQZy6AnAIkf8UTHY5dNZgwEax49WrhW1CVGEBNwUtVzV/7CGx2X5/VN4Sr
+-7ImOrgKmk8kyRDW4JZS7u1P9iOFYOBHt0GSROb5pj0xrqzLLomo6hoy6mvwthx/A
+-jZ5d9NyKEDKWHpQnfd3rRlPNJxO+mmB6BAuYpMn0jCg8sfQSpNfl3MNSRbBTTx0+
+-QA0gMDp1bXv/HFk0o2hI5L0PShgWx/OMqRiivjidHaPYiEVnpchrHTyaJsRfQgsH
+-bmwgenLXq37Vc2dEP3wOvDUZap5aTaTVCLH1H1KYPxXoU5Tu3rDFpyLRv7qSCiUN
+-LT/pAiEA7cFi45d5qagmhLWfCCT5Awv/TVtmzjWgHIuyQAQIxycCggGAGavUQbOi
+-RcrsfoBkXMjpE6RHgptQJ7jq7YPidiEEtqHsCxjS4jF08qjfhV3AffWO7JSe97uZ
+-yeUzgJ2V5iO6hwU5BseM2Zm4H1J2aJkNW0BeRyjJAjKzJ+JoBptVOqzZUALAXkpo
+-qNxL0WVW/xu+j0XSSPN6itCkwYvpsjXsNV7lyLomORSQRGJh7MZaDH0lINmeKEMh
+-a6QlysWVU/mhQ8dsH+oSsKdwWZJpbDG5lOcGISSEwuJ3FsAPpu6klhX8nbyHAFC1
+-bEpKkORIM1PcKVaTxzivqLutrkBBqhyikBPI5oD3JW8/RHtYyA3f5JY2jizGELzL
+-JpA8mUGYT/ar7zMlBjhBB6BsBylLX6bFHpuB7J3gxgabLRwUaOJyXw4OAvY89nTo
+-jFHezRRiJmA9Ng5bipuWt+NFSkkekLcCWGj8ZufhtV0r8OK9Yv0houbQe+MbPU+Z
+-/vM1uXKnLpEN+KUlqMRclHulFzFM1UcgcbcsgxwDfXv5k3HF7xO7w+QcA4IBhQAC
+-ggGAbzxzkmHkqlX+5MMMPjgjJRELvdV6EqxlsTrGEJ0q9gVuXBtQIAJLtJ4NlF5I
+-Zi0Pw4/xx6TqodVdlxn4MGmzj5T0O374Jvnh424UNf9LqUCkyNza70CKp3NN95gT
+-HKc+Kq9ulpTSf+HBEYjiRYoaiT1caNPf4IVrFCsoeHMhQDK1tIapnSQdiXOrOnWJ
+-cRNoQn1Xw6I7vWU2hLJscy/FAXO8wVavbe0MMY6aUD67ihZsmuTqI+9fCOG8qhxF
+-cJkGimPk0K95slxw6vwnsFcD3pAp7sA7El/VKYIFRYTU3FmOZj2y2JYixBSjwwa2
+-X/w5R0t5FmbYFi+x+hC9nqzNHk536qEQ1nFdkFhgudKXVLqBrRhCWmB17f7GVtCV
+-5623T1SXcKk4JxPNIS996seAxospFaySdcQd5I7+RnT6HkMzjvfUM8ULMt4Whwfa
+-9mN6KpyOCEazhs1daKomiwmM+iqUuYnDNFzZz72zKZOf5ZMVHuvvAJ1nJaV0md3U
+-QO6xMAsGCWCGSAFlAwQDAgNHADBEAiBhrf3X7RyOIAw0yYhRB5Eb4n/xUfGsUbJW
+-FW3W65H8lQIgFPcY/isEOe2poLZa+xlctTyuRVNS6c1+G37OikM2iks=
++MIIC+zCCArkCCQDn3tWcVrDYvDALBglghkgBZQMEAwIwYTELMAkGA1UEBhMCeHgx
++CzAJBgNVBAgMAnh4MQswCQYDVQQHDAJ4eDELMAkGA1UECgwCeHgxCzAJBgNVBAsM
++Anh4MQswCQYDVQQDDAJ4eDERMA8GCSqGSIb3DQEJARYCeHgwHhcNMjEwNzA2MjEw
++MDEyWhcNMzEwNzA0MjEwMDEyWjBhMQswCQYDVQQGEwJ4eDELMAkGA1UECAwCeHgx
++CzAJBgNVBAcMAnh4MQswCQYDVQQKDAJ4eDELMAkGA1UECwwCeHgxCzAJBgNVBAMM
++Anh4MREwDwYJKoZIhvcNAQkBFgJ4eDCCAbcwggEsBgcqhkjOOAQBMIIBHwKBgQDj
++QcUKVDwFwzKfprlcrGNy0pNMeot1ljin6Kb6XHOjDNgEGgJPWFXhO/iJOt3l5YrP
++olTTh2+muuBrTtpsYtyOfDs0qMBRy+BAOeMj/nkGoJurq6HV9A7CSOPZc8RWtL64
++gRAQ/sBUnpreikCSRBu59SAMyMI2xRP23OY1A7nSJwIVALNkmBm2+NuB8xLqJjvS
++pqBmEAWZAoGBAJwscB1zabWrfyu/UPg7iAWFQnwfsC6B3m5oU31tkU5/iGhEFfzH
++Wm7aBzpEYgA7mXmBpLfXxWpTSZ8Oe/pkvIpuTAJfxwsIRvX6zJKK1ta9m2pBVkY6
++OChghSqPwegdYg6cuhbAhGJ77kiV0j2u0QZcxXMFZ4ehr0ip01eV+QahA4GEAAKB
++gHvZNPkloprW5RXDHaiW3ZUuIGGucXf1bczCBtDNtznCNr+ypSxHGK3MknKmCLvx
++B9DMbVJ0ptZ+FwuVGJAEq4oY6X5ZioT1zIm5lPrWlt1ttIzkeOaYsfGKlHmx8eg1
++TUjoSEWtMfO3wsC+46BYH3qxDfM87sEeywmCCnIQVmT3MAsGCWCGSAFlAwQDAgMv
++ADAsAhQXbBkoqMSCY715k2NnE3UvzpRmggIURGfA7EuxTAF3U7tYcPrVdISbnBk=
+ -----END CERTIFICATE-----
+ `
+ 
+ const Cert = `-----BEGIN CERTIFICATE-----
+-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
+ -----END CERTIFICATE-----
+ `
+ 
+-const PrivateKeyPKCS1 = `-----BEGIN RSA PRIVATE KEY-----
+-MIIEpAIBAAKCAQEA5Aq+qN2Hfmj4wQIGELCiknM+VA2araI9t7BE20jTZtQ0reQt
+-BRsWVh3M0ZlLgZhcZzk76N2LxKXHzavWR2PPk88I0UEBEiw4/8vyvcMZ5b7J4l2A
+-FmObWzfKWRqa3gCOKr9s2PKxLov9ZI6n6xW6YPG0ETM79RNTU7pBGfNSmEtqJYQ2
+-YSsa+wfQJlWrfwhrnyT9CMIDOlRxiLiPaXV9vTvGoVxAPwfpKZQzb3tTJCiwOuny
+-6R0ijfUqjGvhcOec02xhK0Lbq3Mcx4q4nZaX7djOxLJ+V8zZgRwoTfWyoH0NLfpS
+-Qnwnzh4uwc0iYaDdah0UC+IMHrv6NcNsHfQ2QwIDAQABAoIBAQCJTuLwQLtF5STq
+-6jIGuKSa8+MyryJUrFznDq7XLqmDwACcN8jXyzCO19Cs39W0Ca6RxMeK9mMjHAML
+-lw0l3TZutHmFrdNcQt5rPz1A/4nHaTKcJ1ppoL45lYU0U62uQL1ZhfufQbpn4YjI
+-lJENHv8jQkX/GU9fyKwivQJYAsfXxGW5ymvj3Pny9QP0WaNAFkfgAWoL5PnHCR0j
+-FxmK8oP9p9jrEMnQiJj1N43TFTPwAsoFz25iBGpIjWlQtUwwdzPE+vdS6vRNFMx/
+-UTOYfJBVwiFNe0LM3aqvaBd024tkGbhtWk6ICHrStIdaQRWgz3u8ExQz63zQ8N1T
+-BxMxXW/pAoGBAPyx8HboR87Trxz0qczXhKYlEBJXhwrkyxuOZzbAblOzr5w9DQ5M
+-DwQRsDsMR4oGSDe1YgklUzjQUex9rR3WivdGFlZYJpnz05kfeEY2TzlIhMSsguHp
+-OFSJRDW8EYuPFvfX2fN+7Jm02bDrESRto4sXbhRIuplagirVxs0bjwOfAoGBAOcG
+-Q2CcgTIqYFe9EAtoBoGO6TKdxkHN1wCJhP0SEmab9OUODE3bG92JZBwGdueAnFH7
+-ghYQgPXIGOzO805sGqRlagwpbHWQgoMDdlc5Ifvfbt1QeUEgkOBbHY70tswmK7Zu
+-eA4LlYFFmavFaPx7KsnRTmSkRP5kdeu2ctIJWirdAoGBAI3jYDF0RfXVmOs6WinC
+-DiK4hui1qwcr5vwHHt94d7qaF440HaOcg4X2ZK0TPQw8cMqPF4gpJCyvlIClJNKv
+-SAKGoT5EaxBg/7xoFkHeduekV6CTeT5elRmqpdlCS9vAMdZipmf6KeI40U9s/ogk
+-5ALS2iWbnONFFff1Z5Z91fTjAoGAdthf/OlGBTqLiVc3U8bV4fxUtrc3cE6l1h7o
+-jQ+o66Q7HUJWzg5zjUnKeChTLtCYmgwaZaNj1Ax11gy4WZV/Nyb8oPkGVIxct20m
+-icRYWSwd6jglyH0qSmBVGl+FUgwo3JaDqCYJaREW9qh9U7VA08Wa4GcpHv0rNHEN
+-LEOnYPkCgYBdsi+iAu6KY3yeTylNKXeCY0Zj0Rj8240nAHBLZnsQW7NmCkzRrP6o
+-HoNrw93o8aWMfoTaHbFiIrEq/Nd/7i2iQurZL+SI2Tyu5S7bqp2Lzr3kknMVlRAs
+-jYe9f2NtMJWhPUps3+5Y+iFSn/FV0iy2bxw5BKN6Ovx9ztuCurY8Dg==
+------END RSA PRIVATE KEY-----
++const PrivateKeyPKCS1 = `-----BEGIN PRIVATE KEY-----
++MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBANqSpjYJbtW1PDuk
++SUocKzgRD3apP7bLnx/dPl67NrdA/qSv/fEg1rdRc/s19eFSBVns3SweNgVlfGpy
++1qVwQpb8UebINUprPog7KIfSDSD092yh9oeMrVBfNLkkDreFJ1U5t+Q+4hyqW8Ey
++i/HOUcICp1p+SMR6pCgF65SBGsw9AgMBAAECgYEAlTuPdFGYdR1a1LXkvE7jS1KK
++plAEioAYUx8x2GgmgZREyJjI33u2Xk+kyp4bFQ51TOKmV9sAs0qJWfyyhR5St5R/
++62tPbza0OR0jCZh7mwpivd3XnPxvWKpjdpjVCvD5lMnjEp+7+zjOBEu1E6Y5dlm3
++dGcHfp1OiLG+ru5LedkCQQD4rmmF343TY5QeuoIDN+j68a09MHZAfIWtYY/psXPa
++LLRenRhLj9wNSQTsHiXAvOQ0C3NiaOFtF2XQNQqUH8/DAkEA4QFlsTfM669th5Yu
++YqNydWgdvnkufJ/MnlOJ6g1ruj152hZMAkAH2t3GHfvVtuNHFN3AvWgwvfM/dNI8
++o20z/wJBAJCOUijP2tGWgPOb1xen2HaHJfz7vsGdoNc4bz+ZN48LjY2yI/1IktHm
++MEZRAAEZzE20mk4KSX/wqe5t5shT9aECQCAXNey/m59lpsZ2uejhjNqH3e4jlGi7
++1dAi9AGIpnuqdu2OzopnnXcuuCngmAt8gM/ODMY2zPTac4tyzKk2UvsCQQCAulo6
++uwne3AGKkz9N1AWgAvqy5IsE5yHF09wayUn+0raSORPBX29MqEAzwGoJafcbvp4l
++XHDTEkW8eu6II8iz
++-----END PRIVATE KEY-----
+ `
+
+ //An ECDSA PKCS8 private key
