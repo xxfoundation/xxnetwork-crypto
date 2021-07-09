@@ -106,7 +106,6 @@ func NewPublicKeyFromPEM(certPEMblock []byte) (*rsa.PublicKey, error) {
 	var cert *x509.Certificate
 	cert, err := x509.ParseCertificate(block.Bytes)
 	if err != nil {
-
 		jww.ERROR.Printf("Error parsing PEM into certificate: %+v", err)
 		return nil, err
 	}

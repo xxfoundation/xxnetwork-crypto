@@ -284,8 +284,8 @@ func TestExpiredDSACerts(t *testing.T) {
 		t.Error("Failed to detect passing in a non-certificate into LoadCertificate")
 	}
 	//Turns the error into an error message
-	if strings.HasPrefix(err.Error(), "Cannot load DSA cert, it is expired") {
-		t.Error("Cert is expired")
+	if strings.HasPrefix("Cannot load DSA cert, it is expired", err.Error()) {
+		t.Error("Cannot load DSA cert, it is expired")
 	}
 }
 
@@ -297,7 +297,7 @@ func TestExpiredRSACerts(t *testing.T) {
 		t.Error("Failed to detect passing in a non-certificate into LoadCertificate")
 	}
 	//Turns the error into an error message
-	if strings.HasPrefix(err.Error(), "Cannot load RSA cert, it is expired") {
-		t.Error("RSA Cert is expired")
+	if strings.HasPrefix("Cannot load RSA cert, it is expired", err.Error()) {
+		t.Error("Cannot load RSA cert, it is expired")
 	}
 }
