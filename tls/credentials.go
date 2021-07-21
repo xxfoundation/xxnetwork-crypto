@@ -91,13 +91,13 @@ func NewPublicKeyFromFile(filePath string) (*rsa.PublicKey, error) {
 	}
 	timeTest := time.Now()
 	if timeTest.After(cert.NotAfter) {
-		return nil, errors.Errorf("NewPublicKeyFromFile: Cannot load cert, " 
-			+ "it is expired: %s", cert.NotAfter)
+		return nil, errors.Errorf("NewPublicKeyFromFile: Cannot load "+
+			" cert,nit is expired: %s", cert.NotAfter)
 	}
 	if timeTest.Before(cert.NotBefore) {
-		return nil, errors.Errorf("NewPublicKeyFromFile: Cannot load cert, "
-			+ "it is not yet valid: %s", cert.NotBefore)
-	}	
+		return nil, errors.Errorf("NewPublicKeyFromFile: Cannot load "+
+			"cert, it is not yet valid: %s", cert.NotBefore)
+	}
 
 	//Pull the public key from the cert object
 	rsaPublicKey := cert.PublicKey.(*gorsa.PublicKey)
@@ -120,12 +120,12 @@ func NewPublicKeyFromPEM(certPEMblock []byte) (*rsa.PublicKey, error) {
 	}
 	timeTest := time.Now()
 	if timeTest.After(cert.NotAfter) {
-		return nil, errors.Errorf("NewPublicKeyFromPEM: Cannot load cert, "
-			+ "it is expired: %s", cert.NotAfter)
+		return nil, errors.Errorf("NewPublicKeyFromPEM: Cannot load "+
+			"cert, it is expired: %s", cert.NotAfter)
 	}
 	if timeTest.Before(cert.NotBefore) {
-		return nil, errors.Errorf("NewPublicKeyFromPEM: Cannot load cert, "
-			+ "it is not yet valid: %s", cert.NotBefore)
+		return nil, errors.Errorf("NewPublicKeyFromPEM: Cannot load "+
+			"cert, it is not yet valid: %s", cert.NotBefore)
 	}
 
 	//From the cert, get it's public key
