@@ -89,6 +89,15 @@ func NewPublicKeyFromFile(filePath string) (*rsa.PublicKey, error) {
 		jww.ERROR.Printf("Error parsing PEM into certificate: %+v", err)
 		return nil, err
 	}
+	timeTest := time.Now()
+	if timeTest.After(cert.NotAfter) {
+		return nil, errors.Errorf("NewPublicKeyFromFile: Cannot load cert, " 
+			+ "it is expired: %s", cert.NotAfter)
+	}
+	if timeTest.Before(cert.NotBefore) {
+		return nil, errors.Errorf("NewPublicKeyFromFile: Cannot load cert, "
+			+ "it is not yet valid: %s", cert.NotBefore)
+	}	
 
 	//Pull the public key from the cert object
 	rsaPublicKey := cert.PublicKey.(*gorsa.PublicKey)
@@ -111,10 +120,12 @@ func NewPublicKeyFromPEM(certPEMblock []byte) (*rsa.PublicKey, error) {
 	}
 	timeTest := time.Now()
 	if timeTest.After(cert.NotAfter) {
-		return nil, errors.Errorf("Cannot load cert, it is expired: %s", cert.NotAfter)
+		return nil, errors.Errorf("NewPublicKeyFromPEM: Cannot load cert, "
+			+ "it is expired: %s", cert.NotAfter)
 	}
 	if timeTest.Before(cert.NotBefore) {
-		return nil, errors.Errorf("Cannot load cert, it is not yet valid: %s", cert.NotBefore)
+		return nil, errors.Errorf("NewPublicKeyFromPEM: Cannot load cert, "
+			+ "it is not yet valid: %s", cert.NotBefore)
 	}
 
 	//From the cert, get it's public key
