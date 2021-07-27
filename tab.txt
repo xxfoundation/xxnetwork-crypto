@@ -1,0 +1,43 @@
+diff --git a/tls/tls.go b/tls/tls.go
+index 46fcdc6..1c06cd6 100644
+--- a/tls/tls.go
++++ b/tls/tls.go
+@@ -37,7 +37,7 @@ func LoadCertificate(certContents string) (*x509.Certificate, error) {
+ 	timeTest := time.Now()
+ 	//returns an error if above bounds
+ 	if timeTest.After(cert.NotAfter) {
+-		return nil, errors.Errorf(LoadCertificate(), "Cannot load cert, it is expired on the date: %s", cert.NotAfter)
++		return nil, errors.Errorf("Cannot load cert, it is expired on the date: %s", cert.NotAfter)
+ 		//we return the expired cert message here,,
+ 	}
+ 	//displays an error if the bounds are below bounds
+diff --git a/tls/tls_test.go b/tls/tls_test.go
+index e33fbde..9f2072f 100644
+--- a/tls/tls_test.go
++++ b/tls/tls_test.go
+@@ -281,10 +281,10 @@ func TestExpiredDSACerts(t *testing.T) {
+ 	//Loads DSA key
+ 	_, err := LoadCertificate(DSAExpiredCertificate)
+ 	if err == nil {
+-		t.Error("Failed to detect passing in a non-certificate into LoadCertificate")
++		t.Error("Passed into load Certificate")
+ 	}
+ 	//Turns the error into an error message
+-	if strings.HasPrefix("Cannot load DSA cert, it is expired", err.Error()) {
++	if ! strings.HasPrefix("Passed into load Certificate", err.Error()) {
+ 		t.Error("Cannot load DSA cert, it is expired")
+ 	}
+ }
+@@ -294,10 +294,10 @@ func TestExpiredRSACerts(t *testing.T) {
+ 	//Loads RSA cert
+ 	_, err := LoadCertificate(RSAExpiredCertificate)
+ 	if err == nil {
+-		t.Error("Failed to detect passing in a non-certificate into LoadCertificate")
++		t.Error("Passed into load Certificate")
+ 	}
+ 	//Turns the error into an error message
+-	if strings.HasPrefix("Cannot load RSA cert, it is expired", err.Error()) {
++	if ! strings.HasPrefix("Passed into load Certificate", err.Error()) {
+ 		t.Error("Cannot load RSA cert, it is expired")
+ 	}
+ }
