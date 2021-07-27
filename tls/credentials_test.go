@@ -12,6 +12,7 @@ import (
 	"gitlab.com/xx_network/crypto/testkeys"
 	"gitlab.com/xx_network/primitives/utils"
 	"google.golang.org/grpc/credentials"
+	"strings"
 	"testing"
 )
 
@@ -129,5 +130,32 @@ func TestNewPublicKeyFromPEMError(t *testing.T) {
 	p, err = NewPublicKeyFromPEM(keyBytes)
 	if err == nil {
 		t.Errorf("Expected to receive error, instead got: %+v", p)
+	}
+}
+func TestExpiredDSACertsCredent(t *testing.T) {
+	//Loads DSA key
+	_, err := LoadCertificate(DSAExpiredCertificate)
+	if err == nil {
+		t.Error("Passed into load Certificate")
+	}
+	//Turns the error into an error message
+	expErr := "LoadCertificate: Cannot load cert, it is expired on the date"
+
+	if !strings.HasPrefix(err.Error(), expErr) {
+		t.Errorf("DSA cert should be expired: %v", err)
+	}
+}
+
+//Tests if RSA cert has expired
+func TestExpiredRSACertsCredent(t *testing.T) {
+	//Loads RSA cert
+	_, err := LoadCertificate(RSAExpiredCertificate)
+	if err == nil {
+		t.Error("Passed into load Certificate")
+	}
+	expErr := "LoadCertificate: Cannot load cert, it is expired on the date"
+	//Turns the error into an error message
+	if !strings.HasPrefix(err.Error(), expErr) {
+		t.Errorf("RSA Cert should be expired: %v", err)
 	}
 }
