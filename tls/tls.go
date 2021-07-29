@@ -37,13 +37,15 @@ func LoadCertificate(certContents string) (*x509.Certificate, error) {
 	timeTest := time.Now()
 	//returns an error if above bounds
 	if timeTest.After(cert.NotAfter) {
-		return nil, errors.Errorf(LoadCertificate(), "Cannot load cert, it is expired on the date: %s", cert.NotAfter)
+		return nil, errors.Errorf("LoadCertificate: Cannot load cert,"+
+			" it is expired on the date: %s", cert.NotAfter)
 		//we return the expired cert message here,,
 	}
 	//displays an error if the bounds are below bounds
 
 	if timeTest.Before(cert.NotBefore) {
-		return nil, errors.Errorf("Cannot load cert, it is not yet valid: %s", cert.NotBefore)
+		return nil, errors.Errorf("LoadCertificate: Cannot load cert,"+
+			" it is not yet valid: %s", cert.NotBefore)
 	}
 	//returns the certification
 	return cert, nil

@@ -174,6 +174,20 @@ X/w5R0t5FmbYFi+x+hC9nqzNHk536qEQ1nFdkFhgudKXVLqBrRhCWmB17f7GVtCV
 QO6xMAsGCWCGSAFlAwQDAgNHADBEAiBhrf3X7RyOIAw0yYhRB5Eb4n/xUfGsUbJW
 FW3W65H8lQIgFPcY/isEOe2poLZa+xlctTyuRVNS6c1+G37OikM2iks=
 -----END CERTIFICATE-----`
+const RSANotYetValidCert = `-----BEGIN CERTIFICATE-----
+MIICFjCCAcCgAwIBAgIBATANBgkqhkiG9w0BAQsFADBUMQswCQYDVQQGEwJVUzET
+MBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0cyBQ
+dHkgTHRkMQ0wCwYDVQQDDAR0ZXN0MCAYDzIyMjEwMTAxMTIwMDAwWhcNMjIwNzIx
+MjMzNjQwWjBUMQswCQYDVQQGEwJVUzETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8G
+A1UECgwYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMQ0wCwYDVQQDDAR0ZXN0MFww
+DQYJKoZIhvcNAQEBBQADSwAwSAJBAMFNOHh5qTiePqdxgEhXOLe0masyGpYKP3Mj
+S4EOGUKWOdb+y1HT1k1Sfc3M+R4NbtWbAFTPa3mGMvRxldwCQKkCAwEAAaN7MHkw
+CQYDVR0TBAIwADAsBglghkgBhvhCAQ0EHxYdT3BlblNTTCBHZW5lcmF0ZWQgQ2Vy
+dGlmaWNhdGUwHQYDVR0OBBYEFPqTlChzDJhnkE5tkDODo6pLubWIMB8GA1UdIwQY
+MBaAFPqTlChzDJhnkE5tkDODo6pLubWIMA0GCSqGSIb3DQEBCwUAA0EAZR0Fu2IV
+BOUPszTMjBUYTnrAdb1fhThCWrqZWJIOe721UXbuT6VYciehCBzqUqz2hQu1bAvx
+oARYVHp/Gzmk2g==
+-----END CERTIFICATE-----`
 
 //Error path: pass an empty file into the loaders
 func TestEmptyFile(t *testing.T) {
@@ -283,9 +297,10 @@ func TestExpiredDSACerts(t *testing.T) {
 	if err == nil {
 		t.Error("Failed to detect passing in a non-certificate into LoadCertificate")
 	}
+	expErr := "LoadCertificate: Cannot load cert, it is expired on the date"
 	//Turns the error into an error message
-	if strings.HasPrefix("Cannot load DSA cert, it is expired", err.Error()) {
-		t.Error("Cannot load DSA cert, it is expired")
+	if !strings.HasPrefix(err.Error(), expErr) {
+		t.Errorf("DSA cert should be expired: %v", err)
 	}
 }
 
