@@ -8,9 +8,9 @@
 package xx
 
 import (
-	"gitlab.com/xx_network/crypto/csprng"
-	"gitlab.com/xx_network/crypto/signature/rsa"
-	"gitlab.com/xx_network/primitives/id"
+	"git.xx.network/xx_network/crypto/csprng"
+	"git.xx.network/xx_network/crypto/signature/rsa"
+	"git.xx.network/xx_network/primitives/id"
 	"math/rand"
 	"reflect"
 	"testing"

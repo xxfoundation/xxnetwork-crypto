@@ -8,7 +8,7 @@ package randomness
 
 import (
 	"bytes"
-	"gitlab.com/xx_network/crypto/hasher"
+	"git.xx.network/xx_network/crypto/hasher"
 	"golang.org/x/crypto/sha3"
 	"math/big"
 	"testing"

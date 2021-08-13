@@ -19,7 +19,7 @@ package rsa
 import (
 	"crypto"
 	gorsa "crypto/rsa"
-	"gitlab.com/xx_network/crypto/large"
+	"git.xx.network/xx_network/crypto/large"
 	_ "golang.org/x/crypto/blake2b"
 	"io"
 )

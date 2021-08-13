@@ -8,7 +8,7 @@ package csprng
 
 import (
 	"crypto/aes"
-	"gitlab.com/xx_network/crypto/large"
+	"git.xx.network/xx_network/crypto/large"
 	"os"
 	"testing"
 	"time"

@@ -14,7 +14,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"errors"
-	"gitlab.com/xx_network/crypto/signature/rsa"
+	"git.xx.network/xx_network/crypto/signature/rsa"
 )
 
 // LoadCertificate takes a pem encoded certificate (ie the contents of a crt file),

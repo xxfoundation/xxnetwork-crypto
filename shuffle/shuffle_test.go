@@ -7,8 +7,8 @@
 package shuffle
 
 import (
-	"gitlab.com/xx_network/crypto/hasher"
-	"gitlab.com/xx_network/crypto/randomness"
+	"git.xx.network/xx_network/crypto/hasher"
+	"git.xx.network/xx_network/crypto/randomness"
 	"testing"
 )
 
