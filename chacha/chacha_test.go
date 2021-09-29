@@ -2,9 +2,12 @@ package chacha
 
 import (
 	"bytes"
+	"errors"
+	"fmt"
 	"gitlab.com/xx_network/crypto/csprng"
 	"io"
 	"math/rand"
+	"strings"
 	"testing"
 )
 
@@ -33,9 +36,40 @@ func TestEncrypt_Consistency(t *testing.T) {
 	}
 
 	if !bytes.Equal(ciphertext, expectedSig) {
-		t.Fatalf("Unexpected ciphertext received. " +
-			"\n\tExpected: %v" +
+		t.Fatalf("Unexpected ciphertext received. "+
+			"\n\tExpected: %v"+
 			"\n\tReceived: %v", expectedSig, ciphertext)
+	}
+}
+
+// Error case: pass in a key with a bad length
+func TestEncrypt_NilKey(t *testing.T) {
+	notRand := NewPrng(42)
+
+	data := []byte("Secret data do not read")
+	// Encrypt the secret
+	_, err := Encrypt(nil, data, notRand)
+	if err == nil || !strings.Contains(err.Error(), "bad key length") {
+		t.Fatalf("Encrypt should have errored with a bad key length")
+	}
+}
+
+// Error case: force a nonce generation error.
+func TestEncrypt_BadRng(t *testing.T) {
+	badRand := NewBadPrng(42)
+	notRand := NewPrng(42)
+
+	key := make([]byte, 32)
+	_, err := notRand.Read(key)
+	if err != nil {
+		t.Fatalf("Could not generate mock key: %v", err)
+	}
+
+	data := []byte("Secret data do not read")
+	// Encrypt the secret
+	_, err = Encrypt(key, data, &badRand)
+	if err == nil || !strings.Contains(err.Error(), "Failed to generate nonce") {
+		t.Fatalf("Encrypt should have errored with due to failure to generate a nonce")
 	}
 }
 
@@ -77,4 +111,12 @@ func NewPrng(seed int64) csprng.Source     { return &Prng{rand.New(rand.NewSourc
 func (s *Prng) Read(b []byte) (int, error) { return s.prng.Read(b) }
 func (s *Prng) SetSeed([]byte) error       { return nil }
 
+// BadPrng is a PRNG that satisfies the csprng.Source interface.
+type BadPrng struct{}
 
+func NewBadPrng(seed int64) BadPrng { return BadPrng{} }
+func (s *BadPrng) Read(b []byte) (int, error) {
+	fmt.Printf("doo doo\n")
+	return 0, errors.New("error path")
+}
+func (s *BadPrng) SetSeed([]byte) error { return nil }
