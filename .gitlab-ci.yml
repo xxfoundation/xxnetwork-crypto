@@ -8,6 +8,7 @@ variables:
   GIT_TRACE_PACKFILE: "2"
   GIT_TRACE_SETUP: "2"
   GIT_TRACE_SHALLOW: "2"
+  GIT_SSH_COMMAND: "ssh -vvv"
 
 before_script:
   - go version || echo "Go executable not found."
