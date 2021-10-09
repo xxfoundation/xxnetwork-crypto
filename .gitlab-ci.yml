@@ -15,6 +15,7 @@ before_script:
   - echo $CI_PROJECT_DIR
   - echo $HOME
   - echo $PWD
+  - cat ./cert.pem
   - git config --global http.sslCAInfo ./cert.pem
   - eval $(ssh-agent -s)
   - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
