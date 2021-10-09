@@ -17,7 +17,7 @@ before_script:
   - echo $HOME
   - echo $PWD
   - cat ./cert.pem
-  - git config --system http.sslbackend openssl
+  - git config --global http.sslbackend openssl
   - git config --global http.sslCAInfo ./cert.pem
   - openssl s_client -connect git.xx.network:443
   - eval $(ssh-agent -s)
