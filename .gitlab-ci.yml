@@ -1,34 +1,18 @@
 # From: https://about.gitlab.com/2017/09/21/how-to-create-ci-cd-pipeline-with-autodeploy-to-kubernetes-using-gitlab-and-helm/
-variables:
-  GIT_TRACE: "2"
-  GIT_CURL_VERBOSE: "2"
-  GIT_TRACE_PERFORMANCE: "2"
-  GIT_TRACE_PACK_ACCESS: "2"
-  GIT_TRACE_PACKET: "2"
-  GIT_TRACE_PACKFILE: "2"
-  GIT_TRACE_SETUP: "2"
-  GIT_TRACE_SHALLOW: "2"
-  GIT_SSH_COMMAND: "ssh -vvv"
-
 before_script:
   - go version || echo "Go executable not found."
   - echo $CI_BUILD_REF
   - echo $CI_PROJECT_DIR
   - echo $HOME
   - echo $PWD
-  - cat ./cert.pem
-  - git config --global http.sslbackend openssl
-  - git config --global http.sslCAInfo ./cert.pem
-  - openssl s_client -connect git.xx.network:443
+
   - eval $(ssh-agent -s)
   - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
   - ssh-keyscan -t rsa $GITLAB_SERVER > ~/.ssh/known_hosts
-  - git config --global url."git@$GITLAB_SERVER:elixxir/".insteadOf "https://gitlab.com/elixxir/"
-  - git config --global url."git@$GITLAB_SERVER:xx_network/".insteadOf "https://gitlab.com/xx_network/" --add
-  - git config --global url."git@$GITLAB_SERVER:elixxir/".insteadOf "https://git.xx.network/elixxir/" --add
-  - git config --global url."git@$GITLAB_SERVER:xx_network/".insteadOf "https://git.xx.network/xx_network/" --add
+  - git config --global url."git@$GITLAB_SERVER:".insteadOf "https://gitlab.com/"
+  - git config --global url."git@$GITLAB_SERVER:".insteadOf "https://git.xx.network/" --add
   - export PATH=$HOME/go/bin:$PATH
   #- go env -w GOPROXY=direct
   # Clear out old locally-cached tags
