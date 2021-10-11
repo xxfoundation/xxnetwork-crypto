@@ -1,5 +1,4 @@
 # From: https://about.gitlab.com/2017/09/21/how-to-create-ci-cd-pipeline-with-autodeploy-to-kubernetes-using-gitlab-and-helm/
-
 before_script:
   - go version || echo "Go executable not found."
   - echo $CI_BUILD_REF
@@ -13,8 +12,8 @@ before_script:
   - chmod 700 ~/.ssh
   - ssh-keyscan -t rsa $GITLAB_SERVER > ~/.ssh/known_hosts
   - git config --global url."git@$GITLAB_SERVER:".insteadOf "https://gitlab.com/"
+  - git config --global url."git@$GITLAB_SERVER:".insteadOf "https://git.xx.network/" --add
   - export PATH=$HOME/go/bin:$PATH
-  - export GOPRIVATE=gitlab.com/elixxir/*,gitlab.com/xx_network/*
   #- go env -w GOPROXY=direct
   # Clear out old locally-cached tags
   - git tag -l | xargs git tag -d
