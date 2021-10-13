@@ -8,7 +8,7 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0
 	github.com/tyler-smith/go-bip39 v1.1.0
 	github.com/zeebo/blake3 v0.1.1
-	gitlab.com/xx_network/primitives v0.0.4-0.20211013163328-2c5d1e7ce8a0
+	gitlab.com/xx_network/primitives v0.0.4-0.20211013190514-fc0d0269c3e9
 	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad
 	golang.org/x/sys v0.0.0-20210319071255-635bc2c9138d // indirect
 	google.golang.org/grpc v1.31.0
