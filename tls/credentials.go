@@ -22,10 +22,16 @@ import (
 	"strings"
 )
 
-// acceptedCipherSuites is the accepted TLS cipher suites accepted by
+// acceptedCipherSuites are the accepted TLS cipher suites accepted by
 // the network.
 var acceptedCipherSuites = []uint16{
 	tls.TLS_CHACHA20_POLY1305_SHA256,
+}
+
+// acceptedCurves are the accepted elliptic curve groups accepted by
+// the network.
+var acceptedCurves = []tls.CurveID{
+	tls.X25519,
 }
 
 // NewCredentialsFromPEM creates a TransportCredentials object out of a string.
@@ -43,9 +49,10 @@ func NewCredentialsFromPEM(certificate string,
 		return nil, errors.New("failed to append cert to pool")
 	}
 	return credentials.NewTLS(&tls.Config{
-		ServerName:   nameOverride,
-		RootCAs:      pool,
-		CipherSuites: acceptedCipherSuites,
+		ServerName:       nameOverride,
+		RootCAs:          pool,
+		CipherSuites:     acceptedCipherSuites,
+		CurvePreferences: acceptedCurves,
 	}), nil
 }
 
@@ -73,9 +80,10 @@ func NewCredentialsFromFile(filePath string,
 	}
 
 	return credentials.NewTLS(&tls.Config{
-		ServerName:   nameOverride,
-		RootCAs:      cp,
-		CipherSuites: acceptedCipherSuites,
+		ServerName:       nameOverride,
+		RootCAs:          cp,
+		CipherSuites:     acceptedCipherSuites,
+		CurvePreferences: acceptedCurves,
 	}), nil
 }
 
