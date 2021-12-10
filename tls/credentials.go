@@ -22,11 +22,10 @@ import (
 	"strings"
 )
 
-// acceptedCipherSuites are the accepted TLS cipher suites accepted by
-// the network.
-var acceptedCipherSuites = []uint16{
-	tls.TLS_CHACHA20_POLY1305_SHA256,
-}
+// minTlsVersion is the minimum TLS version, in this case
+// TLS protocol version 1.3; When using TLS 1.3 the tls.Config's
+// Ciphersuites field is ignored as of Go 1.17.
+var minTlsVersion uint16 = tls.VersionTLS13
 
 // acceptedCurves are the accepted elliptic curve groups accepted by
 // the network.
@@ -51,7 +50,7 @@ func NewCredentialsFromPEM(certificate string,
 	return credentials.NewTLS(&tls.Config{
 		ServerName:       nameOverride,
 		RootCAs:          pool,
-		CipherSuites:     acceptedCipherSuites,
+		MinVersion:       minTlsVersion,
 		CurvePreferences: acceptedCurves,
 	}), nil
 }
@@ -82,7 +81,7 @@ func NewCredentialsFromFile(filePath string,
 	return credentials.NewTLS(&tls.Config{
 		ServerName:       nameOverride,
 		RootCAs:          cp,
-		CipherSuites:     acceptedCipherSuites,
+		MinVersion:       minTlsVersion,
 		CurvePreferences: acceptedCurves,
 	}), nil
 }
