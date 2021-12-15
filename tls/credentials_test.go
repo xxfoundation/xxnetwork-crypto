@@ -38,9 +38,18 @@ func TestNewCredentialsFromFile(t *testing.T) {
 	}
 }
 
-//Error path
-func TestNewCredentialsFromFileError(t *testing.T) {
+//Error path: invalid path.
+func TestNewCredentialsFromFileError_BadPath(t *testing.T) {
 	path := testkeys.GetTestCertPath() + "sfdk"
+	_, err := NewCredentialsFromFile(path, "")
+	if err == nil {
+		t.Errorf("Expected to receive error, instead got: %+v", err)
+	}
+}
+
+//Error path: invalid file (not a cert.
+func TestNewCredentialsFromFileError_BadKey(t *testing.T) {
+	path := testkeys.GetTestKeyPath()
 	_, err := NewCredentialsFromFile(path, "")
 	if err == nil {
 		t.Errorf("Expected to receive error, instead got: %+v", err)
