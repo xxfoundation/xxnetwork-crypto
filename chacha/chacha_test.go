@@ -104,6 +104,34 @@ func TestEncryptDecryptMnemonic(t *testing.T) {
 	}
 }
 
+// Error path: Fail on a bad key
+func TestDecrypt_BadKey(t *testing.T) {
+	key, text := make([]byte, 2), make([]byte, 5)
+	_, err := Decrypt(key, text)
+	if err == nil {
+		t.Fatalf("Expected error path. Should not be able to decrypt with a key of length %d", len(key))
+	}
+}
+
+// Error path: Fail on a bad cipher text. Cipher text must be of length chacha Nonce + 16 for the encrypted data.
+func TestDecrypt_BadCiphertext(t *testing.T) {
+	notRand := NewPrng(42)
+
+	key := make([]byte, 32)
+	_, err := notRand.Read(key)
+	if err != nil {
+		t.Fatalf("Could not generate mock key: %v", err)
+	}
+
+	data := []byte("Nonce size of 16 plus a bit")
+
+	_, err = Decrypt(key, data)
+	if err == nil {
+		t.Fatalf("Expected error case: Cipher text must contain nonce and cipher text of minimum length")
+	}
+
+}
+
 // Prng is a PRNG that satisfies the csprng.Source interface.
 type Prng struct{ prng io.Reader }
 
