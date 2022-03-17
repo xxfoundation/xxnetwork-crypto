@@ -20,6 +20,6 @@ update_release:
 update_master:
 	GOFLAGS="" go get -u gitlab.com/xx_network/primitives@master
 
-master: clean update_master build
+master: update_master clean build
 
-release: clean update_release build
+release: update_release clean build
