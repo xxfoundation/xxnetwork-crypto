@@ -7,8 +7,9 @@
 package large
 
 import (
-	jww "github.com/spf13/jwalterweatherman"
 	"math/big"
+
+	jww "github.com/spf13/jwalterweatherman"
 )
 
 // Type large.Int will extend Go's big.Int structure
@@ -237,6 +238,14 @@ func (z *Int) IsCoprime(x *Int) bool {
 		return false
 	}
 	return true
+}
+
+// FillBytes sets buf to the absolute value of x, storing it as a zero-extended
+// big-endian byte slice, and returns buf.
+//
+// If the absolute value of x doesn't fit in buf, FillBytes will panic.
+func (z *Int) FillBytes(buf []byte) []byte {
+	return (*big.Int)(z).FillBytes(buf)
 }
 
 // IsPrime calculates (with high probability) if a number is prime or not.
