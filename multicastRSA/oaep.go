@@ -18,6 +18,13 @@
 // to decrypt. The public key isn't published, per se, but instead shared
 // with the people targeted in the multicast.
 
+// NOTE: WARNING: It is generally not recommended to copy code, especially not
+//                crypto code. Do not do this if you can avoid it.
+//                We made an exception here because converting pubkeys to
+//                privkeys is non-obvious, and the internal checkPub()
+//                call to check the public is meant to keep e small, which
+//                we wished to replicate.
+
 package multicastRSA
 
 import (
@@ -62,7 +69,7 @@ type PrivateKey interface {
 }
 
 // EncryptOAEP encrypts the given message with RSA-OAEP using a Private Key
-// for broadcast RSA.
+// for multicast RSA.
 //
 // OAEP is parameterised by a hash function that is used as a random oracle.
 // Encryption and decryption of a given message must use the same hash function
@@ -119,7 +126,7 @@ func EncryptOAEP(hash hash.Hash, random io.Reader, priv PrivateKey,
 }
 
 // DecryptOAEP decrypts ciphertext using RSA-OAEP using an RSA Public Key
-// for broadcast RSA.
+// for multicast RSA.
 //
 // OAEP is parameterised by a hash function that is used as a random oracle.
 // Encryption and decryption of a given message must use the same hash function
@@ -215,25 +222,25 @@ func decrypt(m *large.Int, pub PublicKey, c *large.Int) *large.Int {
 
 // ErrMessageTooLong is returned when attempting to encrypt a message which is
 // too large for the size of the public key.
-var ErrMessageTooLong = errors.New("xx_network/crypto/broadcastRSA: " +
+var ErrMessageTooLong = errors.New("xx_network/crypto/multicastRSA: " +
 	"message too long for RSA public key size")
 
 // ErrDecryption represents a failure to decrypt a message.
 // It is deliberately vague to avoid adaptive attacks.
-var ErrDecryption = errors.New("xx_network/crypto/broadcastRSA: " +
+var ErrDecryption = errors.New("xx_network/crypto/multicastRSA: " +
 	"decryption error")
 
 // ErrVerification represents a failure to verify a signature.
 // It is deliberately vague to avoid adaptive attacks.
-var ErrVerification = errors.New("xx_network/crypto/broadcastRSA: " +
+var ErrVerification = errors.New("xx_network/crypto/multicastRSA: " +
 	"verification error")
 
 var (
-	errPublicModulus = errors.New("xx_network/crypto/broadcastRSA: " +
+	errPublicModulus = errors.New("xx_network/crypto/multicastRSA: " +
 		"missing public modulus")
-	errPublicExponentSmall = errors.New("xx_network/crypto/broadcastRSA: " +
+	errPublicExponentSmall = errors.New("xx_network/crypto/multicastRSA: " +
 		"public exponent too small")
-	errPublicExponentLarge = errors.New("xx_network/crypto/broadcastRSA: " +
+	errPublicExponentLarge = errors.New("xx_network/crypto/multicastRSA: " +
 		"public exponent too large")
 )
 
