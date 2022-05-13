@@ -92,15 +92,15 @@ func EncryptOAEP(hash hash.Hash, random io.Reader, priv PrivateKey,
 		return nil, err
 	}
 	hash.Reset()
-	k := priv.Size()
-	if len(msg) > k-2*hash.Size()-2 {
+	maxPayloadSize := GetMaxPayloadSize(hash, priv)
+	if len(msg) > maxPayloadSize {
 		return nil, ErrMessageTooLong
 	}
 
 	hash.Write(label)
 	lHash := hash.Sum(nil)
 	hash.Reset()
-
+	k := priv.Size()
 	em := make([]byte, k)
 	seed := em[1 : 1+hash.Size()]
 	db := em[1+hash.Size():]
@@ -295,4 +295,14 @@ func mgf1XOR(out []byte, hash hash.Hash, seed []byte) {
 		}
 		incCounter(&counter)
 	}
+}
+
+// GetMaxPayloadSize returns the maximum size of a multicastRSA broadcast message
+// The message must be no longer than the length of the public modulus minus
+// twice the hash length, minus a further 2.
+func GetMaxPayloadSize(hash hash.Hash, priv PrivateKey) int {
+	hash.Reset()
+	k := priv.Size()
+	hashSize := hash.Size()
+	return k - 2*hashSize - 2
 }
