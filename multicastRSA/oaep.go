@@ -300,9 +300,9 @@ func mgf1XOR(out []byte, hash hash.Hash, seed []byte) {
 // GetMaxPayloadSize returns the maximum size of a multicastRSA broadcast message
 // The message must be no longer than the length of the public modulus minus
 // twice the hash length, minus a further 2.
-func GetMaxPayloadSize(hash hash.Hash, priv PrivateKey) int {
+func GetMaxPayloadSize(hash hash.Hash, key PublicKey) int {
 	hash.Reset()
-	k := priv.Size()
+	k := key.Size()
 	hashSize := hash.Size()
 	return k - 2*hashSize - 2
 }
