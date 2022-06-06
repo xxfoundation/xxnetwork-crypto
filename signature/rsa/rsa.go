@@ -19,9 +19,10 @@ package rsa
 import (
 	"crypto"
 	gorsa "crypto/rsa"
+	"io"
+
 	"gitlab.com/xx_network/crypto/large"
 	_ "golang.org/x/crypto/blake2b"
-	"io"
 )
 
 //Key length used in the system in bits
@@ -117,8 +118,23 @@ func (p *PrivateKey) Public() crypto.PublicKey {
 }
 
 // GetN returns the RSA Public Key modulus
+func (p *PrivateKey) GetN() *large.Int {
+	return large.NewIntFromBigInt(p.N)
+}
+
+// GetE returns the RSA Public Key exponent
+func (p *PrivateKey) GetE() int {
+	return p.E
+}
+
+// GetN returns the RSA Public Key modulus
 func (p *PublicKey) GetN() *large.Int {
 	return large.NewIntFromBigInt(p.N)
+}
+
+// GetE returns the RSA Public Key exponent
+func (p *PublicKey) GetE() int {
+	return p.E
 }
 
 // GenerateKey generates an RSA keypair of the given bit size using the
