@@ -8,11 +8,12 @@ package randomness
 
 import (
 	"math/rand"
+	"strings"
 	"testing"
 )
 
 //TestReadRangeSmoke will check that the results of ReadRangeUint32 gets random
-// numbers from inside the right range. It verifies
+// numbers from inside the right range. It verifies that it is in the range.
 func TestReadRangeSmoke(t *testing.T) {
 	src := rand.NewSource(42)
 	rng := rand.New(src)
@@ -28,4 +29,17 @@ func TestReadRangeSmoke(t *testing.T) {
 			}
 		}
 	}
+}
+
+//TestReadRangeShort panic's the read range by making the buffer to small
+func TestReadRangeShort(t *testing.T) {
+	rng := strings.NewReader("ts")
+
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("ReadRangeUint32 should panic on short read")
+		}
+	}()
+
+	ReadRangeUint32(0, 10, rng)
 }
