@@ -41,9 +41,8 @@ func ReadRangeUint32(start, end uint32, rng io.Reader) uint32 {
 	// Loop until we read something inside the limit
 	for {
 		res := ReadUint32(rng)
-		if res > limit {
-			continue
+		if res <= limit {
+			return (res % size) + start
 		}
-		return (res % size) + start
 	}
 }
