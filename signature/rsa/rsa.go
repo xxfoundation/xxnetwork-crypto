@@ -8,7 +8,7 @@
 // Package rsa includes wrappers to sign and verify the signatures of messages
 // with the PKCS#1 RSASSA-PSS signature algorithm:
 //
-//   https://tools.ietf.org/html/rfc3447#page-29
+//	https://tools.ietf.org/html/rfc3447#page-29
 //
 // We use this because of the "tighter" security proof and regression to full
 // domain hashing in cases where good RNG is unavailable.
@@ -20,13 +20,15 @@ package rsa
 import (
 	"crypto"
 	gorsa "crypto/rsa"
+	"encoding/binary"
 	"io"
+	"math/big"
 
 	"gitlab.com/xx_network/crypto/large"
 	_ "golang.org/x/crypto/blake2b"
 )
 
-//Key length used in the system in bits
+// Key length used in the system in bits
 var DefaultRSABitLen = 4096
 
 // Options is a direct wrapper for PSSOptions
@@ -126,6 +128,22 @@ func (p *PrivateKey) GetN() *large.Int {
 // GetE returns the RSA Public Key exponent
 func (p *PrivateKey) GetE() int {
 	return p.E
+}
+
+// Bytes returns the PublicKey as a byte slice.
+func (p *PublicKey) Bytes() []byte {
+	buf := make([]byte, 16)
+	binary.PutVarint(buf, int64(p.GetE()))
+	return append(buf, p.PublicKey.N.Bytes()...)
+}
+
+// FromBytes loads the given byte slice into the PublicKey.
+func (p *PublicKey) FromBytes(b []byte) error {
+	e, _ := binary.Varint(b[:8])
+	p.E = int(e)
+	p.N = new(big.Int)
+	p.N.SetBytes(b[8:])
+	return nil
 }
 
 // GetN returns the RSA Public Key modulus

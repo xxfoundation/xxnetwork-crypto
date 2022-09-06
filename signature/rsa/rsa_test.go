@@ -218,3 +218,21 @@ func TestIsValidSignature(t *testing.T) {
 			"\n\t Signer's public key: %+v", len(matchingSig), serverPubKey.Size())
 	}
 }
+
+func TestRSABytesFromBytes(t *testing.T) {
+	serverPrivKey, err := GenerateKey(rand.Reader, 4096)
+	if err != nil {
+		t.Errorf("Failed to generate private key: %+v", err)
+	}
+	serverPubKey := serverPrivKey.GetPublic()
+	serverPubKeyBytes := serverPubKey.Bytes()
+	serverPubKey2 := new(PublicKey)
+	err = serverPubKey2.FromBytes(serverPubKeyBytes)
+	if err != nil {
+		t.Fatal(err)
+	}
+	serverPubKey2Bytes := serverPubKey2.Bytes()
+	if !bytes.Equal(serverPubKeyBytes, serverPubKey2Bytes) {
+		t.Fatal("byte slices don't match")
+	}
+}
