@@ -132,14 +132,14 @@ func (p *PrivateKey) GetE() int {
 
 // Bytes returns the PublicKey as a byte slice.
 func (p *PublicKey) Bytes() []byte {
-	buf := make([]byte, 16)
-	binary.PutVarint(buf, int64(p.GetE()))
+	buf := make([]byte, 8)
+	binary.BigEndian.PutUint64(buf, uint64(p.GetE()))
 	return append(buf, p.PublicKey.N.Bytes()...)
 }
 
 // FromBytes loads the given byte slice into the PublicKey.
 func (p *PublicKey) FromBytes(b []byte) error {
-	e, _ := binary.Varint(b[:8])
+	e := binary.BigEndian.Uint64(b[:8])
 	p.E = int(e)
 	p.N = new(big.Int)
 	p.N.SetBytes(b[8:])
