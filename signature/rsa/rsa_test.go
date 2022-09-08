@@ -13,6 +13,8 @@ import (
 	"crypto/rand"
 	"crypto/sha256"
 	"testing"
+
+	"golang.org/x/crypto/blake2b"
 )
 
 type CountingReader struct {
@@ -234,5 +236,17 @@ func TestRSABytesFromBytes(t *testing.T) {
 	serverPubKey2Bytes := serverPubKey2.Bytes()
 	if !bytes.Equal(serverPubKeyBytes, serverPubKey2Bytes) {
 		t.Fatal("byte slices don't match")
+	}
+
+	message := []byte("fluffy bunny")
+	hashed := blake2b.Sum256(message)
+	signature, err := Sign(rand.Reader, serverPrivKey, crypto.BLAKE2b_256, hashed[:], nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	err = Verify(serverPubKey2, crypto.BLAKE2b_256, hashed[:], signature, nil)
+	if err != nil {
+		t.Fatal(err)
 	}
 }
