@@ -133,7 +133,7 @@ func (p *PrivateKey) GetE() int {
 // Bytes returns the PublicKey as a byte slice.
 // The first 4 bytes are the exponent (E) as a 4 byte big
 // endian integer, followed by the modulus (N) as a big.Int
-// in Bytes format. We should the 32 bit integer for E
+// in Bytes format. We chose the 32 bit integer for E
 // because it should be big enough.
 func (p *PublicKey) Bytes() []byte {
 	buf := make([]byte, 4)
