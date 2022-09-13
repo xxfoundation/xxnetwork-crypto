@@ -28,6 +28,11 @@ import (
 	_ "golang.org/x/crypto/blake2b"
 )
 
+const (
+	// Elength is the length is bytes that the RSA Public Key's E component serializes to.
+	ELength = 8
+)
+
 // Key length used in the system in bits
 var DefaultRSABitLen = 4096
 
