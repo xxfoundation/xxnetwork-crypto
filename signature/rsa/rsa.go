@@ -30,7 +30,7 @@ import (
 
 const (
 	// Elength is the length is bytes that the RSA Public Key's E component serializes to.
-	ELength = 8
+	ELength = 4
 )
 
 // Key length used in the system in bits
@@ -141,17 +141,17 @@ func (p *PrivateKey) GetE() int {
 // in Bytes format. We chose the 32 bit integer for E
 // because it should be big enough.
 func (p *PublicKey) Bytes() []byte {
-	buf := make([]byte, 4)
+	buf := make([]byte, ELength)
 	binary.BigEndian.PutUint32(buf, uint32(p.GetE()))
 	return append(buf, p.PublicKey.N.Bytes()...)
 }
 
 // FromBytes loads the given byte slice into the PublicKey.
 func (p *PublicKey) FromBytes(b []byte) error {
-	e := binary.BigEndian.Uint32(b[:4])
+	e := binary.BigEndian.Uint32(b[:ELength])
 	p.E = int(e)
 	p.N = new(big.Int)
-	p.N.SetBytes(b[4:])
+	p.N.SetBytes(b[ELength:])
 	return nil
 }
 
