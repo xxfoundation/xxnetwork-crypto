@@ -20,9 +20,11 @@ package rsa
 import (
 	"crypto"
 	gorsa "crypto/rsa"
-	jww "github.com/spf13/jwalterweatherman"
+	"encoding/binary"
 	"io"
 	"math/big"
+
+	jww "github.com/spf13/jwalterweatherman"
 
 	"gitlab.com/xx_network/crypto/large"
 	_ "golang.org/x/crypto/blake2b"
@@ -32,8 +34,12 @@ import (
 // Use of any bit length smaller than this will result in a warning log print.
 var minRSABitLen = 3072
 
-const minRSABitLenWarn = "CAUTION! RSA bit length %d is smaller than the " +
-	"recommended minimum of %d bits. This is insecure; do not use in production!"
+const (
+	minRSABitLenWarn = "CAUTION! RSA bit length %d is smaller than" +
+		"the recommended minimum of %d bits. This is" +
+		"insecure; do not use in production!"
+	ELength = 4
+)
 
 // Options is a direct wrapper for PSSOptions
 type Options struct {
