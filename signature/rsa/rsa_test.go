@@ -13,6 +13,8 @@ import (
 	"crypto/rand"
 	"crypto/sha256"
 	"testing"
+
+	"golang.org/x/crypto/blake2b"
 )
 
 type CountingReader struct {
@@ -216,5 +218,35 @@ func TestIsValidSignature(t *testing.T) {
 		t.Errorf("Expected valid signature!"+
 			"\n\t Signature: %+v"+
 			"\n\t Signer's public key: %+v", len(matchingSig), serverPubKey.Size())
+	}
+}
+
+func TestRSABytesFromBytes(t *testing.T) {
+	serverPrivKey, err := GenerateKey(rand.Reader, 4096)
+	if err != nil {
+		t.Errorf("Failed to generate private key: %+v", err)
+	}
+	serverPubKey := serverPrivKey.GetPublic()
+	serverPubKeyBytes := serverPubKey.Bytes()
+	serverPubKey2 := new(PublicKey)
+	err = serverPubKey2.FromBytes(serverPubKeyBytes)
+	if err != nil {
+		t.Fatal(err)
+	}
+	serverPubKey2Bytes := serverPubKey2.Bytes()
+	if !bytes.Equal(serverPubKeyBytes, serverPubKey2Bytes) {
+		t.Fatal("byte slices don't match")
+	}
+
+	message := []byte("fluffy bunny")
+	hashed := blake2b.Sum256(message)
+	signature, err := Sign(rand.Reader, serverPrivKey, crypto.BLAKE2b_256, hashed[:], nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	err = Verify(serverPubKey2, crypto.BLAKE2b_256, hashed[:], signature, nil)
+	if err != nil {
+		t.Fatal(err)
 	}
 }
