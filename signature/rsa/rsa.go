@@ -20,7 +20,7 @@ package rsa
 import (
 	"crypto"
 	gorsa "crypto/rsa"
-	"encoding/binary"
+	jww "github.com/spf13/jwalterweatherman"
 	"io"
 	"math/big"
 
@@ -28,13 +28,12 @@ import (
 	_ "golang.org/x/crypto/blake2b"
 )
 
-const (
-	// Elength is the length is bytes that the RSA Public Key's E component serializes to.
-	ELength = 4
-)
+// minRSABitLen is the recommended minimum RSA key length allowed in production.
+// Use of any bit length smaller than this will result in a warning log print.
+var minRSABitLen = 3072
 
-// Key length used in the system in bits
-var DefaultRSABitLen = 4096
+const minRSABitLenWarn = "CAUTION! RSA bit length %d is smaller than the " +
+	"recommended minimum of %d bits. This is insecure; do not use in production!"
 
 // Options is a direct wrapper for PSSOptions
 type Options struct {
@@ -78,7 +77,7 @@ func (p *PrivateKey) GetDq() *large.Int {
 	return large.NewIntFromBigInt(p.Precomputed.Dq)
 }
 
-// GetPublicKey returns the public key in *rsa.PublicKey format
+// GetPublic returns the public key in *rsa.PublicKey format.
 func (p *PrivateKey) GetPublic() *PublicKey {
 	return &PublicKey{p.PublicKey}
 }
@@ -168,12 +167,16 @@ func (p *PublicKey) GetE() int {
 // GenerateKey generates an RSA keypair of the given bit size using the
 // random source random (for example, crypto/rand.Reader).
 func GenerateKey(random io.Reader, bits int) (*PrivateKey, error) {
+	if bits < minRSABitLen {
+		jww.WARN.Printf(minRSABitLenWarn, bits, minRSABitLen)
+	}
+
 	pk, err := gorsa.GenerateMultiPrimeKey(random, 2, bits)
 	return &PrivateKey{*pk}, err
 }
 
 // NewDefaultOptions returns signing options that set the salt length equal
-// to the lenght of the hash and uses the default cMix Hash algorithm.
+// to the length of the hash and uses the default cMix Hash algorithm.
 func NewDefaultOptions() *Options {
 	return &Options{
 		gorsa.PSSOptions{
