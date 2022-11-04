@@ -13,6 +13,8 @@ import (
 	"gitlab.com/xx_network/primitives/id"
 	"math/rand"
 	"reflect"
+	"strconv"
+	"strings"
 	"testing"
 )
 
@@ -42,15 +44,22 @@ func TestNewID(t *testing.T) {
 	// rsa key generation has two possible outputs to stop use of its
 	// deterministic nature so we check both possible outputs and use
 	// its deterministic nature
-	expectedID1 := id.NewIdFromBytes([]byte{122, 15, 124, 177, 225, 209, 252, 65,
-		148, 66, 145, 157, 128, 160, 77, 82, 129, 2, 97, 227, 5, 2, 126, 78, 136,
-		122, 238, 179, 156, 28, 115, 198, 1}, t)
+	expectedID1 := id.NewIdFromBytes([]byte{138, 208, 78, 130, 167, 86, 175, 13, 39,
+		241, 229, 186, 201, 235, 149, 13, 201, 136, 196, 157, 41, 149, 93, 250, 127,
+		251, 203, 111, 57, 168, 66, 4, 1}, t)
 
-	expectedID2 := id.NewIdFromBytes([]byte{73, 68, 157, 125, 57, 194, 165, 132,
-		64, 84, 100, 41, 93, 237, 227, 161, 114, 140, 215, 66, 146, 233, 151, 33,
-		24, 119, 98, 166, 104, 13, 252, 226, 1}, t)
+	expectedID2 := id.NewIdFromBytes([]byte{138, 208, 78, 130, 167, 86, 175, 13, 39, 241,
+		229, 186, 201, 235, 149, 13, 201, 136, 196, 157, 41, 149, 93, 250, 127, 251, 203,
+		111, 57, 168, 66, 4, 1}, t)
 
 	if !reflect.DeepEqual(expectedID1, nid) && !reflect.DeepEqual(expectedID2, nid) {
+		strs := make([]string, 0)
+		for _, n := range nid {
+			strs = append(strs, strconv.Itoa(int(n)))
+		}
+
+		t.Logf("%s", strings.Join(strs, ", "))
+
 		t.Errorf("Received ID did not match expected: "+
 			"Expected: %s or %s, Received: %s", expectedID1, expectedID2, nid)
 	}
