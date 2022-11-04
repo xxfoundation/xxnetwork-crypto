@@ -11,18 +11,30 @@ import (
 	"gitlab.com/xx_network/crypto/csprng"
 	"gitlab.com/xx_network/crypto/signature/rsa"
 	"gitlab.com/xx_network/primitives/id"
-	"math/rand"
 	"reflect"
 	"strconv"
 	"strings"
 	"testing"
 )
 
+type CountingReader struct {
+	count uint8
+}
+
+// Read just counts until 254 then starts over again
+func (c *CountingReader) Read(b []byte) (int, error) {
+	for i := 0; i < len(b); i++ {
+		c.count = (c.count + 1) % 255
+		b[i] = c.count
+	}
+	return len(b), nil
+}
+
 func TestNewID(t *testing.T) {
 	// use insecure seeded rng to reproduce key
-	rng := rand.New(rand.NewSource(42))
-	rng.Seed(42)
-	pk, err := rsa.GenerateKey(rng, 4096)
+
+	rng := &CountingReader{count: 1}
+	pk, err := rsa.GenerateKey(rng, 1024)
 	if err != nil {
 		t.Errorf(err.Error())
 	}
@@ -41,18 +53,9 @@ func TestNewID(t *testing.T) {
 		t.Errorf("wrong type: %d", nid[len(nid)-1])
 	}
 
-	// rsa key generation has two possible outputs to stop use of its
-	// deterministic nature so we check both possible outputs and use
-	// its deterministic nature
-	expectedID1 := id.NewIdFromBytes([]byte{138, 208, 78, 130, 167, 86, 175, 13, 39,
-		241, 229, 186, 201, 235, 149, 13, 201, 136, 196, 157, 41, 149, 93, 250, 127,
-		251, 203, 111, 57, 168, 66, 4, 1}, t)
+	expectedID1 := id.NewIdFromBytes([]byte{219, 230, 150, 81, 207, 49, 51, 222, 66, 199, 131, 254, 182, 254, 241, 109, 209, 183, 134, 83, 35, 142, 235, 195, 156, 173, 194, 128, 46, 10, 2, 51, 1}, t)
 
-	expectedID2 := id.NewIdFromBytes([]byte{138, 208, 78, 130, 167, 86, 175, 13, 39, 241,
-		229, 186, 201, 235, 149, 13, 201, 136, 196, 157, 41, 149, 93, 250, 127, 251, 203,
-		111, 57, 168, 66, 4, 1}, t)
-
-	if !reflect.DeepEqual(expectedID1, nid) && !reflect.DeepEqual(expectedID2, nid) {
+	if !reflect.DeepEqual(expectedID1, nid) {
 		strs := make([]string, 0)
 		for _, n := range nid {
 			strs = append(strs, strconv.Itoa(int(n)))
@@ -61,7 +64,7 @@ func TestNewID(t *testing.T) {
 		t.Logf("%s", strings.Join(strs, ", "))
 
 		t.Errorf("Received ID did not match expected: "+
-			"Expected: %s or %s, Received: %s", expectedID1, expectedID2, nid)
+			"Expected: %s, Received: %s", expectedID1, nid)
 	}
 
 	// Send bad type
