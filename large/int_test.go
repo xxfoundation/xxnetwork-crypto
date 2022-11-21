@@ -66,8 +66,8 @@ func TestNewIntFromString(t *testing.T) {
 func TestNewIntFromString_InvalidBaseError(t *testing.T) {
 	value := NewIntFromString("185", 5)
 	if value != nil {
-		t.Errorf("NewIntFromString should return nil if parsing fails: %s",
-			value.Text(10))
+		t.Errorf(
+			"NewIntFromString should return nil if parsing fails: %d", value)
 	}
 }
 
@@ -191,13 +191,13 @@ func TestInt_DeepCopy(t *testing.T) {
 		lgCopy := lg.DeepCopy()
 		if lg.Cmp(lgCopy) != 0 {
 			t.Errorf("DeepCopy did not return a copy that matches the original."+
-				"\nexpected: %s\nreceived: %s", lg.Text(10), lgCopy.Text(10))
+				"\nexpected: %d\nreceived: %d", lg, lgCopy)
 		}
 
 		lgCopy.Sub(lgCopy, NewInt(1))
 		if lg.Cmp(lgCopy) == 0 {
 			t.Errorf("Modified copy matches original."+
-				"\nexpected: %s\nreceived: %s", lg.Text(10), lgCopy.Text(10))
+				"\nexpected: %d\nreceived: %d", lg, lgCopy)
 		}
 
 		if lg == lgCopy {
@@ -223,7 +223,7 @@ func TestInt_Set(t *testing.T) {
 	actual.Set(expected)
 	if actual.Cmp(expected) != 0 {
 		t.Errorf("Set did not set the correct value."+
-			"\nexpected: %s\nreceived: %s", expected.Text(10), actual.Text(10))
+			"\nexpected: %d\nreceived: %d", expected, actual)
 	}
 }
 
@@ -241,7 +241,7 @@ func TestInt_SetBigInt(t *testing.T) {
 	actual.SetBigInt(expectedBig)
 	if actual.Cmp(expected) != 0 {
 		t.Errorf("SetBigInt did not set the correct value."+
-			"\nexpected: %s\nreceived: %s", expected.Text(10), actual.Text(10))
+			"\nexpected: %d\nreceived: %d", expected, actual)
 	}
 }
 
@@ -270,14 +270,12 @@ func TestInt_SetString(t *testing.T) {
 		if aSuccess == false {
 			if actual != nil && tt.expected == nil {
 				t.Errorf("SetString did not return expected result (%d)."+
-					"\nexpected: %s\nreceived: %s",
-					i, tt.expected.Text(10), actual.Text(10))
+					"\nexpected: %d\nreceived: %d", i, tt.expected, actual)
 			}
 		} else {
 			if actual.Cmp(tt.expected) != 0 {
 				t.Errorf("SetString did not return expected result (%d)."+
-					"\nexpected: %s\nreceived: %s",
-					i, tt.expected.Text(10), actual.Text(10))
+					"\nexpected: %d\nreceived: %d", i, tt.expected, actual)
 			}
 		}
 	}
@@ -302,8 +300,7 @@ func TestInt_SetBytes(t *testing.T) {
 		actual := NewInt(0).SetBytes(tt.b)
 		if actual.Cmp(expected) != 0 {
 			t.Errorf("SetBytes did not return expected result (%d)."+
-				"\nexpected: %s\nreceived: %s",
-				i, expected.Text(10), actual.Text(10))
+				"\nexpected: %d\nreceived: %d", i, expected, actual)
 		}
 	}
 }
@@ -316,7 +313,7 @@ func TestInt_SetInt64(t *testing.T) {
 
 	if actual.Cmp(expected) != 0 {
 		t.Errorf("SetInt64 did not return expected result."+
-			"\nexpected: %s\nreceived: %s", expected.Text(10), actual.Text(10))
+			"\nexpected: %d\nreceived: %d", expected, actual)
 	}
 }
 
@@ -328,7 +325,7 @@ func TestInt_SetUint64(t *testing.T) {
 
 	if actual.Cmp(expected) != 0 {
 		t.Errorf("SetUint64 did not return expected result."+
-			"\nexpected: %s\nreceived: %s", expected.Text(10), actual.Text(10))
+			"\nexpected: %d\nreceived: %d", expected, actual)
 	}
 }
 
@@ -342,7 +339,7 @@ func TestInt_SetBits(t *testing.T) {
 
 	if actual.Cmp(expected) != 0 {
 		t.Errorf("SetBits did not return expected result."+
-			"\nexpected: %s\nreceived: %s", expected.Text(10), actual.Text(10))
+			"\nexpected: %d\nreceived: %d", expected, actual)
 	}
 }
 
@@ -357,7 +354,7 @@ func TestInt_BigInt(t *testing.T) {
 
 	if actual.Cmp(expected) != 0 {
 		t.Errorf("BigInt did not return expected big.Int."+
-			"\nexpected: %s\nreceived: %s", expected.Text(10), actual.Text(10))
+			"\nexpected: %d\nreceived: %d", expected, actual)
 	}
 }
 
@@ -402,9 +399,9 @@ func TestInt_IsInt64(t *testing.T) {
 	for i, tt := range tests {
 		actual := tt.z.IsInt64()
 		if actual != tt.expected {
-			t.Errorf("IsInt64 returned unexpected result for Int %s (%d)."+
+			t.Errorf("IsInt64 returned unexpected result for Int %d (%d)."+
 				"\nexpected: %t\nreceived: %t",
-				tt.z.Text(10), i, tt.expected, actual)
+				tt.z, i, tt.expected, actual)
 		}
 	}
 }
@@ -426,9 +423,9 @@ func TestInt_Add(t *testing.T) {
 	for i, tt := range tests {
 		actual := tt.z.Add(tt.x, tt.y)
 		if actual.Cmp(tt.expected) != 0 {
-			t.Errorf("Add returned unexpected result for %s + %s (%d)."+
-				"\nexpected: %s\nreceived: %s", tt.x.Text(10), tt.y.Text(10), i,
-				tt.expected.Text(10), actual.Text(10))
+			t.Errorf("Add returned unexpected result for %d + %d (%d)."+
+				"\nexpected: %d\nreceived: %d",
+				tt.x, tt.y, i, tt.expected, actual)
 		}
 	}
 }
@@ -451,9 +448,8 @@ func TestInt_Sub(t *testing.T) {
 		expected := NewIntFromString(tt.expected, 10)
 		actual := NewInt(0).Sub(x, y)
 		if actual.Cmp(expected) != 0 {
-			t.Errorf("Sub returned unexpected result for %s - %s (%d)."+
-				"\nexpected: %s\nreceived: %s", x.Text(10), y.Text(10), i,
-				expected.Text(10), actual.Text(10))
+			t.Errorf("Sub returned unexpected result for %d - %d (%d)."+
+				"\nexpected: %d\nreceived: %d", x, y, i, expected, actual)
 		}
 	}
 
@@ -472,9 +468,9 @@ func TestInt_Mul(t *testing.T) {
 	for i, tt := range tests {
 		actual := tt.z.Mul(tt.x, tt.y)
 		if actual.Cmp(tt.expected) != 0 {
-			t.Errorf("Sub returned unexpected result for %s * %s (%d)."+
-				"\nexpected: %s\nreceived: %s", tt.x.Text(10), tt.y.Text(10), i,
-				tt.expected.Text(10), actual.Text(10))
+			t.Errorf("Sub returned unexpected result for %d * %d (%d)."+
+				"\nexpected: %d\nreceived: %d",
+				tt.x, tt.y, i, tt.expected, actual)
 		}
 	}
 }
@@ -498,9 +494,8 @@ func TestInt_Div(t *testing.T) {
 		expected := NewIntFromString(tt.expected, 10)
 		actual := NewInt(0).Div(x, y)
 		if actual.Cmp(expected) != 0 {
-			t.Errorf("Div returned unexpected result for %s / %s (%d)."+
-				"\nexpected: %s\nreceived: %s", x.Text(10), y.Text(10), i,
-				expected.Text(10), actual.Text(10))
+			t.Errorf("Div returned unexpected result for %d / %d (%d)."+
+				"\nexpected: %d\nreceived: %d", x, y, i, expected, actual)
 		}
 	}
 }
@@ -527,8 +522,7 @@ func TestInt_Mod(t *testing.T) {
 
 		if result.Cmp(expected) != 0 {
 			t.Errorf("Mod did not return the expected result (%d)."+
-				"\nexpected: %s\nreceived: %s",
-				i, expected.Text(10), result.Text(10))
+				"\nexpected: %d\nreceived: %d", i, expected, result)
 		}
 	}
 }
@@ -551,8 +545,7 @@ func TestInt_ModInverse(t *testing.T) {
 
 		if expected.Cmp(reMultiply) != 0 {
 			t.Errorf("ModInverse did not return the expected result (%d)."+
-				"\nexpected: %s\nreceived: %s",
-				i, expected.Text(10), reMultiply.Text(10))
+				"\nexpected: %d\nreceived: %d", i, expected, reMultiply)
 		}
 	}
 }
@@ -565,9 +558,9 @@ func TestInt_ModInverse_InputNotRelativelyPrime(t *testing.T) {
 
 	result := NewInt(1).ModInverse(x, n)
 	if result != nil {
-		t.Errorf("ModInverse should have return nil when x (%s) and n (%s) "+
-			"are not relatively prime.\nexpected: %v\nreceived: %s",
-			x.Text(10), n.Text(10), nil, result.Text(10))
+		t.Errorf("ModInverse should have returned nil when x (%d) and n (%d) "+
+			"are not relatively prime.\nexpected: %v\nreceived: %d",
+			x, n, nil, result)
 	}
 }
 
@@ -587,8 +580,7 @@ func TestInt_Exp(t *testing.T) {
 		result := NewInt(0).Exp(x, y, m)
 		if result.Cmp(expected) != 0 {
 			t.Errorf("Exp did not return the expected result (%d)."+
-				"\nexpected: %s\nreceived: %s",
-				i, expected.Text(10), result.Text(10))
+				"\nexpected: %d\nreceived: %d", i, expected, result)
 		}
 	}
 }
@@ -607,8 +599,8 @@ func TestInt_GCD(t *testing.T) {
 	actual := NewInt(0).GCD(x, y, a, b)
 	expected := NewInt(1)
 	if actual.Cmp(expected) != 0 {
-		t.Errorf("GCD did not find the GCD.\nexpected: %s\nreceived: %s",
-			expected.Text(10), actual.Text(10))
+		t.Errorf("GCD did not find the GCD.\nexpected: %d\nreceived: %d",
+			expected, actual)
 	}
 
 	// Use results of extended GCD to calculate modular inverse and check
@@ -620,8 +612,8 @@ func TestInt_GCD(t *testing.T) {
 
 	modInverseResult := NewInt(0).ModInverse(a, b)
 	if x.Cmp(modInverseResult) != 0 {
-		t.Errorf("Incorrect modular inverse.\nexpected: %s\nreceived: %s",
-			modInverseResult.Text(10), x.Text(10))
+		t.Errorf("Incorrect modular inverse.\nexpected: %d\nreceived: %d",
+			modInverseResult, x)
 	}
 }
 
@@ -642,9 +634,9 @@ func TestInt_IsCoprime(t *testing.T) {
 	for i, tt := range tests {
 		received := tt.a.IsCoprime(tt.b)
 		if received != tt.expected {
-			t.Errorf("IsCoprime incorrect checked if %s is a coprime of "+
-				"%s (%d).\nexpected: %t\nreceived: %t",
-				tt.b.Text(10), tt.a.Text(10), i, tt.expected, received)
+			t.Errorf("IsCoprime incorrect checked if %d is a coprime of "+
+				"%d (%d).\nexpected: %t\nreceived: %t",
+				tt.b, tt.a, i, tt.expected, received)
 		}
 	}
 }
@@ -665,8 +657,7 @@ func TestInt_FillBytes(t *testing.T) {
 		buf := make([]byte, x.ByteLen())
 		got := NewInt(0).SetBytes(x.FillBytes(buf))
 		if got.BigInt().CmpAbs(x.BigInt()) != 0 {
-			t.Errorf("FillBytes error.\nexpected: %s\nreceived: %s",
-				x.Text(10), got.Text(10))
+			t.Errorf("FillBytes error.\nexpected: %s\nreceived: %s", x, got)
 		}
 	}
 }
@@ -740,9 +731,9 @@ func TestInt_Cmp(t *testing.T) {
 	for i, tt := range tests {
 		result := tt.x.Cmp(tt.y)
 		if result != tt.expected {
-			t.Errorf("Cmp returned unexpected value when comparing %s to %s (%d)."+
-				"\nexpected: %d\nreceived: %d",
-				tt.x.Text(10), tt.y.Text(10), i, tt.expected, result)
+			t.Errorf("Cmp returned unexpected value when comparing %s to %s "+
+				"(%d).\nexpected: %d\nreceived: %d",
+				tt.x, tt.y, i, tt.expected, result)
 		}
 	}
 }
@@ -1005,8 +996,8 @@ func TestGob(t *testing.T) {
 	}
 
 	if inInt.Cmp(outInt) != 0 {
-		t.Errorf("Failed to gob encode/decode.\nexpected: %s\nreceived: %s",
-			inInt.Text(10), outInt.Text(10))
+		t.Errorf("Failed to gob encode/decode.\nexpected: %d\nreceived: %d",
+			inInt, outInt)
 	}
 }
 
@@ -1032,7 +1023,7 @@ func TestInt_MarshalJSON_UnmarshalJSON(t *testing.T) {
 
 	if inInt.Cmp(outInt) != 0 {
 		t.Errorf("Failed to JSON marshal and unmarshal Int."+
-			"\nexpected: %s\nreceived: %s", inInt.Text(10), outInt.Text(10))
+			"\nexpected: %d\nreceived: %d", inInt, outInt)
 	}
 }
 
@@ -1047,6 +1038,6 @@ func TestInt_UnmarshalJSON_InvalidIntError(t *testing.T) {
 
 	if outInt.Cmp(NewInt(5)) != 0 {
 		t.Errorf("Unmarshalled Int changed on error."+
-			"\nexpected: %s\nreceived: %s", NewInt(5).Text(10), outInt.Text(10))
+			"\nexpected: %d\nreceived: %d", NewInt(5), outInt)
 	}
 }
