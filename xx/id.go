@@ -9,7 +9,7 @@ package xx
 
 import (
 	"github.com/pkg/errors"
-	"gitlab.com/xx_network/crypto/signature/rsa"
+	"gitlab.com/elixxir/crypto/rsa"
 	"gitlab.com/xx_network/primitives/id"
 	"golang.org/x/crypto/blake2b"
 )
@@ -19,15 +19,16 @@ import (
 // ID's are used by cmix to identify users, gateways, servers, and other network
 // services
 // You should use this function with csprng:
-//   rng := csprng.NewSystemRNG()
-//   privk, err := rsa.GenerateKey(rng, 4096)
-//   pubk := privk.PublicKey
-//   // check err
-//   salt, err := csprng.Generate(32, rng)
-//   // check err
-//   id, err := xx.NewID(pubk, salt, IDTypeGateway)
-//   // check err
-func NewID(key *rsa.PublicKey, salt []byte, idType id.Type) (*id.ID, error) {
+//
+//	rng := csprng.NewSystemRNG()
+//	privk, err := rsa.GenerateKey(rng, 4096)
+//	pubk := privk.PublicKey
+//	// check err
+//	salt, err := csprng.Generate(32, rng)
+//	// check err
+//	id, err := xx.NewID(pubk, salt, IDTypeGateway)
+//	// check err
+func NewID(key rsa.PublicKey, salt []byte, idType id.Type) (*id.ID, error) {
 	// Salt's must be 256bit
 	if len(salt) != 32 {
 		return nil, errors.New("salt must be 32 bytes")
@@ -43,7 +44,7 @@ func NewID(key *rsa.PublicKey, salt []byte, idType id.Type) (*id.ID, error) {
 		return nil, errors.Wrap(err, "Could not instantiate CMixHash")
 	}
 
-	pkBytes := PublicKeyBytes(&(*key).PublicKey)
+	pkBytes := PublicKeyBytes(key.GetGoRSA())
 
 	h.Write(pkBytes)
 	h.Write(salt)

@@ -8,8 +8,8 @@
 package xx
 
 import (
+	"gitlab.com/elixxir/crypto/rsa"
 	"gitlab.com/xx_network/crypto/csprng"
-	"gitlab.com/xx_network/crypto/signature/rsa"
 	"gitlab.com/xx_network/primitives/id"
 	"reflect"
 	"strconv"
@@ -34,7 +34,8 @@ func TestNewID(t *testing.T) {
 	// use insecure seeded rng to reproduce key
 
 	rng := &CountingReader{count: 1}
-	pk, err := rsa.GenerateKey(rng, 1024)
+	pk, err := rsa.GetScheme().Generate(rng, 1024)
+
 	if err != nil {
 		t.Errorf(err.Error())
 	}
@@ -42,7 +43,7 @@ func TestNewID(t *testing.T) {
 	for i := 0; i < 32; i++ {
 		salt[i] = byte(i)
 	}
-	nid, err := NewID(pk.GetPublic(), salt, 1)
+	nid, err := NewID(pk.Public(), salt, 1)
 	if err != nil {
 		t.Errorf(err.Error())
 	}
@@ -68,20 +69,20 @@ func TestNewID(t *testing.T) {
 	}
 
 	// Send bad type
-	_, err = NewID(pk.GetPublic(), salt, 7)
+	_, err = NewID(pk.Public(), salt, 7)
 	if err == nil {
 		t.Errorf("Should have failed with bad type!")
 	}
 
 	// Send back salt
-	_, err = NewID(pk.GetPublic(), salt[0:4], 7)
+	_, err = NewID(pk.Public(), salt[0:4], 7)
 	if err == nil {
 		t.Errorf("Should have failed with bad salt!")
 	}
 
 	// Check ideal usage with our RNG
 	rng2 := csprng.NewSystemRNG()
-	pk, err = rsa.GenerateKey(rng2, 4096)
+	pk, err = rsa.GetScheme().Generate(rng2, 4096)
 	if err != nil {
 		t.Errorf(err.Error())
 	}
@@ -89,7 +90,7 @@ func TestNewID(t *testing.T) {
 	if err != nil {
 		t.Errorf(err.Error())
 	}
-	nid, err = NewID(pk.GetPublic(), salt, id.Gateway)
+	nid, err = NewID(pk.Public(), salt, id.Gateway)
 	if err != nil {
 		t.Errorf(err.Error())
 	}
