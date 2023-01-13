@@ -5,10 +5,6 @@
 // LICENSE file.                                                              //
 ////////////////////////////////////////////////////////////////////////////////
 
-// This file is compiled for all architectures except WebAssembly.
-//go:build !js || !wasm
-// +build !js !wasm
-
 package rsa
 
 // DefaultRSABitLen is the RSA key length used in the system, in bits.
