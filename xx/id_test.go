@@ -8,8 +8,8 @@
 package xx
 
 import (
-	"gitlab.com/elixxir/crypto/rsa"
 	"gitlab.com/xx_network/crypto/csprng"
+	"gitlab.com/xx_network/crypto/rsa"
 	"gitlab.com/xx_network/primitives/id"
 	"reflect"
 	"strconv"

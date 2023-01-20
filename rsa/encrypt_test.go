@@ -11,7 +11,7 @@ import (
 	"bytes"
 	"crypto/rand"
 	"encoding/base64"
-	"gitlab.com/elixxir/crypto/hash"
+	"gitlab.com/xx_network/crypto/hash"
 	rand2 "math/rand"
 	"runtime"
 	"strconv"
