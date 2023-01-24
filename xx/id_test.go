@@ -10,6 +10,7 @@ package xx
 import (
 	"gitlab.com/elixxir/crypto/rsa"
 	"gitlab.com/xx_network/crypto/csprng"
+	oldRsa "gitlab.com/xx_network/crypto/signature/rsa"
 	"gitlab.com/xx_network/primitives/id"
 	"reflect"
 	"strconv"
@@ -30,6 +31,29 @@ func (c *CountingReader) Read(b []byte) (int, error) {
 	return len(b), nil
 }
 
+// Tests that the oldRsa package adheres to the GoRsaRetriever interface.
+func TestGoRsaRetriever_OldRsa(t *testing.T) {
+	rng := &CountingReader{}
+	pk, err := oldRsa.GenerateKey(rng, 1024)
+	if err != nil {
+		t.Fatalf("Failed to generate key: %+v", err)
+	}
+
+	var _ GoRsaRetriever = pk.GetPublic()
+}
+
+// Tests that the newRsa package adheres to the GoRsaRetriever interface.
+func TestGoRsaRetriever_NewRsa(t *testing.T) {
+	rng := &CountingReader{count: 1}
+	pk, err := rsa.GetScheme().Generate(rng, 1024)
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	var _ GoRsaRetriever = pk.Public()
+}
+
+// Tests NewID.
 func TestNewID(t *testing.T) {
 	// use insecure seeded rng to reproduce key
 

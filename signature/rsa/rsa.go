@@ -170,6 +170,11 @@ func (p *PublicKey) GetE() int {
 	return p.E
 }
 
+// GetGoRSA returns the public key in the standard Go crypto/rsa format.
+func (p *PublicKey) GetGoRSA() *gorsa.PublicKey {
+	return &p.PublicKey
+}
+
 // GenerateKey generates an RSA keypair of the given bit size using the
 // random source random (for example, crypto/rand.Reader).
 func GenerateKey(random io.Reader, bits int) (*PrivateKey, error) {
