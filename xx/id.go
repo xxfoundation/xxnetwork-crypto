@@ -9,7 +9,7 @@ package xx
 
 import (
 	"github.com/pkg/errors"
-	"gitlab.com/xx_network/crypto/rsa"
+	"gitlab.com/elixxir/crypto/rsa"
 	"gitlab.com/xx_network/primitives/id"
 	"golang.org/x/crypto/blake2b"
 )
