@@ -31,7 +31,7 @@ func (c *CountingReader) Read(b []byte) (int, error) {
 	return len(b), nil
 }
 
-// Tests that the oldRsa package adheres to the GoRsaRetriever interface.
+// Tests that the oldRsa package adheres to the GoRsa interface.
 func TestGoRsaRetriever_OldRsa(t *testing.T) {
 	rng := &CountingReader{}
 	pk, err := oldRsa.GenerateKey(rng, 1024)
@@ -39,10 +39,10 @@ func TestGoRsaRetriever_OldRsa(t *testing.T) {
 		t.Fatalf("Failed to generate key: %+v", err)
 	}
 
-	var _ GoRsaRetriever = pk.GetPublic()
+	var _ GoRsa = pk.GetPublic()
 }
 
-// Tests that the newRsa package adheres to the GoRsaRetriever interface.
+// Tests that the newRsa package adheres to the GoRsa interface.
 func TestGoRsaRetriever_NewRsa(t *testing.T) {
 	rng := &CountingReader{count: 1}
 	pk, err := rsa.GetScheme().Generate(rng, 1024)
@@ -50,7 +50,7 @@ func TestGoRsaRetriever_NewRsa(t *testing.T) {
 		t.Errorf(err.Error())
 	}
 
-	var _ GoRsaRetriever = pk.Public()
+	var _ GoRsa = pk.Public()
 }
 
 // Tests NewID.

@@ -14,10 +14,10 @@ import (
 	"golang.org/x/crypto/blake2b"
 )
 
-// GoRsaRetriever is an interface for an RSA implementation that may be used by
+// GoRsa is an interface for an RSA implementation that may be used by
 // NewID. The object adhering to this interface must have a method providing a
 // rsa.PublicKey.
-type GoRsaRetriever interface {
+type GoRsa interface {
 	// GetGoRSA returns the public key in the standard Go crypto/rsa format.
 	GetGoRSA() *rsa.PublicKey
 }
@@ -25,7 +25,7 @@ type GoRsaRetriever interface {
 // NewID creates a new ID by hashing the public key with a random 256-bit salt
 // and appending the ID type. IDs are used by cMix to identify users, gateways,
 // servers, and other network services (refer to id.Type)
-func NewID(key GoRsaRetriever, salt []byte, idType id.Type) (*id.ID, error) {
+func NewID(key GoRsa, salt []byte, idType id.Type) (*id.ID, error) {
 	// Salt's must be 256bit
 	if len(salt) != 32 {
 		return nil, errors.New("salt must be 32 bytes")
