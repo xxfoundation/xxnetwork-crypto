@@ -42,7 +42,7 @@ func NewNonce(ttl uint) (Nonce, error) {
 	randGen := csprng.SystemRNG{}
 	size, err := randGen.Read(newValue)
 	if err != nil || size != len(newValue) {
-		jww.FATAL.Panicf("Could not generate nonce: %+v")
+		jww.FATAL.Panicf("Could not generate nonce: %+v", err)
 	}
 	newNonce := Nonce{GenTime: time.Now(),
 		TTL: time.Duration(ttl) * time.Second}

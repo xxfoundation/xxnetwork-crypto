@@ -33,13 +33,13 @@ func TestGenerateSecureRandom(t *testing.T) {
 	y, _ := GenerateSecureRandom(size)
 	z, _ := GenerateSecureRandom(size)
 
-	if !bytes.Equal(x, y) {
+	if bytes.Equal(x, y) {
 		t.Errorf("Two randoms are the same.\nx: %X\ny: %X", x, y)
 	}
-	if !bytes.Equal(y, z) {
+	if bytes.Equal(y, z) {
 		t.Errorf("Two randoms are the same.\ny: %X\nz: %X", y, z)
 	}
-	if !bytes.Equal(x, z) {
+	if bytes.Equal(x, z) {
 		t.Errorf("Two randoms are the same.\nx: %X\nz: %X", x, z)
 	}
 }
