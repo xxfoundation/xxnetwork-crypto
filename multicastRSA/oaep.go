@@ -3,13 +3,13 @@
 //                                                                            //
 // Use of this source code is governed by a license that can be found         //
 // in the LICENSE file.                                                       //
-// NOTE: This code is largely copied from golang's crypto/rsa pcakge, so it   //
+// NOTE: This code is largely copied from golang's crypto/rsa package, so it  //
 //       is 3-clause and not 2-clause BSD. Unchanged code (excepting type     //
 //       modifications) is noted at the bottom of this file.                  //
 ////////////////////////////////////////////////////////////////////////////////
 
 // oaep.go implemented "multicast" RSA encryption and decryption using
-// RSA-OAEP (ptimal Asymmetric Encryption Padding) style encrypt and decrypt
+// RSA-OAEP (optimal Asymmetric Encryption Padding) style encrypt and decrypt
 // functions. What we mean by multicast in this context is one writer,
 // encrypting with the private RSA key, and many readers using the public key
 // to decrypt these broadcasts.
@@ -20,8 +20,8 @@
 
 // NOTE: WARNING: It is generally not recommended to copy code, especially not
 //                crypto code. Do not do this if you can avoid it.
-//                We made an exception here because converting pubkeys to
-//                privkeys is non-obvious, and the internal checkPub()
+//                We made an exception here because converting public keys to
+//                private keys is non-obvious, and the internal checkPub
 //                call to check the public is meant to keep e small, which
 //                we wished to replicate.
 
@@ -49,9 +49,8 @@ type PublicKey interface {
 	Size() int
 }
 
+// PrivateKey implements the same interface as public, but with more functions.
 type PrivateKey interface {
-	// Private implements the same interface as public, but with
-	// more functions.
 	PublicKey
 
 	// GetPrimes returns the prime factors of N, which has >= 2 elements
@@ -73,7 +72,7 @@ type PrivateKey interface {
 //
 // OAEP is parameterised by a hash function that is used as a random oracle.
 // Encryption and decryption of a given message must use the same hash function
-// and sha256.New() is a reasonable choice.
+// and sha256.New is a reasonable choice.
 //
 // The random parameter is used as a source of entropy to ensure that
 // encrypting the same message twice doesn't result in the same ciphertext.
@@ -130,7 +129,7 @@ func EncryptOAEP(hash hash.Hash, random io.Reader, priv PrivateKey,
 //
 // OAEP is parameterised by a hash function that is used as a random oracle.
 // Encryption and decryption of a given message must use the same hash function
-// and sha256.New() is a reasonable choice.
+// and sha256.New is a reasonable choice.
 //
 // The label parameter must match the value given when encrypting. See
 // EncryptOAEP for details.
@@ -297,9 +296,9 @@ func mgf1XOR(out []byte, hash hash.Hash, seed []byte) {
 	}
 }
 
-// GetMaxPayloadSize returns the maximum size of a multicastRSA broadcast message
-// The message must be no longer than the length of the public modulus minus
-// twice the hash length, minus a further 2.
+// GetMaxPayloadSize returns the maximum size of a multicastRSA broadcast
+// message. The message must be no longer than the length of the public modulus
+// minus twice the hash length, minus a further 2.
 func GetMaxPayloadSize(hash hash.Hash, key PublicKey) int {
 	hash.Reset()
 	k := key.Size()

@@ -5,7 +5,7 @@
 // LICENSE file.                                                              //
 ////////////////////////////////////////////////////////////////////////////////
 
-// Package rsa pem.go imports and exports to pem files.
+// Package rsa pem.go imports and exports to PEM files.
 package rsa
 
 import (
@@ -100,8 +100,8 @@ func TestPemSmokePKCS1(t *testing.T) {
 		t.Errorf("%v", err)
 	}
 	pkBytesOut := CreatePrivateKeyPem(pk)
-	if bytes.Compare(pkBytes, pkBytesOut) != 0 {
-		t.Errorf("Private Key Mismatch:\n\t%v\n\t%v",
+	if !bytes.Equal(pkBytes, pkBytesOut) {
+		t.Errorf("Private Key Mismatch.\nexpected: %q\nreceived: %q",
 			pkBytes, pkBytesOut)
 	}
 
@@ -111,8 +111,8 @@ func TestPemSmokePKCS1(t *testing.T) {
 	if err != nil {
 		t.Errorf("%v", err)
 	}
-	if bytes.Compare(pkBytes, pkBytesOut) != 0 {
-		t.Errorf("Private Key Mismatch:\n\t%v\n\t%v",
+	if !bytes.Equal(pkBytes, pkBytesOut) {
+		t.Errorf("Private Key Mismatch.\nexpected: %q\nreceived: %q",
 			pkPubBytes, pkPubBytesIn)
 	}
 }

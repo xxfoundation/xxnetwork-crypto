@@ -18,9 +18,9 @@ import (
 // as 64 for the purposes of this function.
 func IntToBytes(x int) []byte {
 	byteBuf := new(bytes.Buffer)
-	// NOTE: binary.Write shouldn't ever error on any value of int64
+	// NOTE: binary.Write shouldn't ever error on any value of int64,
 	// so we don't handle returned errors.
-	binary.Write(byteBuf, binary.BigEndian, int64(x))
+	_ = binary.Write(byteBuf, binary.BigEndian, int64(x))
 	return byteBuf.Bytes()
 }
 

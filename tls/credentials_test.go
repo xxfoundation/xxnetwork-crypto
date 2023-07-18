@@ -8,15 +8,19 @@
 package tls
 
 import (
+	"errors"
+	"os"
+	"testing"
+
 	"github.com/mitchellh/go-homedir"
+	"google.golang.org/grpc/credentials"
+
 	"gitlab.com/xx_network/crypto/signature/rsa"
 	"gitlab.com/xx_network/crypto/testkeys"
 	"gitlab.com/xx_network/primitives/utils"
-	"google.golang.org/grpc/credentials"
-	"testing"
 )
 
-//Happy path
+// Happy path.
 func TestGetFullPath(t *testing.T) {
 	h, _ := homedir.Dir()
 	p := "~/test/test"
@@ -26,10 +30,9 @@ func TestGetFullPath(t *testing.T) {
 	}
 }
 
-//Happy path
+// Happy path.
 func TestNewCredentialsFromFile(t *testing.T) {
 	path := testkeys.GetTestCertPath()
-	var tlsCreds credentials.TransportCredentials
 	tlsCreds, err := NewCredentialsFromFile(path, "")
 	if err != nil {
 		t.Errorf("Error setting tls credentials: %+v", err)
@@ -39,25 +42,28 @@ func TestNewCredentialsFromFile(t *testing.T) {
 	}
 }
 
-//Error path: invalid path.
+// Error path: Tests that NewCredentialsFromFile returns os.ErrNotExist for a
+// file that does not exist.
 func TestNewCredentialsFromFileError_BadPath(t *testing.T) {
-	path := testkeys.GetTestCertPath() + "sfdk"
+	path := testkeys.GetTestCertPath() + "abc"
 	_, err := NewCredentialsFromFile(path, "")
-	if err == nil {
-		t.Errorf("Expected to receive error, instead got: %+v", err)
+	if !errors.Is(err, os.ErrNotExist) {
+		t.Errorf("Did not receive expected error for an invalid path."+
+			"\nexpected: %v\nreceived: %+v", os.ErrNotExist, err)
 	}
 }
 
-//Error path: invalid file (not a cert.
+// Error path: Tests that NewCredentialsFromFile returns an error for an invalid
+// cert file
 func TestNewCredentialsFromFileError_BadKey(t *testing.T) {
 	path := testkeys.GetTestKeyPath()
 	_, err := NewCredentialsFromFile(path, "")
 	if err == nil {
-		t.Errorf("Expected to receive error, instead got: %+v", err)
+		t.Errorf("Failed to receive error for invalid cert file.")
 	}
 }
 
-//Happy path
+// Happy path of NewCredentialsFromPEM.
 func TestNewCredentialsFromPEM(t *testing.T) {
 	var tlsCreds credentials.TransportCredentials
 	tlsCreds, err := NewCredentialsFromPEM(Cert, "")
@@ -69,15 +75,16 @@ func TestNewCredentialsFromPEM(t *testing.T) {
 	}
 }
 
-//Error path
-func TestNewCredentialsFromPEMError(t *testing.T) {
+// Error path: Tests that NewCredentialsFromPEM returns an error for an invalid
+// certificate.
+func TestNewCredentialsFromPEM_InvalidCertificateError(t *testing.T) {
 	_, err := NewCredentialsFromPEM("this is a cert yes", "")
 	if err == nil {
-		t.Errorf("Expected to receive error, instead got: %+v", err)
+		t.Errorf("Failed to return error for invalid certificate")
 	}
 }
 
-//Happy path
+// Happy path
 func TestNewPublicKeyFromFile(t *testing.T) {
 	path := testkeys.GetTestCertPath()
 	var p *rsa.PublicKey
@@ -90,22 +97,27 @@ func TestNewPublicKeyFromFile(t *testing.T) {
 	}
 }
 
-//Error path
-func TestNewPublicKeyFromFileError(t *testing.T) {
-	path := testkeys.GetTestCertPath() + "sdfsd"
-	badCertPath := testkeys.GetTestKeyPath()
-	k, err := NewPublicKeyFromFile(path)
-	if err == nil {
-		t.Errorf("Expected to receive error, instead got: %+v", k)
-	}
-
-	k, err = NewPublicKeyFromFile(badCertPath)
-	if err == nil {
-		t.Errorf("Expected to receive error, instead got: %+v", k)
+// Error path: Tests that NewPublicKeyFromFile returns os.ErrNotExist for a cert
+// path that points to a file that does not exist.
+func TestNewPublicKeyFromFile_BadCertPathError(t *testing.T) {
+	path := testkeys.GetTestCertPath() + "abc"
+	_, err := NewPublicKeyFromFile(path)
+	if !errors.Is(err, os.ErrNotExist) {
+		t.Errorf("Did not receive expected error for an invalid cert path."+
+			"\nexpected: %v\nreceived: %+v", os.ErrNotExist, err)
 	}
 }
 
-//Happy path
+// Error path: Tests that NewPublicKeyFromFile returns an error for an invalid
+// certificate
+func TestNewPublicKeyFromFile_BadCertError(t *testing.T) {
+	_, err := NewPublicKeyFromFile(testkeys.GetTestKeyPath())
+	if err == nil {
+		t.Errorf("Failed to get error when passing a key instead of a cert.")
+	}
+}
+
+// Happy path
 func TestNewPublicKeyFromPEM(t *testing.T) {
 	path := testkeys.GetTestCertPath()
 	filePath := getFullPath(path)
@@ -124,20 +136,17 @@ func TestNewPublicKeyFromPEM(t *testing.T) {
 	}
 }
 
-//Error path: Pass in a key rather than a cert
-func TestNewPublicKeyFromPEMError(t *testing.T) {
-
-	path := testkeys.GetTestKeyPath()
-	filePath := getFullPath(path)
-	keyBytes, err := utils.ReadFile(filePath)
+// Error path: Tests that NewPublicKeyFromPEM returns an error for invalid cert
+// bytes
+func TestNewPublicKeyFromPEM_Error(t *testing.T) {
+	path := getFullPath(testkeys.GetTestKeyPath())
+	keyBytes, err := utils.ReadFile(path)
 	if err != nil {
-		t.Errorf("Failed to read public key file at %s: %+v", filePath, err)
+		t.Errorf("Failed to read public key file at %s: %+v", path, err)
 	}
 
-	var p *rsa.PublicKey
-
-	p, err = NewPublicKeyFromPEM(keyBytes)
+	_, err = NewPublicKeyFromPEM(keyBytes)
 	if err == nil {
-		t.Errorf("Expected to receive error, instead got: %+v", p)
+		t.Errorf("Expected error when passing key bytes instead of cert bytes.")
 	}
 }

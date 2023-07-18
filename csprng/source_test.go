@@ -9,10 +9,11 @@ package csprng
 
 import (
 	"crypto/aes"
-	"gitlab.com/xx_network/crypto/large"
 	"os"
 	"testing"
 	"time"
+
+	"gitlab.com/xx_network/crypto/large"
 )
 
 const MODP4096 = "FFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD1" +
@@ -52,7 +53,7 @@ const MODP2048 = "9DB6FB5951B66BB6FE1E140F1D2CE5502374161FD6538DF1" +
 
 const P107 = "6B"
 
-const LARGE_PRIME = "FFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD1" +
+const LargePrime = "FFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD1" +
 	"29024E088A67CC74020BBEA63B139B22514A08798E3404DD" +
 	"EF9519B3CD3A431B302B0A6DF25F14374FE1356D6D51C245" +
 	"E485B576625E7EC6F44C42E9A637ED6B0BFF5CB6F406B7ED" +
@@ -64,7 +65,7 @@ const LARGE_PRIME = "FFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD1" +
 	"DE2BCBF6955817183995497CEA956AE515D2261898FA0510" +
 	"15728E5A8AACAA68FFFFFFFFFFFFFFFF"
 
-const NONBYTEALIGNED_PRIME = "E2EE983D031DC1DB6F1A7A67DF0E9A8E5561DB8E8D49413394C049B" +
+const NonbytealignedPrime = "E2EE983D031DC1DB6F1A7A67DF0E9A8E5561DB8E8D49413394C049B" +
 	"7A8ACCEDC298708F121951D9CF920EC5D146727AA4AE535B0922C688B55B3DD2AE" +
 	"DF6C01C94764DAB937935AA83BE36E67760713AB44A6337C20E7861575E745D31F" +
 	"8B9E9AD8412118C62A3E2E29DF46B0864D0C951C394A5CBBDC6ADC718DD2A3E041" +
@@ -85,8 +86,8 @@ var largePrime []byte
 var nonByteAlignedPrime []byte
 
 func TestMain(m *testing.M) {
-	nonByteAlignedPrime = large.NewIntFromString(NONBYTEALIGNED_PRIME, 16).Bytes()
-	largePrime = large.NewIntFromString(LARGE_PRIME, 16).Bytes()
+	nonByteAlignedPrime = large.NewIntFromString(NonbytealignedPrime, 16).Bytes()
+	largePrime = large.NewIntFromString(LargePrime, 16).Bytes()
 	p107 = large.NewIntFromString(P107, 16).Bytes()
 	modp2048 = large.NewIntFromString(MODP2048, 16).Bytes()
 	modp4096 = large.NewIntFromString(MODP4096, 16).Bytes()
@@ -95,9 +96,9 @@ func TestMain(m *testing.M) {
 
 // TestInGroup_Empty tests if empty slice is ever in the group
 func TestInGroup_Empty(t *testing.T) {
-	zero := []byte{}
+	var zero []byte
 
-	//Note these test different code paths because of the slice len
+	// Note these test different code paths because of the slice len
 	if InGroup(zero, p107) {
 		t.Errorf("Empty slice is never in the group! Not even p107!")
 	}
@@ -129,7 +130,7 @@ func TestInGroup_0(t *testing.T) {
 
 // TestInGroup_P tests if the prime is ever in the group.
 func TestInGroup_P(t *testing.T) {
-	//Note these test different code paths because of the slice len
+	// Note these test different code paths because of the slice len
 	if InGroup(p107, p107) {
 		t.Errorf("p107 is never in the group for p107!")
 	}
@@ -260,7 +261,7 @@ func TestGenerateInGroup_LargeSize(t *testing.T) {
 	}
 }
 
-//Happy path with a large, byte aligned path
+// Happy path with a large, byte aligned path.
 func TestGenerate(t *testing.T) {
 	rng := NewSystemRNG()
 
@@ -272,13 +273,14 @@ func TestGenerate(t *testing.T) {
 		t.Errorf("b not in largePrime: %v", b)
 	}
 	if len(b) != len(largePrime) {
-		t.Errorf("Failed to generate a value of same length of prime! "+
-			"Expected %v bytes, generated %v bytes", len(largePrime), len(b))
+		t.Errorf("Failed to generate a value of same length of prime."+
+			"\nexpected:  %d bytes\ngenerated: %d bytes",
+			len(largePrime), len(b))
 	}
 
 }
 
-//Happy path with a non byte aligned prime
+// Happy path with a non byte aligned prime.
 func TestGenerate_Padding(t *testing.T) {
 	rng := NewSystemRNG()
 
@@ -290,8 +292,9 @@ func TestGenerate_Padding(t *testing.T) {
 		t.Errorf("b not in largePrime: %v", b)
 	}
 	if len(b) != len(nonByteAlignedPrime) {
-		t.Errorf("Failed to generate a value of same length of prime! "+
-			"Expected %v bytes, generated %v bytes", len(nonByteAlignedPrime), len(b))
+		t.Errorf("Failed to generate a value of same length of prime."+
+			"\nexpected:  %d bytes\ngenerated: %d bytes",
+			len(nonByteAlignedPrime), len(b))
 	}
 }
 
@@ -330,8 +333,9 @@ func TestGenerate_ZeroStart(t *testing.T) {
 		t.Errorf("b not in largePrime: %v", b)
 	}
 	if len(b) != len(largePrime) {
-		t.Errorf("Failed to generate a value of same length of prime! "+
-			"Expected %v bytes, generated %v bytes", len(largePrime), len(b))
+		t.Errorf("Failed to generate a value of same length of prime."+
+			"\nexpected:  %d bytes\ngenerated: %d bytes",
+			len(largePrime), len(b))
 	}
 	for i := 0; i < aes.BlockSize; i++ {
 		if b[i] != 0 {

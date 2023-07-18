@@ -10,12 +10,12 @@ package chacha
 import (
 	"bytes"
 	"errors"
-	"fmt"
-	"gitlab.com/xx_network/crypto/csprng"
 	"io"
 	"math/rand"
 	"strings"
 	"testing"
+
+	"gitlab.com/xx_network/crypto/csprng"
 )
 
 var expectedSig = []byte{223, 215, 155, 77, 118, 66, 155, 97, 122, 12, 159,
@@ -43,9 +43,8 @@ func TestEncrypt_Consistency(t *testing.T) {
 	}
 
 	if !bytes.Equal(ciphertext, expectedSig) {
-		t.Fatalf("Unexpected ciphertext received. "+
-			"\n\tExpected: %v"+
-			"\n\tReceived: %v", expectedSig, ciphertext)
+		t.Fatalf("Unexpected ciphertext received.\nexpected: %v\nreceived: %v",
+			expectedSig, ciphertext)
 	}
 }
 
@@ -61,27 +60,30 @@ func TestEncrypt_NilKey(t *testing.T) {
 	}
 }
 
-// Error case: force a nonce generation error.
-func TestEncrypt_BadRng(t *testing.T) {
-	badRand := NewBadPrng(42)
+// Error path: Tests that Encrypt returns the expected error when the RNG
+// returns an error.
+func TestEncrypt_BadRngError(t *testing.T) {
+	badRand := NewBadPrng()
 	notRand := NewPrng(42)
 
 	key := make([]byte, 32)
-	_, err := notRand.Read(key)
-	if err != nil {
-		t.Fatalf("Could not generate mock key: %v", err)
+	if _, err := notRand.Read(key); err != nil {
+		t.Fatalf("Could not generate mock key: %+v", err)
 	}
 
 	data := []byte("Secret data do not read")
+	expectedErr := "Failed to generate nonce"
+
 	// Encrypt the secret
-	_, err = Encrypt(key, data, &badRand)
-	if err == nil || !strings.Contains(err.Error(), "Failed to generate nonce") {
-		t.Fatalf("Encrypt should have errored with due to failure to generate a nonce")
+	_, err := Encrypt(key, data, &badRand)
+	if err == nil || !strings.Contains(err.Error(), expectedErr) {
+		t.Fatalf("Encrypt should have errored with a bad RNG."+
+			"\nexpected: %s\nreceived: %+v", expectedErr, err)
 	}
 }
 
-// Tests that encrypt and decrypt are inverse operations, ie. ensures
-// encrypted data passed into decrypt returns the original plaintext.
+// Tests that encrypt and decrypt are inverse operations (i.e., ensures
+// encrypted data passed into decrypt returns the original plaintext).
 func TestEncryptDecryptMnemonic(t *testing.T) {
 	notRand := NewPrng(42)
 
@@ -107,7 +109,7 @@ func TestEncryptDecryptMnemonic(t *testing.T) {
 	// Test if secret matches decrypted data
 	if !bytes.Equal(received, data) {
 		t.Fatalf("Decrypted data does not match original plaintext."+
-			"\n\tExpected: %v\n\tReceived: %v", data, received)
+			"\nexpected: %q\nreceived: %q", data, received)
 	}
 }
 
@@ -121,9 +123,8 @@ func (s *Prng) SetSeed([]byte) error       { return nil }
 // BadPrng is a PRNG that satisfies the csprng.Source interface.
 type BadPrng struct{}
 
-func NewBadPrng(seed int64) BadPrng { return BadPrng{} }
-func (s *BadPrng) Read(b []byte) (int, error) {
-	fmt.Printf("doo doo\n")
+func NewBadPrng() BadPrng { return BadPrng{} }
+func (s *BadPrng) Read([]byte) (int, error) {
 	return 0, errors.New("error path")
 }
 func (s *BadPrng) SetSeed([]byte) error { return nil }

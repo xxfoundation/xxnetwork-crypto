@@ -18,11 +18,14 @@ func getDirForFile() string {
 	return filepath.Dir(currentFile)
 }
 
-// These functions are used to cover TLS connection code in tests
+// GetTestCertPath returns a file path to a cert that is used to cover TLS
+// connection code in tests.
 func GetTestCertPath() string {
 	return filepath.Join(getDirForFile(), "cmix.rip.crt")
 }
 
+// GetTestKeyPath returns a file path to a key that is used to cover TLS
+// connection code in tests.
 func GetTestKeyPath() string {
 	return filepath.Join(getDirForFile(), "cmix.rip.key")
 }

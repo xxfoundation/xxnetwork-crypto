@@ -7,54 +7,62 @@
 
 package hasher
 
-import "testing"
+import (
+	"crypto/sha256"
+	"hash"
+	"reflect"
+	"testing"
 
-func testNew(typ HashType, t *testing.T) {
-	h := typ.New()
+	"github.com/zeebo/blake3"
+	"golang.org/x/crypto/blake2b"
+	"golang.org/x/crypto/sha3"
+)
 
-	if h == nil {
-		t.Errorf("HashType.New() returned nil hash function for a valid type!")
-	}
-}
-
+// Consistency test of HashType.New.
 func TestHashType_New(t *testing.T) {
-	testNew(SHA2_224, t)
-	testNew(SHA2_256, t)
-	testNew(SHA3_224, t)
-	testNew(SHA3_256, t)
-	testNew(BLAKE2, t)
-	testNew(BLAKE3, t)
+	newBlake2 := func() hash.Hash {
+		b, _ := blake2b.New256(nil)
+		return b
+	}
 
-	// Test non existing type
-	typ := HashType(20)
-	h := typ.New()
+	hashes := map[HashType]hash.Hash{
+		SHA2_224: sha256.New(),
+		SHA2_256: sha256.New(),
+		SHA3_224: sha3.New224(),
+		SHA3_256: sha3.New256(),
+		BLAKE2:   newBlake2(),
+		BLAKE3:   blake3.New(),
+		99:       nil,
+	}
 
-	if h != nil {
-		t.Errorf("HashType.New() should have returned nil hash function for unknown type!")
+	for ht, expected := range hashes {
+		h := ht.New()
+
+		if !reflect.DeepEqual(expected, h) {
+			t.Errorf("Unexpected hash for type %s.\n"+
+				"expected: %+v\nreceived: %+v", ht, expected, h)
+		}
 	}
 }
 
-func testString(typ HashType, t *testing.T) {
-	str := typ.String()
-
-	if str == "UNKNOWN HASH FUNCTION" {
-		t.Errorf("HashType.String() returned unexpected string for a valid type!")
-	}
-}
-
+// Consistency test of HashType.String.
 func TestHashType_String(t *testing.T) {
-	testString(SHA2_224, t)
-	testString(SHA2_256, t)
-	testString(SHA3_224, t)
-	testString(SHA3_256, t)
-	testString(BLAKE2, t)
-	testString(BLAKE3, t)
+	hashTypes := map[HashType]string{
+		SHA2_224: "SHA2_224",
+		SHA2_256: "SHA2_256",
+		SHA3_224: "SHA3_224",
+		SHA3_256: "SHA3_256",
+		BLAKE2:   "BLAKE2",
+		BLAKE3:   "BLAKE3",
+		99:       "UNKNOWN HASH FUNCTION",
+	}
 
-	// Test non existing type
-	typ := HashType(20)
-	str := typ.String()
+	for ht, expected := range hashTypes {
+		str := ht.String()
 
-	if str != "UNKNOWN HASH FUNCTION" {
-		t.Errorf("HashType.String() should have returned unknown hash function string for an unknown type!")
+		if str != expected {
+			t.Errorf("Unexpected string for type %d.\n"+
+				"expected: %s\nreceived: %s", ht, expected, str)
+		}
 	}
 }

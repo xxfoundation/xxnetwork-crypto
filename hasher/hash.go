@@ -9,10 +9,11 @@ package hasher
 
 import (
 	"crypto/sha256"
+	"hash"
+
 	"github.com/zeebo/blake3"
 	"golang.org/x/crypto/blake2b"
 	"golang.org/x/crypto/sha3"
-	"hash"
 )
 
 type HashType uint8

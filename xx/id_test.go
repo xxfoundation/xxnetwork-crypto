@@ -8,14 +8,15 @@
 package xx
 
 import (
-	"gitlab.com/elixxir/crypto/rsa"
-	"gitlab.com/xx_network/crypto/csprng"
-	oldRsa "gitlab.com/xx_network/crypto/signature/rsa"
-	"gitlab.com/xx_network/primitives/id"
 	"reflect"
 	"strconv"
 	"strings"
 	"testing"
+
+	"gitlab.com/elixxir/crypto/rsa"
+	"gitlab.com/xx_network/crypto/csprng"
+	oldRsa "gitlab.com/xx_network/crypto/signature/rsa"
+	"gitlab.com/xx_network/primitives/id"
 )
 
 type CountingReader struct {
@@ -47,7 +48,7 @@ func TestGoRsaRetriever_NewRsa(t *testing.T) {
 	rng := &CountingReader{count: 1}
 	pk, err := rsa.GetScheme().Generate(rng, 1024)
 	if err != nil {
-		t.Errorf(err.Error())
+		t.Fatal(err)
 	}
 
 	var _ GoRsa = pk.Public()
@@ -59,9 +60,8 @@ func TestNewID(t *testing.T) {
 
 	rng := &CountingReader{count: 1}
 	pk, err := rsa.GetScheme().Generate(rng, 1024)
-
 	if err != nil {
-		t.Errorf(err.Error())
+		t.Fatal(err)
 	}
 	salt := make([]byte, 32)
 	for i := 0; i < 32; i++ {
@@ -69,7 +69,7 @@ func TestNewID(t *testing.T) {
 	}
 	nid, err := NewID(pk.Public(), salt, 1)
 	if err != nil {
-		t.Errorf(err.Error())
+		t.Error(err)
 	}
 	if len(nid) != id.ArrIDLen {
 		t.Errorf("wrong ID length: %d", len(nid))
@@ -78,7 +78,9 @@ func TestNewID(t *testing.T) {
 		t.Errorf("wrong type: %d", nid[len(nid)-1])
 	}
 
-	expectedID1 := id.NewIdFromBytes([]byte{219, 230, 150, 81, 207, 49, 51, 222, 66, 199, 131, 254, 182, 254, 241, 109, 209, 183, 134, 83, 35, 142, 235, 195, 156, 173, 194, 128, 46, 10, 2, 51, 1}, t)
+	expectedID1 := id.NewIdFromBytes([]byte{219, 230, 150, 81, 207, 49, 51, 222,
+		66, 199, 131, 254, 182, 254, 241, 109, 209, 183, 134, 83, 35, 142, 235,
+		195, 156, 173, 194, 128, 46, 10, 2, 51, 1}, t)
 
 	if !reflect.DeepEqual(expectedID1, nid) {
 		strs := make([]string, 0)
@@ -88,8 +90,8 @@ func TestNewID(t *testing.T) {
 
 		t.Logf("%s", strings.Join(strs, ", "))
 
-		t.Errorf("Received ID did not match expected: "+
-			"Expected: %s, Received: %s", expectedID1, nid)
+		t.Errorf("Received ID did not match expected."+
+			"\nexpected: %s\nreceived: %s", expectedID1, nid)
 	}
 
 	// Send bad type
@@ -108,14 +110,14 @@ func TestNewID(t *testing.T) {
 	rng2 := csprng.NewSystemRNG()
 	pk, err = rsa.GetScheme().Generate(rng2, 4096)
 	if err != nil {
-		t.Errorf(err.Error())
+		t.Error(err)
 	}
 	salt, err = csprng.Generate(32, rng)
 	if err != nil {
-		t.Errorf(err.Error())
+		t.Error(err)
 	}
 	nid, err = NewID(pk.Public(), salt, id.Gateway)
 	if err != nil {
-		t.Errorf(err.Error())
+		t.Error(err)
 	}
 }

@@ -40,7 +40,7 @@ func TestMnemonic(t *testing.T) {
 	if err != nil {
 		t.Errorf("%+v", err)
 	}
-	if bytes.Compare(originalEntropy, entropy) != 0 {
+	if !bytes.Equal(originalEntropy, entropy) {
 		t.Errorf("Unable to read entropy that was put in")
 	}
 }

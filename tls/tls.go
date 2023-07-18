@@ -15,13 +15,14 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"errors"
+
 	"gitlab.com/xx_network/crypto/signature/rsa"
 )
 
-// LoadCertificate takes a pem encoded certificate (ie the contents of a crt file),
-// parses it and outputs an x509 certificate object
+// LoadCertificate takes a PEM encoded certificate (i.e., the contents of a CRT
+// file), parses it and outputs a x509 certificate object.
 func LoadCertificate(certContents string) (*x509.Certificate, error) {
-	//Decode the pem encoded cert
+	// Decode the PEM encoded cert
 	certDecoded, _ := pem.Decode([]byte(certContents))
 	if certDecoded == nil {
 		err := errors.New("decoding PEM Failed")
@@ -35,10 +36,10 @@ func LoadCertificate(certContents string) (*x509.Certificate, error) {
 	return cert, nil
 }
 
-// LoadRSAPrivateKey takes a pem encoded private key (ie the contents of a private key file),
-// parses it and outputs an x509 private key object
+// LoadRSAPrivateKey takes a PEM encoded private key (i.e., the contents of a
+// private key file), parses it and outputs a x509 private key object
 func LoadRSAPrivateKey(privContents string) (*gorsa.PrivateKey, error) {
-	//Decode the pem encoded cert
+	// Decode the PEM encoded cert
 	keyDecoded, _ := pem.Decode([]byte(privContents))
 	if keyDecoded == nil {
 		err := errors.New("decoding PEM Failed")
@@ -52,22 +53,25 @@ func LoadRSAPrivateKey(privContents string) (*gorsa.PrivateKey, error) {
 		case *gorsa.PrivateKey:
 			return key, nil
 		case *ecdsa.PrivateKey:
-			return nil, errors.New("found unknown or invalid private key type in PKCS#8 wrapping")
+			return nil, errors.New(
+				"found unknown or invalid private key type in PKCS#8 wrapping")
 		default:
-			return nil, errors.New("found unknown or invalid private key type in PKCS#8 wrapping")
+			return nil, errors.New(
+				"found unknown or invalid private key type in PKCS#8 wrapping")
 		}
 	}
 
 	return nil, errors.New("failed to parse private key")
 }
 
-// ExtractPublicKey pulls the certificate's public key from the certificate object
-// If the public key is not an rsa key, it returns an error
+// ExtractPublicKey pulls the certificate's public key from the certificate
+// object. If the public key is not an RSA key, then it returns an error.
 func ExtractPublicKey(cert *x509.Certificate) (*rsa.PublicKey, error) {
 	switch rsaKey := cert.PublicKey.(type) {
 	case *gorsa.PublicKey:
 		return &rsa.PublicKey{PublicKey: *rsaKey}, nil
 	default:
-		return nil, errors.New("found unknown or invalid public key type in certificate")
+		return nil, errors.New(
+			"found unknown or invalid public key type in certificate")
 	}
 }

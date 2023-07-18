@@ -5,26 +5,29 @@
 // LICENSE file.                                                              //
 ////////////////////////////////////////////////////////////////////////////////
 
-// Package rsa pem.go imports and exports to pem files.
+// Package rsa pem.go imports and exports to PEM files.
 package rsa
 
 import (
 	gorsa "crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
-	"errors"
 	"fmt"
+
+	"github.com/pkg/errors"
 )
 
 // LoadPrivateKeyFromPem decodes and produces an RSA PrivateKey in PKCS#1 PEM
-// format
+// format.
+//
 // Usage:
-//    pem := ioutil.ReadFile("pemfile.pem")
-//    privateKey, err := LoadPrivateKeyFromPem(pem)
+//
+//	pem := os.ReadFile("pemfile.pem")
+//	privateKey, err := LoadPrivateKeyFromPem(pem)
 func LoadPrivateKeyFromPem(pemBytes []byte) (*PrivateKey, error) {
 	block, rest := pem.Decode(pemBytes)
 
-	//handles if structged as a PEM in a PEM
+	// Handles if structured as a PEM in a PEM
 	if block == nil {
 		block, _ = pem.Decode(rest)
 		if block == nil {
@@ -35,7 +38,7 @@ func LoadPrivateKeyFromPem(pemBytes []byte) (*PrivateKey, error) {
 	var key interface{}
 	var err error
 
-	//decodes the pem depending on type
+	// Decodes the PEM depending on type
 	switch block.Type {
 	case "RSA PRIVATE KEY":
 		key, err = x509.ParsePKCS1PrivateKey(block.Bytes)
@@ -77,7 +80,7 @@ func LoadPublicKeyFromPem(pemBytes []byte) (*PublicKey, error) {
 
 // CreatePrivateKeyPem creates a PEM file from a private key
 func CreatePrivateKeyPem(k *PrivateKey) []byte {
-	// Note we have to dig into the wrappers .PrivateKey object here
+	// Note we have to dig into the wrappers PrivateKey object here
 	block := &pem.Block{
 		Type:  "RSA PRIVATE KEY",
 		Bytes: x509.MarshalPKCS1PrivateKey(&k.PrivateKey),
@@ -86,9 +89,9 @@ func CreatePrivateKeyPem(k *PrivateKey) []byte {
 	return pemBytes[:len(pemBytes)-1] // Strip newline
 }
 
-// CreatePrivateKeyPem creates a PEM file from a private key
+// CreatePublicKeyPem creates a PEM file from a public key.
 func CreatePublicKeyPem(k *PublicKey) []byte {
-	// Note we have to dig into the wrappers .PrivateKey object here
+	// Note we have to dig into the wrappers PublicKey object here
 	block := &pem.Block{
 		Type:  "RSA PUBLIC KEY",
 		Bytes: x509.MarshalPKCS1PublicKey(&k.PublicKey),

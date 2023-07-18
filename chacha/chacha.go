@@ -15,7 +15,7 @@ import (
 	"golang.org/x/crypto/chacha20poly1305"
 )
 
-// Encrypt encrypts plaintext data using using chacha20poly1305.
+// Encrypt encrypts plaintext data using chacha20poly1305.
 // This encryption algorithm is initialized by passing in the
 // encryption key, which must be 256 bits.
 func Encrypt(key, data []byte, rng csprng.Source) (ciphertext []byte, error error) {
@@ -36,7 +36,7 @@ func Encrypt(key, data []byte, rng csprng.Source) (ciphertext []byte, error erro
 	return ciphertext, nil
 }
 
-// Decrypt decrypts ciphertext data using using chacha20poly1305.
+// Decrypt decrypts ciphertext data using chacha20poly1305.
 // This encryption algorithm is initialized by passing in the
 // encryption key, which must be 256 bits.
 func Decrypt(key, data []byte) (plaintext []byte, err error) {

@@ -8,35 +8,18 @@
 package shuffle
 
 import (
+	"reflect"
+	"testing"
+
 	"gitlab.com/xx_network/crypto/hasher"
 	"gitlab.com/xx_network/crypto/randomness"
-	"testing"
 )
 
-var (
-	h = hasher.SHA2_224.New()
-	//s = []byte("321f485cffb6027f14b7764e8795d6feea5eeeccdc9c08b9487d7b90")
-)
+var h = hasher.SHA2_224.New()
 
-// Auxiliary function to compare int arrays
-func Equal(l1 []int, l2 []int) bool {
-
-	if len(l1) != len(l2) {
-		return false
-	}
-
-	for i := 0; i < len(l1); i++ {
-		if l1[i] != l2[i] {
-			return false
-		}
-	}
-
-	return true
-}
-
-// Test to check if function produces two identical lists with two different seeds
+// Test to check if function produces two identical lists with two different
+// seeds.
 func TestSeededShuffle_Lists(t *testing.T) {
-
 	listSize := 10
 
 	m1 := []byte("Super Mario")
@@ -49,11 +32,12 @@ func TestSeededShuffle_Lists(t *testing.T) {
 	listB := SeededShuffle(listSize, seed2)
 	listC := SeededShuffle(listSize, seed2)
 
-	if Equal(listA, listB) {
-		t.Errorf("SeededShuffle(): Function output equal lists.")
+	if reflect.DeepEqual(listA, listB) {
+		t.Errorf("Two different lists are equal.\nA: %d\nB: %d", listA, listB)
 	}
 
-	if !Equal(listB, listC) {
-		t.Errorf("SeededShuffle(): Function output different lists and they should be equal.")
+	if !reflect.DeepEqual(listB, listC) {
+		t.Errorf("Two of the same list are not equal.\nB: %d\nC: %d",
+			listB, listC)
 	}
 }

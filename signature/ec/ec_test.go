@@ -11,6 +11,7 @@ import (
 	"bytes"
 	"crypto/rand"
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -50,10 +51,8 @@ func TestEcSmoke(t *testing.T) {
 
 	// Check key matches predetermined data
 	if !bytes.Equal(privKey.privKey[:], expectedPrivKey) {
-		t.Fatalf("EC Smoke test error: "+
-			"Unexpected private key generated."+
-			"\n\tExpected: %v"+
-			"\n\tReceived: %v", expectedPrivKey, privKey)
+		t.Fatalf("Unexpected private key generated."+
+			"\nexpected: %v\nreceived: %v", expectedPrivKey, privKey)
 	}
 
 	// Generate a signature
@@ -61,10 +60,8 @@ func TestEcSmoke(t *testing.T) {
 
 	// Check signature matches predetermined data
 	if !bytes.Equal(expectedSignature, signature) {
-		t.Fatalf("EC Smoke test error: "+
-			"Unexpected signature generated."+
-			"\n\tExpected: %v"+
-			"\n\tReceived: %v", expectedSignature, signature)
+		t.Fatalf("Unexpected signature generated."+
+			"\nexpected: %v\nreceived: %v", expectedSignature, signature)
 
 	}
 
@@ -96,18 +93,14 @@ func TestLoadPrivateKey(t *testing.T) {
 	}
 
 	if !reflect.DeepEqual(received, expected) {
-		t.Fatalf("LoadPrivateKey error: "+
-			"Unexpected key mismatch."+
-			"\n\tExpected: %v"+
-			"\n\tReceived: %v", expected, received)
+		t.Fatalf("Unexpected private key.\nexpected: %s\nreceived: %s",
+			expected, received)
 	}
 
 	encoded := received.MarshalText()
 	if encoded != privKeyEncoded {
-		t.Fatalf("LoadPrivateKey error: "+
-			"Unexpected key mismatch."+
-			"\n\tExpected: %v"+
-			"\n\tReceived: %v", privKeyEncoded, encoded)
+		t.Fatalf("Unexpected encoded private key.\nexpected: %q\nreceived: %q",
+			privKeyEncoded, encoded)
 	}
 
 }
@@ -149,39 +142,39 @@ func TestLoadPublicKey(t *testing.T) {
 	}
 
 	if !reflect.DeepEqual(received, expected) {
-		t.Fatalf("LoadPublicKey error: "+
-			"Unexpected key mismatch."+
-			"\n\tExpected: %v"+
-			"\n\tReceived: %v", &expected, received)
+		t.Fatalf("Unexpected public key.\nexpected: %s\nreceived: %s",
+			expected, received)
 	}
 
 	encoded := received.MarshalText()
 	if encoded != pubKeyEncoded {
-		t.Fatalf("LoadPublicKey error: "+
-			"Unexpected key mismatch."+
-			"\n\tExpected: %v"+
-			"\n\tReceived: %v", pubKeyEncoded, encoded)
+		t.Fatalf("Unexpected marshalled public key."+
+			"\nexpected: %q\nreceived: %q", pubKeyEncoded, encoded)
 	}
 
 }
 
-// Error path
-func TestLoadPublicKeyFromString_Error(t *testing.T) {
+// Error path: Tests that LoadPublicKey returns an error when the key is not
+// base 64 encoded.
+func TestLoadPublicKeyFromString_InvalidBase64Error(t *testing.T) {
 	_, err := LoadPublicKey("invalid")
 	if err == nil {
-		t.Errorf("LoadPublicKey error path failed, " +
-			"should be invalid eddsa key")
-	}
-
-	_, err = LoadPublicKey(privKeyEncoded)
-	if err == nil {
-		t.Errorf("LoadPublicKey error path failed, " +
-			"Expected error path, should be invalid eddsa key")
+		t.Errorf("Expected error for invalid key.")
 	}
 }
 
-// Unit test of both PublicKey and PrivateKey's KeyType() method
-func TestKeyTpe(t *testing.T) {
+// Error path: Tests that LoadPublicKey returns an error when passing in a
+// private key instead of a public key.
+func TestLoadPublicKeyFromString_PrivateKeyError(t *testing.T) {
+	_, err := LoadPublicKey(privKeyEncoded)
+	if err == nil || !strings.Contains(err.Error(), invalidKeySize) {
+		t.Errorf("Unexpected error when trying to load a private key."+
+			"\nexpected: %s\nreceived: %+v", invalidKeySize, err)
+	}
+}
+
+// Unit test of both PublicKey.KeyType and PrivateKey.KeyType.
+func TestKeyTYpe(t *testing.T) {
 	pk, err := NewKeyPair(rand.Reader)
 	if err != nil {
 		t.Fatalf("LoadPublicKey error: "+
@@ -189,42 +182,33 @@ func TestKeyTpe(t *testing.T) {
 	}
 
 	if pk.KeyType() != keyType {
-		t.Errorf("KeyType error: "+
-			"Unexpected value returned from PrivateKey.KeyType()."+
-			"\n\tExpected: %v"+
-			"\n\tReceived: %v", keyType, pk.KeyType())
+		t.Errorf("Unexpected private key type string."+
+			"\nexpected: %s\nreceived: %s", keyType, pk.KeyType())
 	}
 
-	publicKey := pk.GetPublic()
-	if publicKey.KeyType() != keyType {
-		t.Errorf("KeyType error: "+
-			"Unexpected value returned from PublicKey.KeyType()."+
-			"\n\tExpected: %v"+
-			"\n\tReceived: %v", keyType, publicKey.KeyType())
+	publicKeyKeyType := pk.GetPublic().KeyType()
+	if publicKeyKeyType != keyType {
+		t.Errorf("Unexpected public key type string."+
+			"\nexpected: %s\nreceived: %s", keyType, publicKeyKeyType)
 	}
 }
 
-// Unit test of both PublicKey and PrivateKey's Marshal() method
+// Unit test of both PublicKey.Marshal and PrivateKey.Marshal.
 func TestMarshal(t *testing.T) {
 	pk, err := NewKeyPair(rand.Reader)
 	if err != nil {
-		t.Fatalf("LoadPublicKey error: "+
-			"Failed to create a test key: %v", err)
+		t.Fatalf("Failed to create a test key: %+v", err)
 	}
 
 	if !bytes.Equal(pk.Marshal(), pk.privKey[:]) {
-		t.Errorf("Marshal error: "+
-			"Did not return expected byte data."+
-			"\n\tExpected: %v"+
-			"\n\tReceived: %v", pk.privKey[:], pk.Marshal())
+		t.Errorf("Unexpected marshalled public key."+
+			"\nepected: %v\nreceived: %v", pk.privKey, pk.Marshal())
 	}
 
 	publicKey := pk.GetPublic()
 	if !bytes.Equal(publicKey.Marshal(), pk.pubKey.pubKey[:]) {
-		t.Errorf("Marshal error: "+
-			"Unexpected value returned from PublicKey.Marshal()."+
-			"\n\tExpected: %v"+
-			"\n\tReceived: %v", pk.pubKey.pubKey[:], publicKey.Marshal())
+		t.Errorf("Unexpected marshalled public key."+
+			"\nepected: %v\nreceived: %v", pk.pubKey.pubKey, publicKey.Marshal())
 	}
 
 }
@@ -242,9 +226,7 @@ func TestPublicKey_String(t *testing.T) {
 	publicKey := pk.GetPublic()
 
 	if publicKey.String() != expectedPubKey {
-		t.Errorf("String() error: "+
-			"Unexpected value returned from PublicKey.String()"+
-			"\n\tExpected: %v"+
-			"\n\tReceived: %v", pubKeyEncoded, publicKey.String())
+		t.Errorf("Unexpected PublicKey string."+
+			"\nexpected: %s\nreceived: %s", pubKeyEncoded, publicKey.String())
 	}
 }

@@ -8,11 +8,13 @@
 package shuffle
 
 import (
+	"math/big"
+
 	"gitlab.com/xx_network/crypto/hasher"
 	"gitlab.com/xx_network/crypto/randomness"
-	"math/big"
 )
 
+// CreateList creates a list of numbers from zero to the given size.
 func CreateList(size int) []int {
 	list := make([]int, size)
 
@@ -23,7 +25,8 @@ func CreateList(size int) []int {
 	return list
 }
 
-// SeededShuffle performs a deterministic Fisher-Yates Shuffle given a list size and a random seed
+// SeededShuffle performs a deterministic Fisher-Yates Shuffle given a list size
+// and a random seed.
 func SeededShuffle(size int, seed []byte) []int {
 
 	var (
@@ -36,7 +39,6 @@ func SeededShuffle(size int, seed []byte) []int {
 		s  = seed
 	)
 
-	// Create a new list
 	list := CreateList(size)
 
 	for i := size - 1; i > 0; i-- {
@@ -51,5 +53,6 @@ func SeededShuffle(size int, seed []byte) []int {
 		// Hash the seed value so that next iteration of the loop does not return the same value
 		s = randomness.PRF(h, s)
 	}
+
 	return list
 }

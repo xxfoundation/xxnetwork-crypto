@@ -15,16 +15,18 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"errors"
+	"strings"
+
 	"github.com/mitchellh/go-homedir"
 	jww "github.com/spf13/jwalterweatherman"
+	"google.golang.org/grpc/credentials"
+
 	"gitlab.com/xx_network/crypto/signature/rsa"
 	"gitlab.com/xx_network/primitives/utils"
-	"google.golang.org/grpc/credentials"
-	"strings"
 )
 
-// minTlsVersion is the minimum TLS version, in this case
-// TLS protocol version 1.3; When using TLS 1.3 the tls.Config's
+// minTlsVersion is the minimum TLS version.
+// In this case, LS protocol version 1.3. When using TLS 1.3 the tls.Config's
 // Ciphersuites field is ignored as of Go 1.17.
 var minTlsVersion uint16 = tls.VersionTLS13
 
@@ -90,7 +92,7 @@ func NewCredentialsFromFile(filePath string,
 // NewPublicKeyFromFile reads the contents of a file and uses it
 // to create a PublicKey object.
 func NewPublicKeyFromFile(filePath string) (*rsa.PublicKey, error) {
-	//Pull the cert from the file
+	// Pull the cert from the file
 	filePath = getFullPath(filePath)
 	certBytes, err := utils.ReadFile(filePath)
 	if err != nil {
@@ -99,10 +101,10 @@ func NewPublicKeyFromFile(filePath string) (*rsa.PublicKey, error) {
 		return nil, err
 	}
 
-	//Decode the certificate
+	// Decode the certificate
 	block, _ := pem.Decode(certBytes)
 
-	//Create the cert object
+	// Create the cert object
 	var cert *x509.Certificate
 	cert, err = x509.ParseCertificate(block.Bytes)
 	if err != nil {
@@ -110,7 +112,7 @@ func NewPublicKeyFromFile(filePath string) (*rsa.PublicKey, error) {
 		return nil, err
 	}
 
-	//Pull the public key from the cert object
+	// Pull the public key from the cert object
 	rsaPublicKey := cert.PublicKey.(*gorsa.PublicKey)
 	return &rsa.PublicKey{
 		PublicKey: *rsaPublicKey,
@@ -119,10 +121,10 @@ func NewPublicKeyFromFile(filePath string) (*rsa.PublicKey, error) {
 
 // NewPublicKeyFromPEM accepts a PEM certificate block in []byte format
 // and returns a *rsa.PublicKey object.
-func NewPublicKeyFromPEM(certPEMblock []byte) (*rsa.PublicKey, error) {
-	block, _ := pem.Decode(certPEMblock)
+func NewPublicKeyFromPEM(certPemBlock []byte) (*rsa.PublicKey, error) {
+	block, _ := pem.Decode(certPemBlock)
 
-	//Parse the certificate
+	// Parse the certificate
 	var cert *x509.Certificate
 	cert, err := x509.ParseCertificate(block.Bytes)
 	if err != nil {
@@ -130,7 +132,7 @@ func NewPublicKeyFromPEM(certPEMblock []byte) (*rsa.PublicKey, error) {
 		return nil, err
 	}
 
-	//From the cert, get it's public key
+	// From the cert, get it's public key
 	rsaPublicKey := cert.PublicKey.(*gorsa.PublicKey)
 	return &rsa.PublicKey{
 		PublicKey: *rsaPublicKey,

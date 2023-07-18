@@ -3,7 +3,7 @@
 //                                                                            //
 // Use of this source code is governed by a license that can be found         //
 // in the LICENSE file.                                                       //
-// NOTE: This code is largely copied from golang's crypto/rsa pcakge, so it   //
+// NOTE: This code is largely copied from golang's crypto/rsa package, so it  //
 //       is 3-clause and not 2-clause BSD. Unchanged code (excepting type     //
 //       modifications) is noted at the bottom of this file.                  //
 ////////////////////////////////////////////////////////////////////////////////
@@ -22,7 +22,7 @@ import (
 )
 
 func TestEncryptDecryptRSA(t *testing.T) {
-	test_messages := [][]byte{
+	testMessages := [][]byte{
 		[]byte("Hello"),
 		[]byte("World!"),
 		[]byte("How"),
@@ -44,8 +44,8 @@ func TestEncryptDecryptRSA(t *testing.T) {
 	rng := rand.Reader
 
 	// Encrypt, then decrypt and check each message
-	for i := 0; i < len(test_messages); i++ {
-		inM := test_messages[i]
+	for i := 0; i < len(testMessages); i++ {
+		inM := testMessages[i]
 		c, err := EncryptOAEP(h, rng, priv, inM, label)
 		if err != nil {
 			t.Fatalf("'%s': %+v", inM, err)
@@ -56,7 +56,7 @@ func TestEncryptDecryptRSA(t *testing.T) {
 			t.Fatalf("%+v", err)
 		}
 
-		if bytes.Compare(inM, m) != 0 {
+		if !bytes.Equal(inM, m) {
 			t.Errorf("Encrypt/Decrypt Mismatch, in: %v, out: %v",
 				inM, m)
 		}
@@ -64,7 +64,7 @@ func TestEncryptDecryptRSA(t *testing.T) {
 }
 
 func TestEncryptRSATooLong(t *testing.T) {
-	too_long := []byte("averylongmessageaverylongmessageaverylongkgeavery" +
+	tooLong := []byte("averylongmessageaverylongmessageaverylongkgeavery" +
 		"longmessageaverylongmessageaverylongmessageaverylong" +
 		"longmessageaverylongmessageaverylongmessageaverylong" +
 		"longmessageaverylongmessageaverylongmessageaverylong" +
@@ -80,7 +80,7 @@ func TestEncryptRSATooLong(t *testing.T) {
 	label := []byte("testing123")
 	rng := rand.Reader
 
-	inM := too_long
+	inM := tooLong
 	_, err = EncryptOAEP(h, rng, priv, inM, label)
 	if err == nil {
 		t.Fatalf("Message should have been too long to encrypt!")

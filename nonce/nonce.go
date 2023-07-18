@@ -5,22 +5,22 @@
 // LICENSE file.                                                              //
 ////////////////////////////////////////////////////////////////////////////////
 
-// Package nonce contains our implementation of a nonce, including an expiration time,
-// generation time and TTL.
+// Package nonce contains our implementation of a nonce, including an expiration
+// time, generation time and TTL.
 package nonce
 
 import (
+	"time"
+
 	jww "github.com/spf13/jwalterweatherman"
 	"gitlab.com/xx_network/crypto/csprng"
-	"time"
 )
 
 const (
-	// Length of Nonce in bytes
-	// 256 bits
+	// NonceLen is the length of [Nonce] in bytes.
 	NonceLen = 32
 
-	// TTL of registration nonce in seconds
+	// RegistrationTTL is the TTL of registration nonce in seconds.
 	RegistrationTTL = 180
 )
 
@@ -42,7 +42,7 @@ func NewNonce(ttl uint) (Nonce, error) {
 	randGen := csprng.SystemRNG{}
 	size, err := randGen.Read(newValue)
 	if err != nil || size != len(newValue) {
-		jww.FATAL.Panicf("Could not generate nonce: %v", err.Error())
+		jww.FATAL.Panicf("Could not generate nonce: %+v")
 	}
 	newNonce := Nonce{GenTime: time.Now(),
 		TTL: time.Duration(ttl) * time.Second}

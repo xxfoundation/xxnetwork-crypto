@@ -112,8 +112,8 @@ jYe9f2NtMJWhPUps3+5Y+iFSn/FV0iy2bxw5BKN6Ovx9ztuCurY8Dg==
 -----END RSA PRIVATE KEY-----
 `
 
-//An ECDSA PKCS8 private key
-const ECDSA_PRIVATEKEY = `-----BEGIN PRIVATE KEY-----
+// An ECDSA PKCS8 private key
+const EcdsaPirvateKey = `-----BEGIN PRIVATE KEY-----
 MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgVTfeWQAwaQ2fX1RM
 rzhicau6dkfnTZmRXMhSgHn1O/2hRANCAAQaG9n2s+E/HxSbEx4xn9lKQkOL7MzS
 XSlHvlSAyk3CY3kfptxz2n6ybXO0tKgmQ7D3JqZ7fhRxCmqOSSqHftWc
@@ -154,43 +154,43 @@ const ed25519Key = `-----BEGIN PRIVATE KEY-----
 MC4CAQAwBQYDK2VwBCIEIOCWuyHuYHEEUa334Qriq9PK9fwwtda1YJrjzqWwY9o6
 -----END PRIVATE KEY-----`
 
-//Error path: pass an empty file into the loaders
+// Error path: pass an empty file into the loaders
 func TestEmptyFile(t *testing.T) {
 	empty := ""
-	//Pass the empty string into loading the certificate
+	// Pass the empty string into loading the certificate
 	_, err := LoadCertificate(empty)
 	if err == nil {
 		t.Error("Generated a certificate from an empty file!")
 	}
 
-	//Pass the empty string into loading the private key
+	// Pass the empty string into loading the private key
 	_, err = LoadRSAPrivateKey(empty)
 	if err == nil {
 		t.Error("Generated a private key from an empty file!")
 	}
 }
 
-//Error path: Pass incorrectly formated contents into the loaders
+// Error path: Pass incorrectly formated contents into the loaders
 func TestLoadIncorrectly(t *testing.T) {
-	//Pass the private key into the certificate loader
+	// Pass the private key into the certificate loader
 	_, err := LoadCertificate(PrivateKeyPKCS1)
 	if err == nil {
 		t.Error("Failed to detect passing in a non-certificate into LoadCertificate")
 	}
-	//Pass the request into the private key loader
+	// Pass the request into the private key loader
 	_, err = LoadRSAPrivateKey(Cert)
 	if err == nil {
 		t.Error("Failed to detect passing a non-private key into LoadRSAPrivateKey")
 	}
 }
 
-//Happy Path: pass everything as intended. No errors should occur in this test
+// Happy Path: pass everything as intended. No errors should occur in this test
 func TestTLS_SmokeTest(t *testing.T) {
 
 	// Load the PKCS#1 Key
 	privKey, err := LoadRSAPrivateKey(PrivateKeyPKCS1)
 	if err != nil {
-		t.Errorf("Unable to load private key: %+v", err.Error())
+		t.Errorf("Unable to load private key: %+v", err)
 	}
 	if privKey == nil || err != nil {
 		t.Error("Failed to load a correctly formatted private key")
@@ -199,14 +199,14 @@ func TestTLS_SmokeTest(t *testing.T) {
 
 	cert, err := LoadCertificate(Cert)
 	if err != nil {
-		t.Error(err.Error())
+		t.Error(err)
 	}
 
 	if cert == nil || err != nil {
 		t.Error("Failed to load a correctly formatted Certificate")
 	}
 
-	//Load the PKCS#8 private key
+	// Load the PKCS#8 private key
 	privKey, err = LoadRSAPrivateKey(RSAPrivateKeyPKCS8)
 	if err != nil {
 		t.Errorf("%+v", err)
@@ -218,9 +218,9 @@ func TestTLS_SmokeTest(t *testing.T) {
 
 }
 
-//Error path: Passes in an ecdsa pkcs#8 private key.
+// Error path: Passes in an ecdsa pkcs#8 private key.
 func TestTLS_IncorrectPrivateKey(t *testing.T) {
-	_, err := LoadRSAPrivateKey(ECDSA_PRIVATEKEY)
+	_, err := LoadRSAPrivateKey(EcdsaPirvateKey)
 	if err == nil {
 		t.Errorf("Expected Error case: Should not load key of type ECDSA")
 

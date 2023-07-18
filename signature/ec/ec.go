@@ -30,15 +30,14 @@ const (
 	keyType = "ed25519"
 )
 
-// PrivateKey is a wrapper of  containing both an ed25519 public key.
-// Wrapper provides additional functionality on top of Go's library
+// PublicKey is a wrapper of [ed25519.PublicKey] that provides additional
+// functionality on top of Go's library.
 type PublicKey struct {
 	pubKey ed25519.PublicKey
 }
 
 // MarshalText returns a base64 encoded string of the PublicKey.
-// Adheres to the TextMarshaler interface defined
-// in https://golang.org/pkg/encoding/
+// Adheres to the encoding.TextMarshaler interface.
 func (pub *PublicKey) MarshalText() string {
 	return base64.StdEncoding.EncodeToString(pub.pubKey[:])
 }

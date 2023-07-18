@@ -7,8 +7,7 @@
 
 // Package rsa includes wrappers to sign and verify the signatures of messages
 // with the PKCS#1 RSASSA-PSS signature algorithm:
-//
-//	https://tools.ietf.org/html/rfc3447#page-29
+// https://tools.ietf.org/html/rfc3447#page-29
 //
 // We use this because of the "tighter" security proof and regression to full
 // domain hashing in cases where good RNG is unavailable.
@@ -41,24 +40,23 @@ const (
 	ELength = 4
 )
 
-// Options is a direct wrapper for PSSOptions
+// Options wraps [PSSOptions].
 type Options struct {
 	gorsa.PSSOptions
 }
 
-// PrivateKey is identical to the rsa private key, with additional
-// big int accessors functions.
+// PrivateKey is identical to the RSA private key, with additional [big.Int]
+// access functions.
 type PrivateKey struct {
 	gorsa.PrivateKey
 }
 
-// GetD returns the private exponent of the RSA Private Key as
-// a large.Int
+// GetD returns the private exponent of the RSA Private Key as a [large.Int].
 func (p *PrivateKey) GetD() *large.Int {
 	return large.NewIntFromBigInt(p.D)
 }
 
-// GetPrimes returns the prime factors of N, which has >= 2 elements
+// GetPrimes returns the prime factors of N, which has >= 2 elements.
 func (p *PrivateKey) GetPrimes() []*large.Int {
 	primes := make([]*large.Int, len(p.Primes))
 	for i := 0; i < len(p.Primes); i++ {
@@ -67,7 +65,7 @@ func (p *PrivateKey) GetPrimes() []*large.Int {
 	return primes
 }
 
-// GetDp returns D mod (P - 1), or nil if unavailable
+// GetDp returns D mod (P - 1), or nil if unavailable.
 func (p *PrivateKey) GetDp() *large.Int {
 	if p.Precomputed.Dp == nil {
 		return nil
@@ -75,7 +73,7 @@ func (p *PrivateKey) GetDp() *large.Int {
 	return large.NewIntFromBigInt(p.Precomputed.Dp)
 }
 
-// GetDq returns D mod (Q - 1), or nil if unavailable
+// GetDq returns D mod (Q - 1), or nil if unavailable.
 func (p *PrivateKey) GetDq() *large.Int {
 	if p.Precomputed.Dq == nil {
 		return nil
@@ -88,62 +86,61 @@ func (p *PrivateKey) GetPublic() *PublicKey {
 	return &PublicKey{p.PublicKey}
 }
 
-/* NOTE: This is included for completeness, but since we don't use
-         the multi configuration, the CRTValues struct inside the PrivateKey
-         should always be empty for our purposes. Leaving this present and
-         commented to document that fact.
+// // NOTE: This is included for completeness, but since we don't use the multi
+// // configuration, the CRTValues struct inside the PrivateKey should always be
+// // empty for our purposes. Leaving this present and commented to document that
+// // fact.
+//
+// // CRTValue holds Exp, Coeff, R as large.Int's
+// type CRTValue struct {
+// 	Exp   *large.Int // D mod (prime-1).
+// 	Coeff *large.Int // R·Coeff ≡ 1 mod Prime.
+// 	R     *large.Int // product of primes prior to this (inc p and q).
+// }
+//
+// // GetCRTValues returns large.Int versions of all precomputed chinese
+// // remainder theorem values
+// func (priv *PrivateKey) GetCRTValues() []*CRTValue {
+// 	if priv.Precomputed.CRTValues == nil {
+// 		return nil
+// 	}
+// 	crtValues := make([]*CRTValue, len(priv.Precomputed.CRTValues))
+// 	for i := 0; i < len(priv.Precomputed.CRTValues); i++ {
+// 		cur := priv.Precomputed.CRTValues[i]
+// 		crtValues[i] = &CRTValue{
+// 			Exp:   large.NewIntFromBigInt(cur.Exp),
+// 			Coeff: large.NewIntFromBigInt(cur.Coeff),
+// 			R:     large.NewIntFromBigInt(cur.R),
+// 		}
+// 	}
+// 	return crtValues
+// }
 
-// CRTValue holds Exp, Coeff, R as large.Int's
-type CRTValue struct {
-	Exp   *large.Int // D mod (prime-1).
-        Coeff *large.Int // R·Coeff ≡ 1 mod Prime.
-        R     *large.Int // product of primes prior to this (inc p and q).
-}
-
-// GetCRTValues returns large.Int versions of all precomputed chinese
-// remainder theorum values
-func (priv *PrivateKey) GetCRTValues() []*CRTValue {
-	if priv.Precomputed.CRTValues == nil {
-		return nil
-	}
-	crtValues := make([]*CRTValue, len(priv.Precomputed.CRTValues))
-	for i := 0; i < len(priv.Precomputed.CRTValues); i++ {
-		cur := priv.Precomputed.CRTValues[i]
-		crtValues[i] = &CRTValue{
-			Exp: large.NewIntFromBigInt(cur.Exp),
-			Coeff: large.NewIntFromBigInt(cur.Coeff),
-			R: large.NewIntFromBigInt(cur.R),
-		}
-	}
-	return crtValues
-}
-*/
-
-// PublicKey is identical to the rsa public key, with additonal
-// big int access functions.
+// PublicKey is identical to the RSA public key with additional [big.Int] access
+// functions.
 type PublicKey struct {
 	gorsa.PublicKey
 }
 
-// Public returns the public key corresponding to priv.
+// Public returns the public key corresponding to the private key.
 func (p *PrivateKey) Public() crypto.PublicKey {
 	return &PublicKey{p.PublicKey}
 }
 
-// GetN returns the RSA Public Key modulus
+// GetN returns the RSA public key modulus.
 func (p *PrivateKey) GetN() *large.Int {
 	return large.NewIntFromBigInt(p.N)
 }
 
-// GetE returns the RSA Public Key exponent
+// GetE returns the RSA public key exponent.
 func (p *PrivateKey) GetE() int {
 	return p.E
 }
 
-// Bytes returns the PublicKey as a byte slice.
+// Bytes returns the [PublicKey] as a byte slice.
 // The first 4 bytes are the exponent (E) as a 4 byte big
-// endian integer, followed by the modulus (N) as a big.Int
-// in Bytes format. We chose the 32 bit integer for E
+// endian integer, followed by the modulus (N) as a [big.Int]
+// in Bytes format. We chose the 32-bit integer for E
 // because it should be big enough.
 func (p *PublicKey) Bytes() []byte {
 	buf := make([]byte, ELength)
@@ -151,7 +148,7 @@ func (p *PublicKey) Bytes() []byte {
 	return append(buf, p.PublicKey.N.Bytes()...)
 }
 
-// FromBytes loads the given byte slice into the PublicKey.
+// FromBytes loads the given byte slice into the [PublicKey].
 func (p *PublicKey) FromBytes(b []byte) error {
 	e := binary.BigEndian.Uint32(b[:ELength])
 	p.E = int(e)
@@ -160,12 +157,12 @@ func (p *PublicKey) FromBytes(b []byte) error {
 	return nil
 }
 
-// GetN returns the RSA Public Key modulus
+// GetN returns the RSA public key modulus.
 func (p *PublicKey) GetN() *large.Int {
 	return large.NewIntFromBigInt(p.N)
 }
 
-// GetE returns the RSA Public Key exponent
+// GetE returns the RSA public key exponent.
 func (p *PublicKey) GetE() int {
 	return p.E
 }

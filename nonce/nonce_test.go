@@ -8,7 +8,6 @@
 package nonce
 
 import (
-	"encoding/hex"
 	"testing"
 	"time"
 )
@@ -28,15 +27,15 @@ const (
 // Nonce should be of correct size and valid
 func TestNewNonce(t *testing.T) {
 	n, err := NewNonce(NormalTTL)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	val := n.Bytes()
 
 	if len(val) != NonceLen {
-		t.Errorf("TestNewNonce: Nonce size is %d bytes instead of %d", len(val), NonceLen)
-	}
-
-	if err != nil {
-		t.Error(err)
+		t.Errorf("TestNewNonce: Nonce size is %d bytes instead of %d",
+			len(val), NonceLen)
 	}
 
 	if !n.IsValid() {
@@ -46,19 +45,18 @@ func TestNewNonce(t *testing.T) {
 
 // Test new Nonce repeated times and see if random values repeat
 func TestNewNonceMultiple(t *testing.T) {
-	tmap := make(map[string]bool)
-
+	nonceMap := make(map[string]struct{}, NumTests)
 	for i := 0; i < NumTests; i++ {
 		n, err := NewNonce(NormalTTL)
-
 		if err != nil {
-			t.Error(err)
+			t.Errorf("Failed to generate nonce %d: %+v", i, err)
 		}
-		tmap[hex.EncodeToString(n.Bytes())] = true
-	}
 
-	if len(tmap) < NumTests {
-		t.Errorf("At least two nonces out of %d have the same value", NumTests)
+		if _, exists := nonceMap[string(n.Bytes())]; exists {
+			t.Errorf("Nonce %X already exists.", n)
+		} else {
+			nonceMap[string(n.Bytes())] = struct{}{}
+		}
 	}
 }
 
@@ -86,7 +84,8 @@ func TestNewNonceVarious(t *testing.T) {
 		val := n.Bytes()
 
 		if len(val) != NonceLen {
-			t.Errorf("TestNewNonce: Nonce size is %d bytes instead of %d", len(val), NonceLen)
+			t.Errorf("TestNewNonce: Nonce size is %d bytes instead of %d",
+				len(val), NonceLen)
 		}
 
 		if !n.IsValid() {
@@ -102,7 +101,7 @@ func TestNewNoncePanic(t *testing.T) {
 			t.Errorf("Nonce should panic on 0 TTL")
 		}
 	}()
-	NewNonce(0)
+	_, _ = NewNonce(0)
 }
 
 // Test TTL correctly set
@@ -142,11 +141,10 @@ func TestNonceTTLStr(t *testing.T) {
 // Test Generation Time correctly generated
 func TestNonceGenTime(t *testing.T) {
 	n, err := NewNonce(NormalTTL)
-	diff := time.Now().Sub(n.GenTime)
-
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
+	diff := time.Now().Sub(n.GenTime)
 
 	if diff > TimeWindow {
 		t.Errorf("Nonce generation time not correct (more than 100ms discrepancy)")
@@ -166,8 +164,9 @@ func TestNonceExpiryTime(t *testing.T) {
 	expTime := n.ExpiryTime
 
 	if calcTime := genTime.Add(ttl); !calcTime.Equal(expTime) {
-		t.Errorf("Nonce expiry time %s doesn't match with generation time %s + TTL %s: %s",
-			ExpiryTimeStr(n), GenTimeStr(n), TTLStr(n), calcTime.Format(time.RFC3339))
+		t.Errorf("Nonce expiry time %s doesn't match with generation time %s "+
+			"+ TTL %s: %s", ExpiryTimeStr(n), GenTimeStr(n), TTLStr(n),
+			calcTime.Format(time.RFC3339))
 	}
 }
 

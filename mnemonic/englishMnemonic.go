@@ -10,13 +10,14 @@
 package mnemonic
 
 import (
-	"errors"
-	bip39 "github.com/tyler-smith/go-bip39"
+	"github.com/pkg/errors"
+	"github.com/tyler-smith/go-bip39"
+
 	"gitlab.com/xx_network/crypto/csprng"
 )
 
-// GenerateMnemonic uses a CSPRNG to geenerate entropy then returns the
-// corresponding english mnemonic. numBytes must be divisble by 4 and between
+// GenerateMnemonic uses a CSPRNG to generate entropy and then returns the
+// corresponding english mnemonic. numBytes must be divisible by 4 and between
 // 16 and 32.
 func GenerateMnemonic(rng csprng.Source, numBytes int) (string, error) {
 	if (numBytes%4) != 0 || numBytes < 16 || numBytes > 32 {
@@ -35,7 +36,7 @@ func GenerateMnemonic(rng csprng.Source, numBytes int) (string, error) {
 }
 
 // EncodeMnemonic encodes a given entropy into a BIP39-styled english mnemonic.
-// Note that if you are using a password you should run this through pkbdf or
+// Note that if you are using a password you should run this through PBKDF or
 // similar, do not send the password to this directly.
 func EncodeMnemonic(entropy []byte) (string, error) {
 	return bip39.NewMnemonic(entropy)
