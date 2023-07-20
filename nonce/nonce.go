@@ -27,10 +27,10 @@ const (
 type Value [NonceLen]byte
 
 type Nonce struct {
-	Value
-	GenTime    time.Time
-	ExpiryTime time.Time
-	TTL        time.Duration
+	Value      `json:"value"`
+	GenTime    time.Time     `json:"genTime"`
+	ExpiryTime time.Time     `json:"expiryTime"`
+	TTL        time.Duration `json:"TTL"`
 }
 
 // NewNonce generate a fresh nonce with the given TTL in seconds
