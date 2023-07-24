@@ -12,6 +12,7 @@ import (
 	"crypto/ed25519"
 	"crypto/rand"
 	"encoding/base64"
+	"encoding/json"
 	"errors"
 	"io"
 )
@@ -30,8 +31,8 @@ const (
 	keyType = "ed25519"
 )
 
-// PrivateKey is a wrapper of  containing both an ed25519 public key.
-// Wrapper provides additional functionality on top of Go's library
+// PublicKey is a wrapper of an ed25519 public key.
+// Wrapper provides additional functionality on top of Go's library.
 type PublicKey struct {
 	pubKey ed25519.PublicKey
 }
@@ -59,15 +60,34 @@ func (pub *PublicKey) UnmarshalText(data string) error {
 func (pub *PublicKey) Unmarshal(data []byte) error {
 	if len(data) != PublicKeySize {
 		return errors.New(invalidKeySize)
+	} else if len(pub.pubKey) != PublicKeySize {
+		pub.pubKey = make(ed25519.PublicKey, PublicKeySize)
 	}
 
-	copy(pub.pubKey[:], data[:])
+	copy(pub.pubKey, data)
 	return nil
 }
 
 // Marshal serializes a PublicKey into a byte slice
 func (pub *PublicKey) Marshal() []byte {
 	return pub.pubKey[:]
+}
+
+// MarshalJSON marshals the PublicKey into valid JSON. This function adheres
+// to the json.Marshaler interface.
+func (pub *PublicKey) MarshalJSON() ([]byte, error) {
+	return json.Marshal(pub.Marshal())
+}
+
+// UnmarshalJSON unmarshalls the JSON into the PublicKey. This function adheres
+// to the json.Unmarshaler interface.
+func (pub *PublicKey) UnmarshalJSON(b []byte) error {
+	var pubKeyBytes []byte
+	err := json.Unmarshal(b, &pubKeyBytes)
+	if err != nil {
+		return err
+	}
+	return pub.Unmarshal(pubKeyBytes)
 }
 
 // DeepCopy returns a new PublicKey with identical data
@@ -141,6 +161,23 @@ func (priv *PrivateKey) Marshal() []byte {
 	copy(data[:], priv.privKey[:])
 
 	return data[:]
+}
+
+// MarshalJSON marshals the PrivateKey into valid JSON. This function adheres
+// to the json.Marshaler interface.
+func (priv *PrivateKey) MarshalJSON() ([]byte, error) {
+	return json.Marshal(priv.Marshal())
+}
+
+// UnmarshalJSON unmarshalls the JSON into the PrivateKey. This function adheres
+// to the json.Unmarshaler interface.
+func (priv *PrivateKey) UnmarshalJSON(b []byte) error {
+	var privKeyBytes []byte
+	err := json.Unmarshal(b, &privKeyBytes)
+	if err != nil {
+		return err
+	}
+	return priv.Unmarshal(privKeyBytes)
 }
 
 // KeyType returns the PrivateKey type
