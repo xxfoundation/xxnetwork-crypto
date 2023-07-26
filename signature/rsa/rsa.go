@@ -1,13 +1,14 @@
-////////////////////////////////////////////////////////////////////////////////////////////
-// Copyright © 2020 xx network SEZC                                                       //
-//                                                                                        //
-// Use of this source code is governed by a license that can be found in the LICENSE file //
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Copyright © 2022 xx foundation                                             //
+//                                                                            //
+// Use of this source code is governed by a license that can be found in the  //
+// LICENSE file.                                                              //
+////////////////////////////////////////////////////////////////////////////////
 
 // Package rsa includes wrappers to sign and verify the signatures of messages
 // with the PKCS#1 RSASSA-PSS signature algorithm:
 //
-//   https://tools.ietf.org/html/rfc3447#page-29
+//	https://tools.ietf.org/html/rfc3447#page-29
 //
 // We use this because of the "tighter" security proof and regression to full
 // domain hashing in cases where good RNG is unavailable.
@@ -19,13 +20,26 @@ package rsa
 import (
 	"crypto"
 	gorsa "crypto/rsa"
+	"encoding/binary"
+	"io"
+	"math/big"
+
+	jww "github.com/spf13/jwalterweatherman"
+
 	"gitlab.com/xx_network/crypto/large"
 	_ "golang.org/x/crypto/blake2b"
-	"io"
 )
 
-//Key length used in the system in bits
-var DefaultRSABitLen = 4096
+// minRSABitLen is the recommended minimum RSA key length allowed in production.
+// Use of any bit length smaller than this will result in a warning log print.
+var minRSABitLen = 3072
+
+const (
+	minRSABitLenWarn = "CAUTION! RSA bit length %d is smaller than" +
+		"the recommended minimum of %d bits. This is" +
+		"insecure; do not use in production!"
+	ELength = 4
+)
 
 // Options is a direct wrapper for PSSOptions
 type Options struct {
@@ -69,7 +83,7 @@ func (p *PrivateKey) GetDq() *large.Int {
 	return large.NewIntFromBigInt(p.Precomputed.Dq)
 }
 
-// GetPublicKey returns the public key in *rsa.PublicKey format
+// GetPublic returns the public key in *rsa.PublicKey format.
 func (p *PrivateKey) GetPublic() *PublicKey {
 	return &PublicKey{p.PublicKey}
 }
@@ -117,19 +131,63 @@ func (p *PrivateKey) Public() crypto.PublicKey {
 }
 
 // GetN returns the RSA Public Key modulus
+func (p *PrivateKey) GetN() *large.Int {
+	return large.NewIntFromBigInt(p.N)
+}
+
+// GetE returns the RSA Public Key exponent
+func (p *PrivateKey) GetE() int {
+	return p.E
+}
+
+// Bytes returns the PublicKey as a byte slice.
+// The first 4 bytes are the exponent (E) as a 4 byte big
+// endian integer, followed by the modulus (N) as a big.Int
+// in Bytes format. We chose the 32 bit integer for E
+// because it should be big enough.
+func (p *PublicKey) Bytes() []byte {
+	buf := make([]byte, ELength)
+	binary.BigEndian.PutUint32(buf, uint32(p.GetE()))
+	return append(buf, p.PublicKey.N.Bytes()...)
+}
+
+// FromBytes loads the given byte slice into the PublicKey.
+func (p *PublicKey) FromBytes(b []byte) error {
+	e := binary.BigEndian.Uint32(b[:ELength])
+	p.E = int(e)
+	p.N = new(big.Int)
+	p.N.SetBytes(b[ELength:])
+	return nil
+}
+
+// GetN returns the RSA Public Key modulus
 func (p *PublicKey) GetN() *large.Int {
 	return large.NewIntFromBigInt(p.N)
+}
+
+// GetE returns the RSA Public Key exponent
+func (p *PublicKey) GetE() int {
+	return p.E
+}
+
+// GetGoRSA returns the public key in the standard Go crypto/rsa format.
+func (p *PublicKey) GetGoRSA() *gorsa.PublicKey {
+	return &p.PublicKey
 }
 
 // GenerateKey generates an RSA keypair of the given bit size using the
 // random source random (for example, crypto/rand.Reader).
 func GenerateKey(random io.Reader, bits int) (*PrivateKey, error) {
+	if bits < minRSABitLen {
+		jww.WARN.Printf(minRSABitLenWarn, bits, minRSABitLen)
+	}
+
 	pk, err := gorsa.GenerateMultiPrimeKey(random, 2, bits)
 	return &PrivateKey{*pk}, err
 }
 
 // NewDefaultOptions returns signing options that set the salt length equal
-// to the lenght of the hash and uses the default cMix Hash algorithm.
+// to the length of the hash and uses the default cMix Hash algorithm.
 func NewDefaultOptions() *Options {
 	return &Options{
 		gorsa.PSSOptions{

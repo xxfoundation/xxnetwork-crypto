@@ -1,8 +1,9 @@
-////////////////////////////////////////////////////////////////////////////////////////////
-// Copyright © 2020 xx network SEZC                                                       //
-//                                                                                        //
-// Use of this source code is governed by a license that can be found in the LICENSE file //
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Copyright © 2022 xx foundation                                             //
+//                                                                            //
+// Use of this source code is governed by a license that can be found in the  //
+// LICENSE file.                                                              //
+////////////////////////////////////////////////////////////////////////////////
 
 // Package nonce contains our implementation of a nonce, including an expiration time,
 // generation time and TTL.
@@ -26,10 +27,10 @@ const (
 type Value [NonceLen]byte
 
 type Nonce struct {
-	Value
-	GenTime    time.Time
-	ExpiryTime time.Time
-	TTL        time.Duration
+	Value      `json:"value"`
+	GenTime    time.Time     `json:"genTime"`
+	ExpiryTime time.Time     `json:"expiryTime"`
+	TTL        time.Duration `json:"TTL"`
 }
 
 // NewNonce generate a fresh nonce with the given TTL in seconds

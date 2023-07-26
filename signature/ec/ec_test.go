@@ -1,14 +1,16 @@
-////////////////////////////////////////////////////////////////////////////////////////////
-// Copyright © 2020 xx network SEZC                                                       //
-//                                                                                        //
-// Use of this source code is governed by a license that can be found in the LICENSE file //
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Copyright © 2022 xx foundation                                             //
+//                                                                            //
+// Use of this source code is governed by a license that can be found in the  //
+// LICENSE file.                                                              //
+////////////////////////////////////////////////////////////////////////////////
 
 package ec
 
 import (
 	"bytes"
 	"crypto/rand"
+	"encoding/json"
 	"reflect"
 	"testing"
 )
@@ -225,7 +227,53 @@ func TestMarshal(t *testing.T) {
 			"\n\tExpected: %v"+
 			"\n\tReceived: %v", pk.pubKey.pubKey[:], publicKey.Marshal())
 	}
+}
 
+// Tests that a PublicKey can be marshalled and unmarshalled.
+func TestPublicKey_Marshal_Unmarshal(t *testing.T) {
+	priv, err := NewKeyPair(rand.Reader)
+	if err != nil {
+		t.Fatalf("Failed to get new key pair: %+v", err)
+	}
+	expected := priv.GetPublic()
+
+	data := expected.Marshal()
+
+	var public PublicKey
+	err = public.Unmarshal(data)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal PublicKey: %+v", err)
+	}
+
+	if !reflect.DeepEqual(*expected, public) {
+		t.Errorf("Marshalled and unmarshalled PublicKey does not match "+
+			"original.\nexpected: %#v\nreceived: %#v", expected, public)
+	}
+}
+
+// Tests that a PublicKey can be JSON marshalled and unmarshalled.
+func TestPublicKey_JsonMarshalUnmarshal(t *testing.T) {
+	priv, err := NewKeyPair(rand.Reader)
+	if err != nil {
+		t.Fatalf("Failed to get new key pair: %+v", err)
+	}
+	expected := priv.GetPublic()
+
+	data, err := json.Marshal(expected)
+	if err != nil {
+		t.Fatalf("Failed to JSON marshal PublicKey: %+v", err)
+	}
+
+	var public PublicKey
+	err = json.Unmarshal(data, &public)
+	if err != nil {
+		t.Fatalf("Failed to JSON unmarshal PublicKey: %+v", err)
+	}
+
+	if !reflect.DeepEqual(*expected, public) {
+		t.Errorf("Marshalled and unmarshalled PublicKey does not match "+
+			"original.\nexpected: %#v\nreceived: %#v", *expected, public)
+	}
 }
 
 // Smoke test
@@ -245,5 +293,29 @@ func TestPublicKey_String(t *testing.T) {
 			"Unexpected value returned from PublicKey.String()"+
 			"\n\tExpected: %v"+
 			"\n\tReceived: %v", pubKeyEncoded, publicKey.String())
+	}
+}
+
+// Tests that a PrivateKey can be JSON marshalled and unmarshalled.
+func TestPrivateKey_JsonMarshalUnmarshal(t *testing.T) {
+	expected, err := NewKeyPair(rand.Reader)
+	if err != nil {
+		t.Fatalf("Failed to get new key pair: %+v", err)
+	}
+
+	data, err := json.Marshal(expected)
+	if err != nil {
+		t.Fatalf("Failed to JSON marshal PrivateKey: %+v", err)
+	}
+
+	var private PrivateKey
+	err = json.Unmarshal(data, &private)
+	if err != nil {
+		t.Fatalf("Failed to JSON unmarshal PrivateKey: %+v", err)
+	}
+
+	if !reflect.DeepEqual(*expected, private) {
+		t.Errorf("Marshalled and unmarshalled PrivateKey does not match "+
+			"original.\nexpected: %#v\nreceived: %#v", *expected, private)
 	}
 }
