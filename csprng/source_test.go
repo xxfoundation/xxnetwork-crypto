@@ -260,7 +260,7 @@ func TestGenerateInGroup_LargeSize(t *testing.T) {
 	}
 }
 
-//Happy path with a large, byte aligned path
+// Happy path with a large, byte aligned path
 func TestGenerate(t *testing.T) {
 	rng := NewSystemRNG()
 
@@ -278,7 +278,7 @@ func TestGenerate(t *testing.T) {
 
 }
 
-//Happy path with a non byte aligned prime
+// Happy path with a non byte aligned prime
 func TestGenerate_Padding(t *testing.T) {
 	rng := NewSystemRNG()
 

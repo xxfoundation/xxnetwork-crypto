@@ -16,7 +16,7 @@ import (
 	"testing"
 )
 
-//Happy path
+// Happy path
 func TestGetFullPath(t *testing.T) {
 	h, _ := homedir.Dir()
 	p := "~/test/test"
@@ -26,7 +26,7 @@ func TestGetFullPath(t *testing.T) {
 	}
 }
 
-//Happy path
+// Happy path
 func TestNewCredentialsFromFile(t *testing.T) {
 	path := testkeys.GetTestCertPath()
 	var tlsCreds credentials.TransportCredentials
@@ -39,7 +39,7 @@ func TestNewCredentialsFromFile(t *testing.T) {
 	}
 }
 
-//Error path: invalid path.
+// Error path: invalid path.
 func TestNewCredentialsFromFileError_BadPath(t *testing.T) {
 	path := testkeys.GetTestCertPath() + "sfdk"
 	_, err := NewCredentialsFromFile(path, "")
@@ -48,7 +48,7 @@ func TestNewCredentialsFromFileError_BadPath(t *testing.T) {
 	}
 }
 
-//Error path: invalid file (not a cert.
+// Error path: invalid file (not a cert.
 func TestNewCredentialsFromFileError_BadKey(t *testing.T) {
 	path := testkeys.GetTestKeyPath()
 	_, err := NewCredentialsFromFile(path, "")
@@ -57,7 +57,7 @@ func TestNewCredentialsFromFileError_BadKey(t *testing.T) {
 	}
 }
 
-//Happy path
+// Happy path
 func TestNewCredentialsFromPEM(t *testing.T) {
 	var tlsCreds credentials.TransportCredentials
 	tlsCreds, err := NewCredentialsFromPEM(Cert, "")
@@ -69,7 +69,7 @@ func TestNewCredentialsFromPEM(t *testing.T) {
 	}
 }
 
-//Error path
+// Error path
 func TestNewCredentialsFromPEMError(t *testing.T) {
 	_, err := NewCredentialsFromPEM("this is a cert yes", "")
 	if err == nil {
@@ -77,7 +77,7 @@ func TestNewCredentialsFromPEMError(t *testing.T) {
 	}
 }
 
-//Happy path
+// Happy path
 func TestNewPublicKeyFromFile(t *testing.T) {
 	path := testkeys.GetTestCertPath()
 	var p *rsa.PublicKey
@@ -90,7 +90,7 @@ func TestNewPublicKeyFromFile(t *testing.T) {
 	}
 }
 
-//Error path
+// Error path
 func TestNewPublicKeyFromFileError(t *testing.T) {
 	path := testkeys.GetTestCertPath() + "sdfsd"
 	badCertPath := testkeys.GetTestKeyPath()
@@ -105,7 +105,7 @@ func TestNewPublicKeyFromFileError(t *testing.T) {
 	}
 }
 
-//Happy path
+// Happy path
 func TestNewPublicKeyFromPEM(t *testing.T) {
 	path := testkeys.GetTestCertPath()
 	filePath := getFullPath(path)
@@ -124,7 +124,7 @@ func TestNewPublicKeyFromPEM(t *testing.T) {
 	}
 }
 
-//Error path: Pass in a key rather than a cert
+// Error path: Pass in a key rather than a cert
 func TestNewPublicKeyFromPEMError(t *testing.T) {
 
 	path := testkeys.GetTestKeyPath()

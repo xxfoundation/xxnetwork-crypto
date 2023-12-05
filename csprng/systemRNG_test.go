@@ -13,7 +13,7 @@ import (
 	"testing"
 )
 
-//Tests that the NewSystemRNG meets the source constructor and returns a valid SystemRNG in the interface
+// Tests that the NewSystemRNG meets the source constructor and returns a valid SystemRNG in the interface
 func TestNewSystemRNG(t *testing.T) {
 
 	var sc SourceConstructor
@@ -29,7 +29,7 @@ func TestNewSystemRNG(t *testing.T) {
 	}
 }
 
-//Spot check that the results of the rng vary
+// Spot check that the results of the rng vary
 func TestSystemRNG_Read(t *testing.T) {
 	csprig := NewSystemRNG()
 
@@ -55,7 +55,7 @@ func TestSystemRNG_Read(t *testing.T) {
 	}
 }
 
-//Spot check that the set seed function does nothing
+// Spot check that the set seed function does nothing
 func TestSystemRNG_SetSeed(t *testing.T) {
 	csprig := NewSystemRNG()
 
