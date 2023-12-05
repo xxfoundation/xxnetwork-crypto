@@ -25,8 +25,7 @@ func Encrypt(key, data []byte, rng csprng.Source) (ciphertext []byte, error erro
 	}
 
 	// Generate the nonce
-	nonce := make([]byte, chaCipher.NonceSize())
-	nonce, err = csprng.Generate(chaCipher.NonceSize(), rng)
+	nonce, err := csprng.Generate(chaCipher.NonceSize(), rng)
 	if err != nil {
 		return nil, errors.Errorf("Failed to generate nonce: %v", err)
 	}
