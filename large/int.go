@@ -44,7 +44,7 @@ func NewIntFromBytes(buf []byte) *Int {
 func NewIntFromString(str string, base int) *Int {
 	s := new(Int)
 	_, b := s.SetString(str, base)
-	if b == false {
+	if !b {
 		return nil
 	}
 	return s
@@ -103,7 +103,7 @@ func (z *Int) SetBigInt(x *big.Int) *Int {
 func (z *Int) SetString(s string, base int) (*Int, bool) {
 	y := (*big.Int)(z)
 	_, b := y.SetString(s, base)
-	if b == false {
+	if !b {
 		return nil, false
 	}
 	return z, b
@@ -255,10 +255,7 @@ func (z *Int) GCD(x, y, a, b *Int) *Int {
 // IsCoprime returns true if the two numbers are coprime (relatively prime).
 func (z *Int) IsCoprime(x *Int) bool {
 	s := NewInt(0)
-	if s.ModInverse(z, x) == nil {
-		return false
-	}
-	return true
+	return s.ModInverse(z, x) != nil
 }
 
 // FillBytes sets buf to the absolute value of x, storing it as a zero-extended
