@@ -12,15 +12,16 @@ import (
 	gorsa "crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
-	"errors"
-	"fmt"
+
+	"github.com/pkg/errors"
 )
 
 // LoadPrivateKeyFromPem decodes and produces an RSA PrivateKey in PKCS#1 PEM
 // format
 // Usage:
-//    pem := ioutil.ReadFile("pemfile.pem")
-//    privateKey, err := LoadPrivateKeyFromPem(pem)
+//
+//	pem := ioutil.ReadFile("pemfile.pem")
+//	privateKey, err := LoadPrivateKeyFromPem(pem)
 func LoadPrivateKeyFromPem(pemBytes []byte) (*PrivateKey, error) {
 	block, rest := pem.Decode(pemBytes)
 
@@ -44,8 +45,7 @@ func LoadPrivateKeyFromPem(pemBytes []byte) (*PrivateKey, error) {
 	}
 
 	if err != nil {
-		return nil, errors.New(
-			fmt.Sprintf("could not decode key from PEM: %+v", err))
+		return nil, errors.Wrap(err, "could not decode key from PEM")
 	}
 
 	keyRSA, success := key.(*gorsa.PrivateKey)
