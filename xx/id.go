@@ -9,6 +9,7 @@ package xx
 
 import (
 	"crypto/rsa"
+
 	"github.com/pkg/errors"
 	"gitlab.com/xx_network/primitives/id"
 	"golang.org/x/crypto/blake2b"
