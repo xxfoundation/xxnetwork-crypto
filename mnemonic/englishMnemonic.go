@@ -11,6 +11,7 @@ package mnemonic
 
 import (
 	"errors"
+
 	bip39 "github.com/tyler-smith/go-bip39"
 	"gitlab.com/xx_network/crypto/csprng"
 )
@@ -29,7 +30,7 @@ func GenerateMnemonic(rng csprng.Source, numBytes int) (string, error) {
 		return "", err
 	}
 	if bytesGenerated != numBytes {
-		return "", errors.New("Could not fully read entropy source")
+		return "", errors.New("could not fully read entropy source")
 	}
 	return EncodeMnemonic(entropy)
 }
