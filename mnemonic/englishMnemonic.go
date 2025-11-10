@@ -12,7 +12,7 @@ package mnemonic
 import (
 	"errors"
 
-	bip39 "github.com/tyler-smith/go-bip39"
+	bip39 "github.com/rcarback/go-bip39"
 	"gitlab.com/xx_network/crypto/csprng"
 )
 

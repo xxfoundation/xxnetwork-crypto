@@ -5,8 +5,8 @@ go 1.19
 require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
+	github.com/rcarback/go-bip39 v1.1.1
 	github.com/spf13/jwalterweatherman v1.1.0
-	github.com/tyler-smith/go-bip39 v1.1.0
 	github.com/zeebo/blake3 v0.2.3
 	gitlab.com/xx_network/primitives v0.0.5
 	golang.org/x/crypto v0.16.0
