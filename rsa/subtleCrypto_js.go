@@ -184,8 +184,10 @@ func (sc *subtleCrypto) callCatch(
 	m string, args ...any) (result js.Value, err error) {
 	defer func() {
 		if r := recover(); r != nil {
+			result = js.Undefined()
 			err = errors.Errorf("SubtleCrypto.%s panic: %v", m, r)
 		}
 	}()
-	return sc.Value.Call(m, args...), nil
+	result = sc.Value.Call(m, args...)
+	return result, nil
 }
