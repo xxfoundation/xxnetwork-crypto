@@ -13,7 +13,6 @@ import (
 	"github.com/pkg/errors"
 	jww "github.com/spf13/jwalterweatherman"
 
-	"gitlab.com/elixxir/wasm-utils/exception"
 	"gitlab.com/elixxir/wasm-utils/utils"
 )
 
@@ -29,7 +28,7 @@ func init() {
 		err := errors.New("SubtleCrypto unavailable; " +
 			"is a secure context (TLS/https) enabled?")
 		jww.FATAL.Printf("%+v", err)
-		exception.ThrowTrace(err)
+		panic(err)
 	}
 }
 
@@ -183,6 +182,10 @@ func (sc *subtleCrypto) exportKey(format string, key js.Value) (
 // given arguments. It catches and returns all thrown exceptions.
 func (sc *subtleCrypto) callCatch(
 	m string, args ...any) (result js.Value, err error) {
-	defer exception.Catch(&err)
+	defer func() {
+		if r := recover(); r != nil {
+			err = errors.Errorf("SubtleCrypto.%s panic: %v", m, r)
+		}
+	}()
 	return sc.Value.Call(m, args...), nil
 }
