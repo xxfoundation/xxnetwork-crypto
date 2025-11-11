@@ -97,7 +97,13 @@ func TestDecrypt(t *testing.T) {
 	err = newbackup.Decrypt(string(password), ciphertext)
 	require.NoError(t, err)
 
-	require.Equal(t, newbackup.TransmissionIdentity.RSASigningPrivateKey, backup.TransmissionIdentity.RSASigningPrivateKey)
+	// Compare RSA keys by their components (not internal fips field)
+	orig := backup.TransmissionIdentity.RSASigningPrivateKey
+	decrypted := newbackup.TransmissionIdentity.RSASigningPrivateKey
+	require.Equal(t, orig.GetN().Bytes(), decrypted.GetN().Bytes(), "N values should match")
+	require.Equal(t, orig.GetD().Bytes(), decrypted.GetD().Bytes(), "D values should match")
+	require.Equal(t, orig.GetPrimes()[0].Bytes(), decrypted.GetPrimes()[0].Bytes(), "Prime 0 should match")
+	require.Equal(t, orig.GetPrimes()[1].Bytes(), decrypted.GetPrimes()[1].Bytes(), "Prime 1 should match")
 }
 
 func TestDecryptPrecanned(t *testing.T) {

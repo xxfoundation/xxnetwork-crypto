@@ -90,7 +90,8 @@ func TestSymmetric_Decrypt(t *testing.T) {
 // UnmarshalSymmetric matches the original.
 func TestSymmetric_Marshal_UnmarshalSymmetric(t *testing.T) {
 	rng := rand.New(rand.NewSource(42))
-	pk, err := rsa.GetScheme().Generate(rng, 256)
+	// Use 1024 bits minimum for WASM/browser compatibility
+	pk, err := rsa.GetScheme().Generate(rng, 1024)
 	if err != nil {
 		t.Fatalf("Failed to generate key: %+v", err)
 	}

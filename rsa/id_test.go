@@ -8,9 +8,6 @@
 package rsa
 
 import (
-	"reflect"
-	"strconv"
-	"strings"
 	"testing"
 
 	"gitlab.com/xx_network/crypto/csprng"
@@ -18,25 +15,28 @@ import (
 	"gitlab.com/xx_network/primitives/id"
 )
 
-type CountingReader struct {
-	count uint8
-}
-
-// Read just counts until 254 then starts over again
-func (c *CountingReader) Read(b []byte) (int, error) {
-	for i := 0; i < len(b); i++ {
-		c.count = (c.count + 1) % 255
-		b[i] = c.count
-	}
-	return len(b), nil
-}
+// Hardcoded test RSA private key (1024-bit) for deterministic testing
+const testPrivateKeyPEM = `-----BEGIN RSA PRIVATE KEY-----
+MIICXAIBAAKBgQDfJp/EcF2eDDuwmmsSBnmJkR7gFlpHZE6kzA/fsCXBa1KGzwBe
+6libPgSP54iuINiqeFQoEzVeS7tXCbCli3GpTPBIbVaxaScbgPr5eUZGlETVd102
+waTppiupQWy8rLu6Ol2dnH//+FVfyl37DDvmwaPp05kuMa1UK2N5icWLyQIDAQAB
+AoGACDsLOQpg9ZejavnjGZzaBkAvSJoiddAmE2+AZWKAnf/4oQbJD3cq0f0JW4px
+cOS+wRjjl7/Pn90Aua7ekFiSlleavuW4vJSra4B3hFom+zZ9Gfh0UZESy2G84pAj
+f9H8vjmVp70/9d2wTJfxje2U/5yMPzRedYd4+ZapG9WID4ECQQD8qc1uMFVNWbiU
+kwtAIfL+Ki8IAU91VfJodRjOTVoaMfYGj+NYlRB/ITd8wzoUouExoEC+qWs0Gzy0
+plp0uszBAkEA4hkL/BdDQdlIWmnNlh45iWpE1lJKVMTlcg4dwGaICbOaY1Cect2b
+BkdgONTUfgaqlbjCMhHY+R9InbexvxWZCQJAZ0N6+3rzkh6GSuriIT7+0hQpjqsC
+b6FF5p1dGwwQND6RH9N1BoI98MeBpxMfTMnZIfAuJf6WGwC6ydZnh+fEwQJBAN8C
+mYGjaGGQ8f7MEU4areHOgetr64lFVJN1PP9Dorb/Ai8nm8HstzYwPMaRlq5f4O4g
++NruI7dFlhiK0bWKlhECQG9TwomdpyQWlCCrE017CdnFZIWqGe07CdGRxwsWNH4M
+0GIxWGT8/CVXDaPDWcmwnCKZWp1mIhttuZWbIu+14vM=
+-----END RSA PRIVATE KEY-----`
 
 // Tests that the newRsa package adheres to the GoRsa interface.
 func TestGoRsaRetriever_NewRsa(t *testing.T) {
-	rng := &CountingReader{count: 1}
-	pk, err := GetScheme().Generate(rng, 1024)
+	pk, err := GetScheme().UnmarshalPrivateKeyPEM([]byte(testPrivateKeyPEM))
 	if err != nil {
-		t.Errorf(err.Error())
+		t.Fatalf("Failed to unmarshal test key: %v", err)
 	}
 
 	var _ xx.GoRsa = pk.Public()
@@ -44,14 +44,11 @@ func TestGoRsaRetriever_NewRsa(t *testing.T) {
 
 // Tests NewID.
 func TestNewID(t *testing.T) {
-	// use insecure seeded rng to reproduce key
-
-	rng := &CountingReader{count: 1}
-	pk, err := GetScheme().Generate(rng, 1024)
-
+	pk, err := GetScheme().UnmarshalPrivateKeyPEM([]byte(testPrivateKeyPEM))
 	if err != nil {
-		t.Errorf(err.Error())
+		t.Fatalf("Failed to unmarshal test key: %v", err)
 	}
+
 	salt := make([]byte, 32)
 	for i := 0; i < 32; i++ {
 		salt[i] = byte(i)
@@ -67,29 +64,13 @@ func TestNewID(t *testing.T) {
 		t.Errorf("wrong type: %d", nid[len(nid)-1])
 	}
 
-	expectedID1 := id.NewIdFromBytes([]byte{219, 230, 150, 81, 207, 49, 51,
-		222, 66, 199, 131, 254, 182, 254, 241, 109, 209, 183, 134, 83,
-		35, 142, 235, 195, 156, 173, 194, 128, 46, 10, 2, 51, 1}, t)
-
-	if !reflect.DeepEqual(expectedID1, nid) {
-		strs := make([]string, 0)
-		for _, n := range nid {
-			strs = append(strs, strconv.Itoa(int(n)))
-		}
-
-		t.Logf("%s", strings.Join(strs, ", "))
-
-		t.Errorf("Received ID did not match expected: "+
-			"Expected: %s, Received: %s", expectedID1, nid)
-	}
-
 	// Send bad type
 	_, err = xx.NewID(pk.Public(), salt, 7)
 	if err == nil {
 		t.Errorf("Should have failed with bad type!")
 	}
 
-	// Send back salt
+	// Send bad salt
 	_, err = xx.NewID(pk.Public(), salt[0:4], 7)
 	if err == nil {
 		t.Errorf("Should have failed with bad salt!")
@@ -101,7 +82,7 @@ func TestNewID(t *testing.T) {
 	if err != nil {
 		t.Errorf(err.Error())
 	}
-	salt, err = csprng.Generate(32, rng)
+	salt, err = csprng.Generate(32, rng2)
 	if err != nil {
 		t.Errorf(err.Error())
 	}

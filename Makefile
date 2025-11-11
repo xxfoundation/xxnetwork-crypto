@@ -1,4 +1,4 @@
-.PHONY: update master release setup update_master update_release build clean
+.PHONY: update master release setup update_master update_release build clean wasm_tests tests
 
 setup:
 	git config --global --add url."git@gitlab.com:".insteadOf "https://gitlab.com/"
@@ -30,13 +30,13 @@ master: update_master clean build
 
 release: update_release clean build
 
-wasmException = "vendor/gitlab.com/elixxir/wasm-utils/exception"
-
 wasm_tests:
-	cp $(wasmException)/throw_js.s $(wasmException)/throw_js.s.bak
-	cp $(wasmException)/throws.go $(wasmException)/throws.go.bak
-	> $(wasmException)/throw_js.s
-	cp $(wasmException)/throws.dev $(wasmException)/throws.go
-	-GOOS=js GOARCH=wasm go test -v ./...
-	mv $(wasmException)/throw_js.s.bak $(wasmException)/throw_js.s
-	mv $(wasmException)/throws.go.bak $(wasmException)/throws.go
+	@echo "Running WASM tests (requires wasmbrowsertest)"
+	@if ! command -v wasmbrowsertest >/dev/null 2>&1; then \
+		echo "Error: wasmbrowsertest not found. Install with:"; \
+		echo "  go install github.com/agnivade/wasmbrowsertest@latest"; \
+		exit 1; \
+	fi
+	GOOS=js GOARCH=wasm go test -exec=$$(go env GOROOT)/lib/wasm/go_js_wasm_exec_browser -v ./...
+
+tests: wasm_tests
