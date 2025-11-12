@@ -1,0 +1,1944 @@
+Running WASM tests (requires wasmbrowsertest)
+GOOS=js GOARCH=wasm go test -exec=$(go env GOROOT)/lib/wasm/go_js_wasm_exec_browser -v ./...
+2025/11/10 23:59:23 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:23 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:23 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:23 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:23 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:23 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:23 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestSignVerify_Consistency
+--- PASS: TestSignVerify_Consistency (0.01s)
+=== RUN   TestDigest_Consistency
+--- PASS: TestDigest_Consistency (0.00s)
+=== RUN   TestSignVerify
+--- PASS: TestSignVerify (0.03s)
+=== RUN   TestVerify_Error
+--- PASS: TestVerify_Error (0.06s)
+=== RUN   TestSignVerify_CertRequest
+--- PASS: TestSignVerify_CertRequest (0.18s)
+=== RUN   TestSignVerify_CertRequest_Consistency
+--- PASS: TestSignVerify_CertRequest_Consistency (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/authorize	7.626s
+2025/11/10 23:59:24 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:24 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:24 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestTagVersion
+--- PASS: TestTagVersion (0.00s)
+=== RUN   TestMarshalSaltParams_UnmarshalSaltParams
+--- PASS: TestMarshalSaltParams_UnmarshalSaltParams (0.00s)
+=== RUN   TestEncrypt
+--- PASS: TestEncrypt (11.63s)
+=== RUN   TestDecrypt
+--- PASS: TestDecrypt (3.81s)
+=== RUN   TestDecryptPrecanned
+--- PASS: TestDecryptPrecanned (0.00s)
+=== RUN   TestDecryptWithBadKeySize
+--- PASS: TestDecryptWithBadKeySize (0.00s)
+=== RUN   TestEncryptWithBadKeySize
+--- PASS: TestEncryptWithBadKeySize (0.00s)
+=== RUN   TestDecryptBadCiphertextSize
+--- PASS: TestDecryptBadCiphertextSize (0.00s)
+=== RUN   TestEncryptAndDecrypt
+--- PASS: TestEncryptAndDecrypt (0.00s)
+=== RUN   TestDecryptPrecannedCiphertext
+--- PASS: TestDecryptPrecannedCiphertext (0.00s)
+=== RUN   TestDeriveKey
+--- PASS: TestDeriveKey (0.02s)
+=== RUN   TestMakeSalt
+--- PASS: TestMakeSalt (0.00s)
+=== RUN   TestParams_Marshal_Unmarshal
+--- PASS: TestParams_Marshal_Unmarshal (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/backup	21.853s
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestChannel_EncryptRSAToPublic_DecryptRSAToPublic_BigKey
+--- PASS: TestChannel_EncryptRSAToPublic_DecryptRSAToPublic_BigKey (3.19s)
+=== RUN   TestChannel_EncryptRSAToPublic_DecryptRSAToPublic_BigKey_SmallPayload
+--- PASS: TestChannel_EncryptRSAToPublic_DecryptRSAToPublic_BigKey_SmallPayload (4.53s)
+=== RUN   TestChannel_EncryptRSAToPublic_DecryptRSAToPublic_NewChannel
+--- PASS: TestChannel_EncryptRSAToPublic_DecryptRSAToPublic_NewChannel (1.26s)
+=== RUN   TestChannel_EncryptRSAToPrivate_DecryptRSAToPrivate_BigKey
+--- PASS: TestChannel_EncryptRSAToPrivate_DecryptRSAToPrivate_BigKey (2.44s)
+=== RUN   TestChannel_EncryptRSAToPrivate_DecryptRSAToPrivate_BigKey_SmallPacket
+--- PASS: TestChannel_EncryptRSAToPrivate_DecryptRSAToPrivate_BigKey_SmallPacket (2.81s)
+=== RUN   TestChannel_DecryptRSAToPublicInner
+--- PASS: TestChannel_DecryptRSAToPublicInner (2.64s)
+=== RUN   TestChannel_PrettyPrint
+--- PASS: TestChannel_PrettyPrint (1.17s)
+=== RUN   TestChannel_MarshalJson
+--- PASS: TestChannel_MarshalJson (0.37s)
+=== RUN   TestRChanel_Marshal_Unmarshal
+--- PASS: TestRChanel_Marshal_Unmarshal (0.85s)
+=== RUN   TestChannel_Verify
+--- PASS: TestChannel_Verify (0.60s)
+=== RUN   TestChannel_Verify_Happy
+--- PASS: TestChannel_Verify_Happy (0.94s)
+=== RUN   TestChannel_Verify_Fail_BadVerify
+ERROR 2025/11/10 23:59:49 Channel verify failed due to error from channel generation: NewChannelID salt must be 32 bytes long.
+gitlab.com/elixxir/crypto/broadcast.init
+	<autogenerated>:1
+runtime.doInit1
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/proc.go:7670
+runtime.doInit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/proc.go:7637
+runtime.main
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/proc.go:256
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestChannel_Verify_Fail_BadVerify (0.53s)
+=== RUN   TestChannel_Verify_BadGeneration
+ERROR 2025/11/10 23:59:50 Channel verify failed due to error from channel generation: NewChannelID salt must be 32 bytes long.
+gitlab.com/elixxir/crypto/broadcast.init
+	<autogenerated>:1
+runtime.doInit1
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/proc.go:7670
+runtime.doInit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/proc.go:7637
+runtime.main
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/proc.go:256
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestChannel_Verify_BadGeneration (0.91s)
+=== RUN   TestChannel_VerifyName
+--- PASS: TestChannel_VerifyName (0.00s)
+=== RUN   TestChannel_VerifyName_InvalidNameError
+--- PASS: TestChannel_VerifyName_InvalidNameError (0.00s)
+=== RUN   TestChannel_VerifyDescription
+--- PASS: TestChannel_VerifyDescription (0.00s)
+=== RUN   TestChannel_VerifyDescription_InvalidDescriptionError
+--- PASS: TestChannel_VerifyDescription_InvalidDescriptionError (0.00s)
+=== RUN   Test_ExportPrivateKey_ImportPrivateKey_KeySign
+--- PASS: Test_ExportPrivateKey_ImportPrivateKey_KeySign (0.25s)
+=== RUN   Test_ExportPrivateKeyCustomParams_ImportPrivateKey
+--- PASS: Test_ExportPrivateKeyCustomParams_ImportPrivateKey (0.06s)
+=== RUN   Test_portablePrivKey_export_ImportPrivateKey
+--- PASS: Test_portablePrivKey_export_ImportPrivateKey (0.02s)
+=== RUN   Test_portablePrivKey_export_EncryptError
+--- PASS: Test_portablePrivKey_export_EncryptError (0.03s)
+=== RUN   TestImportPrivateKey_MalformedImportsError
+--- PASS: TestImportPrivateKey_MalformedImportsError (0.00s)
+=== RUN   Test_portablePrivKey_encrypt_decrypt
+--- PASS: Test_portablePrivKey_encrypt_decrypt (0.04s)
+=== RUN   Test_portablePrivKey_encrypt_MakeSaltError
+--- PASS: Test_portablePrivKey_encrypt_MakeSaltError (0.00s)
+=== RUN   Test_portablePrivKey_decrypt_DecryptError
+--- PASS: Test_portablePrivKey_decrypt_DecryptError (0.01s)
+=== RUN   Test_portablePrivKey_decrypt_DecodeError
+--- PASS: Test_portablePrivKey_decrypt_DecodeError (0.02s)
+=== RUN   Test_portablePrivKey_encode_decode
+--- PASS: Test_portablePrivKey_encode_decode (0.02s)
+=== RUN   Test_portablePrivKey_decode_DataLengthError
+--- PASS: Test_portablePrivKey_decode_DataLengthError (0.02s)
+=== RUN   Test_portablePrivKey_decode_IncorrectVersionError
+--- PASS: Test_portablePrivKey_decode_IncorrectVersionError (0.01s)
+=== RUN   Test_portablePrivKey_decode_InvalidRsaKeyPEM
+--- PASS: Test_portablePrivKey_decode_InvalidRsaKeyPEM (0.02s)
+=== RUN   Test_getTagContents
+--- PASS: Test_getTagContents (0.00s)
+=== RUN   Test_getTagContents_MissingTagsError
+--- PASS: Test_getTagContents_MissingTagsError (0.00s)
+=== RUN   Test_encryptPrivateKey_decryptPrivateKey
+--- PASS: Test_encryptPrivateKey_decryptPrivateKey (0.00s)
+=== RUN   Test_decryptPrivateKey_ShortDataError
+--- PASS: Test_decryptPrivateKey_ShortDataError (0.00s)
+=== RUN   Test_decryptPrivateKey_InvalidPasswordError
+--- PASS: Test_decryptPrivateKey_InvalidPasswordError (0.00s)
+=== RUN   Test_deriveKey
+--- PASS: Test_deriveKey (0.01s)
+=== RUN   Test_makeSalt
+--- PASS: Test_makeSalt (0.00s)
+=== RUN   Test_makeSalt_ReadError
+--- PASS: Test_makeSalt_ReadError (0.00s)
+=== RUN   Test_makeSalt_ReadNumBytesError
+--- PASS: Test_makeSalt_ReadNumBytesError (0.00s)
+=== RUN   TestChannel_deriveIntermediary_vector
+--- PASS: TestChannel_deriveIntermediary_vector (0.00s)
+=== RUN   TestChannel_deriveIntermediary
+--- PASS: TestChannel_deriveIntermediary (0.25s)
+=== RUN   Test_calculateKeySize
+--- PASS: Test_calculateKeySize (0.00s)
+=== RUN   Test_calculateKeySize_NetworkStandard
+--- PASS: Test_calculateKeySize_NetworkStandard (0.00s)
+=== RUN   TestPrivacyLevel_Verify
+--- PASS: TestPrivacyLevel_Verify (0.00s)
+=== RUN   TestPrivacyLevel_Verify_Invalid
+--- PASS: TestPrivacyLevel_Verify_Invalid (0.00s)
+=== RUN   TestPrivacyLevel_String_Consistency
+--- PASS: TestPrivacyLevel_String_Consistency (0.00s)
+=== RUN   TestPrivacyLevel_Marshal_UnmarshalPrivacyLevel
+--- PASS: TestPrivacyLevel_Marshal_UnmarshalPrivacyLevel (0.00s)
+=== RUN   TestUnmarshalPrivacyLevel_Error
+--- PASS: TestUnmarshalPrivacyLevel_Error (0.00s)
+=== RUN   TestPrivacyLevel_MapCheck
+--- PASS: TestPrivacyLevel_MapCheck (0.00s)
+=== RUN   Test_makeMAC_Consistency
+--- PASS: Test_makeMAC_Consistency (0.00s)
+=== RUN   Test_makeMAC_Unique
+--- PASS: Test_makeMAC_Unique (0.00s)
+=== RUN   Test_verifyMAC_GoodMACs
+--- PASS: Test_verifyMAC_GoodMACs (0.00s)
+=== RUN   Test_verifyMAC_BadMACs
+--- PASS: Test_verifyMAC_BadMACs (0.00s)
+=== RUN   Test_newMessageKey_Consistency
+--- PASS: Test_newMessageKey_Consistency (0.00s)
+=== RUN   Test_newMessageKey_Unique
+--- PASS: Test_newMessageKey_Unique (0.00s)
+=== RUN   Test_newNonce_Unique
+--- PASS: Test_newNonce_Unique (0.00s)
+=== RUN   TestChannel_ShareURL_DecodeShareURL
+--- PASS: TestChannel_ShareURL_DecodeShareURL (0.08s)
+=== RUN   TestChannel_ShareURL
+    shareURL_test.go:62: name: aaaa
+    shareURL_test.go:63: RsaPubKeyLength: 368
+    shareURL_test.go:64: RSASubPayloads: 1
+--- PASS: TestChannel_ShareURL (0.00s)
+=== RUN   TestChannel_ShareURL_ParseError
+--- PASS: TestChannel_ShareURL_ParseError (0.05s)
+=== RUN   TestChannel_ShareURL_PasswordRngError
+--- PASS: TestChannel_ShareURL_PasswordRngError (0.02s)
+=== RUN   TestDecodeShareURL_ParseError
+--- PASS: TestDecodeShareURL_ParseError (0.00s)
+=== RUN   TestDecodeShareURL_DecodeError
+--- PASS: TestDecodeShareURL_DecodeError (0.00s)
+=== RUN   TestChannel_DecodeShareURL_MaxUsesMismatchError
+--- PASS: TestChannel_DecodeShareURL_MaxUsesMismatchError (0.01s)
+=== RUN   TestDecodeShareURL_NewChannelIDError
+--- PASS: TestDecodeShareURL_NewChannelIDError (0.00s)
+=== RUN   TestDecodeShareURL_NameMaxLengthError
+--- PASS: TestDecodeShareURL_NameMaxLengthError (0.00s)
+=== RUN   TestDecodeShareURL_DescriptionMaxLengthError
+--- PASS: TestDecodeShareURL_DescriptionMaxLengthError (0.00s)
+=== RUN   TestGetShareUrlType
+--- PASS: TestGetShareUrlType (0.08s)
+=== RUN   TestGetShareUrlType_ParseError
+--- PASS: TestGetShareUrlType_ParseError (0.00s)
+=== RUN   TestGetShareUrlType_Error
+--- PASS: TestGetShareUrlType_Error (0.00s)
+=== RUN   TestChannel_encodePublicShareURL_decodePublicShareURL
+--- PASS: TestChannel_encodePublicShareURL_decodePublicShareURL (0.03s)
+=== RUN   TestChannel_encodePrivateShareURL_decodePrivateShareURL
+--- PASS: TestChannel_encodePrivateShareURL_decodePrivateShareURL (0.02s)
+=== RUN   TestChannel_decodePrivateShareURL
+--- PASS: TestChannel_decodePrivateShareURL (0.00s)
+=== RUN   TestChannel_encodeSecretShareURL_decodeSecretShareURL
+--- PASS: TestChannel_encodeSecretShareURL_decodeSecretShareURL (0.03s)
+=== RUN   TestChannel_marshalPrivateShareUrlSecrets_unmarshalPrivateShareUrlSecrets
+--- PASS: TestChannel_marshalPrivateShareUrlSecrets_unmarshalPrivateShareUrlSecrets (0.02s)
+=== RUN   TestChannel_marshalSecretShareUrlSecrets_unmarshalSecretShareUrlSecrets
+--- PASS: TestChannel_marshalSecretShareUrlSecrets_unmarshalSecretShareUrlSecrets (0.03s)
+=== RUN   Test_encryptShareURL_decryptShareURL
+--- PASS: Test_encryptShareURL_decryptShareURL (0.00s)
+=== RUN   Test_decryptShareURL_ShortData
+--- PASS: Test_decryptShareURL_ShortData (0.00s)
+=== RUN   TestChannel_InviteURL_DecodeInviteURL
+--- PASS: TestChannel_InviteURL_DecodeInviteURL (0.06s)
+=== RUN   TestChannel_InviteURL
+    shareURL_test.go:584: name: aaaa
+    shareURL_test.go:585: RsaPubKeyLength: 368
+    shareURL_test.go:586: RSASubPayloads: 1
+--- PASS: TestChannel_InviteURL (0.00s)
+=== RUN   TestChannel_InviteURL_ParseError
+--- PASS: TestChannel_InviteURL_ParseError (0.01s)
+=== RUN   TestDecodeInviteURL_ParseError
+--- PASS: TestDecodeInviteURL_ParseError (0.00s)
+=== RUN   TestDecodeInviteURL_DecodeError
+--- PASS: TestDecodeInviteURL_DecodeError (0.00s)
+=== RUN   TestDecodeInviteURL_NewChannelIDError
+--- PASS: TestDecodeInviteURL_NewChannelIDError (0.00s)
+=== RUN   TestDecodeInviteURL_NameMaxLengthError
+--- PASS: TestDecodeInviteURL_NameMaxLengthError (0.00s)
+=== RUN   TestDecodeInviteURL_DescriptionMaxLengthError
+--- PASS: TestDecodeInviteURL_DescriptionMaxLengthError (0.00s)
+=== RUN   TestChannel_encodePublicInviteURL_decodePublicInviteURL
+--- PASS: TestChannel_encodePublicInviteURL_decodePublicInviteURL (0.02s)
+=== RUN   TestChannel_encodePrivateInviteURL_decodePrivateInviteURL
+--- PASS: TestChannel_encodePrivateInviteURL_decodePrivateInviteURL (0.06s)
+=== RUN   TestChannel_decodeInviteURL
+--- PASS: TestChannel_decodeInviteURL (0.00s)
+=== RUN   TestChannel_encodeSecretInviteURL_decodeSecretInviteURL
+--- PASS: TestChannel_encodeSecretInviteURL_decodeSecretInviteURL (0.08s)
+=== RUN   TestNewSizedBroadcast_DecodeSizedBroadcast_SmallPayload
+--- PASS: TestNewSizedBroadcast_DecodeSizedBroadcast_SmallPayload (0.00s)
+=== RUN   TestNewSizedBroadcast_DecodeSizedBroadcast_FullSizesPayload
+--- PASS: TestNewSizedBroadcast_DecodeSizedBroadcast_FullSizesPayload (0.00s)
+=== RUN   TestNewSizedBroadcast_MaxPayloadSizeError
+--- PASS: TestNewSizedBroadcast_MaxPayloadSizeError (0.00s)
+=== RUN   TestDecodeSizedBroadcast_DataTooShortError
+--- PASS: TestDecodeSizedBroadcast_DataTooShortError (0.00s)
+=== RUN   TestDecodeSizedBroadcast_SizeMismatchError
+--- PASS: TestDecodeSizedBroadcast_SizeMismatchError (0.00s)
+=== RUN   TestMaxSizedBroadcastPayloadSize
+--- PASS: TestMaxSizedBroadcastPayloadSize (0.00s)
+=== RUN   TestSymmetric_Encrypt_Decrypt
+--- PASS: TestSymmetric_Encrypt_Decrypt (0.05s)
+=== RUN   TestSymmetric_Decrypt
+--- PASS: TestSymmetric_Decrypt (0.04s)
+=== RUN   TestSymmetric_Marshal_UnmarshalSymmetric
+--- PASS: TestSymmetric_Marshal_UnmarshalSymmetric (0.01s)
+=== RUN   TestNewSymmetricKey_Consistency
+--- PASS: TestNewSymmetricKey_Consistency (0.00s)
+=== RUN   TestNewSymmetricKey_Unique
+--- PASS: TestNewSymmetricKey_Unique (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/broadcast	30.812s
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestHexEscape
+--- PASS: TestHexEscape (0.00s)
+=== RUN   TestHexEscapeUnescapeWeirdStrings
+--- PASS: TestHexEscapeUnescapeWeirdStrings (0.00s)
+=== RUN   TestHexUnescapeOnInvalid
+--- PASS: TestHexUnescapeOnInvalid (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/broadcast/escape	8.148s
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   Test_encryptIdentity_decryptIdentity
+--- PASS: Test_encryptIdentity_decryptIdentity (0.00s)
+=== RUN   Test_decryptIdentity_ShortDataError
+--- PASS: Test_decryptIdentity_ShortDataError (0.00s)
+=== RUN   Test_decryptIdentity_InvalidPasswordError
+--- PASS: Test_decryptIdentity_InvalidPasswordError (0.00s)
+=== RUN   Test_deriveKey
+--- PASS: Test_deriveKey (0.02s)
+=== RUN   Test_makeSalt
+--- PASS: Test_makeSalt (0.00s)
+=== RUN   Test_makeSalt_ReadError
+--- PASS: Test_makeSalt_ReadError (0.00s)
+=== RUN   Test_makeSalt_ReadNumBytesError
+--- PASS: Test_makeSalt_ReadNumBytesError (0.00s)
+=== RUN   Test_decodeVer0_Consistency
+--- PASS: Test_decodeVer0_Consistency (0.03s)
+=== RUN   TestPrivateIdentity_export_ImportPrivateIdentity_KeySign
+--- PASS: TestPrivateIdentity_export_ImportPrivateIdentity_KeySign (0.38s)
+=== RUN   TestPrivateIdentity_export_ImportPrivateIdentity
+--- PASS: TestPrivateIdentity_export_ImportPrivateIdentity (0.27s)
+=== RUN   TestPrivateIdentity_export_EncryptError
+--- PASS: TestPrivateIdentity_export_EncryptError (0.00s)
+=== RUN   TestImportPrivateIdentity_MalformedImportsError
+--- PASS: TestImportPrivateIdentity_MalformedImportsError (0.00s)
+=== RUN   TestPrivateIdentity_encrypt_decryptPrivateIdentity
+--- PASS: TestPrivateIdentity_encrypt_decryptPrivateIdentity (0.00s)
+=== RUN   TestPrivateIdentity_encrypt_MakeSaltError
+--- PASS: TestPrivateIdentity_encrypt_MakeSaltError (0.00s)
+=== RUN   Test_decryptPrivateIdentity_DecryptIdentityError
+--- PASS: Test_decryptPrivateIdentity_DecryptIdentityError (0.00s)
+=== RUN   Test_decryptPrivateIdentity_DecodeIdentityError
+--- PASS: Test_decryptPrivateIdentity_DecodeIdentityError (0.00s)
+=== RUN   TestPrivateIdentity_encode_decodePrivateIdentity
+--- PASS: TestPrivateIdentity_encode_decodePrivateIdentity (0.00s)
+=== RUN   Test_decodePrivateIdentity_DataLengthError
+--- PASS: Test_decodePrivateIdentity_DataLengthError (0.00s)
+=== RUN   Test_decodePrivateIdentity_IncorrectVersionError
+--- PASS: Test_decodePrivateIdentity_IncorrectVersionError (0.00s)
+=== RUN   Test_getTagContents
+--- PASS: Test_getTagContents (0.00s)
+=== RUN   Test_getTagContents_MissingTagsError
+--- PASS: Test_getTagContents_MissingTagsError (0.00s)
+=== RUN   TestSignVerify
+--- PASS: TestSignVerify (1.29s)
+=== RUN   TestSignResponse_VerifyResponse
+--- PASS: TestSignResponse_VerifyResponse (0.00s)
+=== RUN   TestSignVerify_Consistency
+--- PASS: TestSignVerify_Consistency (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/channel	9.330s
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestGenerateClientGatewayKey
+--- PASS: TestGenerateClientGatewayKey (0.00s)
+=== RUN   TestEncrypt
+--- PASS: TestEncrypt (0.01s)
+=== RUN   TestEncrypt_Consistency
+--- PASS: TestEncrypt_Consistency (0.00s)
+=== RUN   TestDecrypt
+--- PASS: TestDecrypt (0.01s)
+=== RUN   TestKeyGen
+--- PASS: TestKeyGen (0.00s)
+=== RUN   TestNodeKeyGen
+--- PASS: TestNodeKeyGen (0.00s)
+=== RUN   TestClientKeyGen
+--- PASS: TestClientKeyGen (0.00s)
+=== RUN   TestGenerateKMAC_Consistency
+--- PASS: TestGenerateKMAC_Consistency (0.00s)
+=== RUN   TestGenerateKMACs_Consistency
+--- PASS: TestGenerateKMACs_Consistency (0.00s)
+=== RUN   TestVerifyKMAC
+--- PASS: TestVerifyKMAC (0.00s)
+=== RUN   TestVerifyKMAC_WrongExpectedKmac
+--- PASS: TestVerifyKMAC_WrongExpectedKmac (0.00s)
+=== RUN   TestVerifyKACY_Mismatch
+--- PASS: TestVerifyKACY_Mismatch (0.00s)
+=== RUN   TestSaltSystemRand
+--- PASS: TestSaltSystemRand (0.00s)
+=== RUN   TestSaltPanic
+--- PASS: TestSaltPanic (0.00s)
+=== RUN   TestSelectGroupBit_ByteMask
+--- PASS: TestSelectGroupBit_ByteMask (0.00s)
+=== RUN   TestSelectGroupBit_InGroup
+--- PASS: TestSelectGroupBit_InGroup (0.00s)
+=== RUN   TestSetGroupBits
+--- PASS: TestSetGroupBits (0.03s)
+PASS
+ok  	gitlab.com/elixxir/crypto/cmix	7.704s
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   Test_encryptIdentity_decryptIdentity
+--- PASS: Test_encryptIdentity_decryptIdentity (0.00s)
+=== RUN   Test_decryptIdentity_ShortDataError
+--- PASS: Test_decryptIdentity_ShortDataError (0.00s)
+=== RUN   Test_decryptIdentity_InvalidPasswordError
+--- PASS: Test_decryptIdentity_InvalidPasswordError (0.00s)
+=== RUN   Test_deriveKey
+--- PASS: Test_deriveKey (0.02s)
+=== RUN   Test_makeSalt
+--- PASS: Test_makeSalt (0.00s)
+=== RUN   Test_makeSalt_ReadError
+--- PASS: Test_makeSalt_ReadError (0.00s)
+=== RUN   Test_makeSalt_ReadNumBytesError
+--- PASS: Test_makeSalt_ReadNumBytesError (0.00s)
+=== RUN   TestConstructIdentity
+--- PASS: TestConstructIdentity (0.07s)
+=== RUN   TestConstructIdentity_Vector
+    identity_test.go:162: codenames := []string {
+        	"aWellKnownDownScoopShovel#CJBQ1Z7JR7B92gVvitmJbuzyQLOIHm0x77BFC7",
+        	"mrDisruptiveFullback#diTJfbO4VEdjfsRZ78Lw46mG5B4s3Y0x57FEFF",
+        	"juniorNeriticRicer#eyrYJ5rkz2S0geIaKRxlhVtMd1lzvg0x57FEFF",
+        	"freshieUndueUntidiness#IGXyptJWwIEvodXOQelrok5/I+d6Wv0xFFE87C",
+        	"tiaCorkedBasis#JHfoarwsvjQMY5iZypfxQPBoa+US3T0xFDEEF4",
+        	"thisPeltateJudicialPrinciple#J7sDlY7bHn8Iu3XPte6pga5ZaWLfT20xF6358A",
+        	"theObligationalNovocain#y8mnzmlzQVUMPgMByUtpV1X8HNdp/m0x56A5EC",
+        	"juniorUndoableCapsicum#0OQddD1SY9IOyfoFDtGXquChG/kCXt0xE18B6B",
+        	"ourUnwoundedRoyalAcademyOfArts#VQB+elebg54sG1o9AyzDiSDIGKo6S70xB041FF",
+        	"señorGrilledConfect#u0P0nkNbHDMHi12fwtSISDW3wxEBDs0xC5908E",
+        	"brotherLonghandConvalescence#iIvJy9nuiJg7H3TLwumyN37vtTrdr60xE238EC",
+        	"sisterBasidialRosaceae#WtAoXbvG/Dhts/hODSvH6hDclfN33E0x57E964",
+        	"mayorHoraryMiddle#aqhA8UEV525NUucnkHQdfymVDAL2xb0xFAAFBE",
+        	"señorMulticellularSpecs#FIzpM5LrItNjLFZpIiMhV0rx6kqoLM0xC9BE62",
+        	"coachFoggedContourLine#+0kY0+W/mN9Vk8fOk536zGFu5JVi6K0xF88017",
+        	"coachReformistSeneschal#7/U4P2FKBAaHX7CquQ3oQac1++aBY+0xB041FF",
+        	"thisVotelessDeviceCharacteristic#G6omqBoKDTL4NFpic5P+IpuKkfbbeY0xA74AC7",
+        	"theirDissonantOpticalIllusion#du1ojRiL7pU4Owq4o1cjK7qzYBX5tR0x4CC417",
+        	"tiaInsectanSilverworker#7IspUGfv8lFjf3j9pxI9aN2xiiQGE40x48CCCD",
+        	"señoritaFoliateCardiograph#XVECxCH7ZPU5qCsyLgnnDwmUWsT4P00xE9AB17",
+        	"chiefCutOutAvower#oTPqAD4ZVfSI9u+6NnA2HBDwmoMiq20xCA226B",
+        	"theirIllAtEaseAuctionPitch#CBhMFc2S4EsMaOF361VVjJugepEEbU0xF75D59",
+        	"djAstylarHominyGrits#UyJJFRRYjaOjJ78pQ5nMV9wxKGCSqN0xE41B17",
+        	"rookieLxivIodoaminoAcid#Fx+XJnd3aongZqcaXJtAFyUYUTlYpD0xFFFC17",
+        	"coachUnpractisedArbutus#8VDrAkNQomebVKsa+BRR7+QOUtFcS10xECD672",
+        	"itsPyrogenicImpendence#ON7m/yKsp8nIWK3XnrT5+x+Lcv8MnP0xC7A317",
+        	"msUnsurprisingGorger#TQDfTRTkRtk17mC66/V5V1h6Lmxtnj0x00FFFF",
+        	"thisDemographicBackfire#OQIxTFPiDXuH8C5DzlQMZtblOY3v5J0xF6358A",
+        	"theSagittateJudaism#1mYeBOM8W9l155FPtQrS8lO+7P7OVG0xD462FF",
+        	"yourIncreasedUpthrow#n7WfNv5sU7k14YwnKvkbSEe1Q+ZbA20xE56E94",
+        	"theHarmoniousEthmoid#Do33eHXNpszdIg48vxu54NJ6Z/NZLV0x5EFB6E",
+        	"monsieurUnconfirmedTablature#vZZW1mpxAHySKuVVdZg2efSi7agsrA0x43C6DB",
+        	"señoraNecklikeElastic#bMcXb1srnFLumAEvm8YxFG1TxqO2310x43BFC7",
+        	"representativeAniseikonicDuct#aYgewQbqBlL1z+Bvd5S3sCLPptCck70xA0C544",
+        	"señorClarifyingSepal#YZN14FDNGhfrvglD2fbF4h1Wjtn9LW0x48CCCD",
+        	"djEntertainedAnagoge#8es/JqPu6qTL6N5VTwD3udCa2X5sGN0x5EFB6E",
+        	"apprenticeDepartedBoringness#8GTh/1guvSfcHdg7u6+2Z6kCKHQqgD0xFFF8C6",
+        	"noviceUntaggedGoodForm#gKckIJS6r+Fr5KJ7UmP+cnCgENCxVR0x57FEFF",
+        	"adeptDualSunberry#jKXmp0xHki2DDaYGuzrJxT3Buyw0r30xC6AEC7",
+        	"myGarrulousDeception#9iW47PUFZobB40jLa/Ircd15R9UOX40xF665AB",
+        	"fledgelingPolycrystallineIngot#AiHgclVykhE117QZLUsLDe3PyaiL//0xF75D59",
+        	"myObsessiveHueAndCry#kOAubHhdI4YSiddHZtiaxVz5L30VQs0xE41B17",
+        	"mcEvidentiaryVolgaic#jLoLArQEWCO0mijjlszerWYgUAp0c20xF6358A",
+        	"jrMercerizedBowlingEquipment#/Ly7aeiOzDfxarK0JdB5ub/o5SJ9J+0x43BFC7",
+        	"rookieToughenedNewMexico#sfuEVKCLqg0ZU2e9dpk+TowWfxDnrU0x7FE817",
+        	"aWellKnownPurpleRedTulipPoplar#RhkPV4oeDc4MQJj29OdER51O1TBJJe0x52D017",
+        	"inspectorFileLikeDeaminization#0SP+BRiIXUhmweMfPFhnbSENP16ZlZ0xE0FFFF",
+        	"juniorBrisantOvercharge#CQosQspA5p6Nmg6iIFX4fveCiZuWis0x9E7BFF",
+        	"myUnspecialisedHydrocharidaceae#4CNwfPw4hQb5NuPVXwI4aAr8Ams++J0xF6358A",
+        	"deputyDuplicatableConferrer#EP1WyHh21rAmSUT+5aNMoJb4I6/eKb0xCA226B",
+        	"mcPaleocorticalAmericanDream#nVCP1OkG2Kob462gdeFSGlpHTKNXqM0xC12283",
+        	"thatSausageShapedImmortelle#s5CDyaJCyflp94Nht60BgMynfQIxt60x64E986",
+        	"itsAstonishedMalePlug#oSpGyMiORey7lqbIAcgL2H5MTWs87n0x00FFFF",
+        	"councillorPillaredAntiviralAgent#/PTDWmUsAOIYm5OjO+i68maTs5ZQ320x43BFC7",
+        	"jrSilveryGreyIndene#Ey44JvrTjZc5bw1THQ/FCjQDboixk70xEDE275",
+        	"broadbandTaxation#CFBonykLjYHMzGESusgET+ojZXnXy+0x3EA99F",
+        	"sergeantExpectantLowGear#of1pNqREHIQeNV/qjtclGr1K3EZAOE0xEDDA74",
+        	"directorCompatibleFlutter#xEn2zV0WoZowqE/anGrXEkXclKDEjm0x48CCCD",
+        	"mrCreepyMultiplex#6eNDFseaT07bWJ7XbhxUi4hadmGWkO0x3EA99F",
+        	"corporalApostrophicGoat#nD+VIRKJFpOVjm8jnTjLXLwkWNVHoJ0xC68E17",
+        	"señorSpinousMorphea#UcEhk455MmNyx8aZv/ninLoGk+t9+H0xC48793",
+        	"thisManyAnotherArrears#9ONAWOcBCb32QvAq2XAZRjt82iA7us0xC25A7C",
+        	"seniorUnappetisingRawWool#D6DvIW4Ett7mAm9yPrqzudLYCiVqCQ0xC12267",
+        	"jrPoundFoolishStephanion#6f+VMw9K669bzC7+Yhg+WzEg8UZWnW0xB38481",
+        	"deputyArcticGraduatingClass#dC3bCc9Pnum6PJ6FZbxAdaqgK/OgDa0xE18B6B",
+        	"mrRopeyTheHalt#t3GIfdsaml800cqHQovmhY6CapFW9V0x54C571",
+        	"drOpprobriousResult#CxgaD4atGCC2ySR1FUjbuVNEgy5aBP0x57FEFF",
+        	"chiefMiddleFoodFish#AosH51cvf16D7e+ngycHz1qMafxaED0xF75D59",
+        	"itsOtherPhotometer#R3nMp5DTaVJ7lM7AivOpMQGfEedlPA0xB38481",
+        	"oldmanDefendableComprehensive#MgfelOEBdci1MYxvCFVg+GOmXYesRv0xE7A1B0",
+        	"aWellKnownEnoughOpticalFiber#xET81e2mef+GNsepulMKS4qHzVNXg80x8AFB17",
+        	"ladyJocundSidalcea#cazZBzanh8y0/pH5oFsKX3kggDYUhC0x00FFFF",
+        	"mcSurroundedSemimonthly#nEax3bLPHQnUGeKB0XAKAZWKbIXrMY0x1589FF",
+        	"deputyAnalogLobbyist#VUW+i98apTF35NvwGp1jsgK1dh/pHr0xE3319D",
+        	"aWellKnownPapalNonobservance#xm7wVal361xYnPfeQgB7LT890VRObk0xC6DEFF",
+        	"sisterMousyUnderdevelopment#11ohNjlcsuclZAfIUIt84U4JwCwU2b0xFFFF00",
+        	"juniorWoollenLiveliness#GVptxNdWnI5ExW1xizO/AojF17oD/90xE6A9EC",
+        	"itsUnrecognizedArmiger#LUVWIV8khBXd6nZRPRaQuiHO5g0XOs0x1589FF",
+        	"monsieurKindlyAccountant#9Qv4vcwkBAvj6x6qOUyYfPP0nFKKv/0xFF0000",
+        	"señoritaHygienicalImago#DPL5HrXuemKD4fTUIyxGBUBFrP4L5f0xC12267",
+        	"inspectorBrisantPerchloromethane#04XTUr4bdtfuXRlgvqHaydSoI8jrvB0x488AC7",
+        	"myLadylikeBitthead#gx3HpBXMc7pk/B1ClkJqORpl7mxjs10xF75D59",
+        	"constableGrownupBabble#oxWVz57MNz1JG/JgzNusw0fAdHiq0D0xFAAFBA",
+        	"theirPurposelessForelock#4tBa2MKTV3W6+Pgr7wuNd6GxtvQ3r/0x82CAFA",
+        	"msAmusiveBandleader#rC+WyvBvP1z2chh4caISyKtrAwGnk40xD462FF",
+        	"sisterLiquefiedProgestogen#foDth/e4qEuDMA1UspMlolAIxSoEN20xF433FF",
+        	"srSubstantiveElectromagnetics#38S9/zpJ77bnc3jQnxwfsi8ouVF/St0xFBB117",
+        	"yourFeudalisticHorizontal#DBBH33YolG+cJGN44VGw2qSM8M/7s80x893BFF",
+        	"lordHeterologicRadiationPattern#MH5UXonBleimbDRmDyXGfDArXdOJQk0xE9AB17",
+        	"fledgelingBillowyLyrist#g8AmNtoK4/ympAKDGqdtOmPJ0JW/PR0xC58917",
+        	"freshieRhetoricalPatrimony#5xrdkIFsHGxYApAvWKcXRZg2KN06jX0x87F717",
+        	"señoritaScrubbyGoogol#GS3iJ2W6bs7VnnKOQwa2o2iTgGqTAi0x59E817",
+        	"aFramedPall#/usy7acxjOL2kPx7JJLFZe9HtTC5Sr0xF6358A",
+        	"inRightEyedPaleography#nLDg1OX2lbDIE7/0G+S8AZxUsvYsME0x8AFB17",
+        	"freshieIndoGermanicBurr#0Z0odw3VMwPGO38jLhSu719UTpIpIq0x8BB381",
+        	"freshieNonpersonalTrouper#PJ/HxMkKXOlxwbnJXcWy/uE+1BfIcI0xE77471",
+        	"itsReversiveArrestedDevelopment#kuMUS/CM7x6Kmug2ZhSA7kq7xkC42W0xC9BE62",
+        	"mistressHowlingPosting#Dj1d5Jr6U/dm5F3p1BThm0eRtOrsgK0xFAAFBA",
+        	"señoritaMostValuableRededication#xgvcUcqQxezQPNi5vAYE1a/c+H3MAo0xC12283",
+        	"djMeanspiritedComplacency#XbYzYUhlZTHeSNEhzueijbQXX7HpQO0xE18B6B",
+        }
+--- PASS: TestConstructIdentity_Vector (0.07s)
+=== RUN   TestPrivateIdentity_MarshalUnmarshal
+--- PASS: TestPrivateIdentity_MarshalUnmarshal (0.00s)
+=== RUN   TestIdentity_MarshalUnmarshal
+--- PASS: TestIdentity_MarshalUnmarshal (0.00s)
+=== RUN   TestUnmarshalPrivateIdentity_Error
+--- PASS: TestUnmarshalPrivateIdentity_Error (0.00s)
+=== RUN   TestUnmarshalIdentity_Error
+--- PASS: TestUnmarshalIdentity_Error (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/codename	8.387s
+2025/11/10 23:59:24 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:24 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:24 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:24 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:24 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:24 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestContact_Marshal_Unmarshal
+--- PASS: TestContact_Marshal_Unmarshal (0.01s)
+=== RUN   TestContact_Marshal_Unmarshal_Nil
+--- PASS: TestContact_Marshal_Unmarshal_Nil (0.00s)
+=== RUN   TestUnmarshal_Consistency
+--- PASS: TestUnmarshal_Consistency (0.00s)
+=== RUN   TestUnmarshal_Error
+--- PASS: TestUnmarshal_Error (0.00s)
+=== RUN   TestUnmarshal_ChecksumError
+--- PASS: TestUnmarshal_ChecksumError (0.00s)
+=== RUN   TestContact_GetChecksum
+--- PASS: TestContact_GetChecksum (0.00s)
+=== RUN   TestContact_GetChecksum_NilContact
+--- PASS: TestContact_GetChecksum_NilContact (0.00s)
+=== RUN   TestContact_GetFingerprint
+--- PASS: TestContact_GetFingerprint (0.00s)
+=== RUN   TestContact_GetFingerprint_NilContact
+--- PASS: TestContact_GetFingerprint_NilContact (0.00s)
+=== RUN   TestContact_GetFingerprint_Consistency
+--- PASS: TestContact_GetFingerprint_Consistency (0.00s)
+=== RUN   TestContact_MakeQR
+--- PASS: TestContact_MakeQR (0.24s)
+=== RUN   TestContact_MakeQR_DataTooLargeError
+--- PASS: TestContact_MakeQR_DataTooLargeError (0.00s)
+=== RUN   TestContact_String
+--- PASS: TestContact_String (0.00s)
+=== RUN   TestContact_String_Nil
+--- PASS: TestContact_String_Nil (0.00s)
+=== RUN   TestEqual
+--- PASS: TestEqual (0.00s)
+=== RUN   Test_getTagContents
+--- PASS: Test_getTagContents (0.00s)
+=== RUN   Test_getTagContents_MissingTagsError
+--- PASS: Test_getTagContents_MissingTagsError (0.00s)
+=== RUN   TestContact_unmarshalVer2_Consistency
+--- PASS: TestContact_unmarshalVer2_Consistency (0.00s)
+=== RUN   TestContact_unmarshalVer1_Consistency
+--- PASS: TestContact_unmarshalVer1_Consistency (0.00s)
+=== RUN   TestContact_unmarshalVer0_Consistency
+--- PASS: TestContact_unmarshalVer0_Consistency (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/contact	7.526s
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestIntBuffer_Get
+--- PASS: TestIntBuffer_Get (0.00s)
+=== RUN   TestIntBuffer_Len
+--- PASS: TestIntBuffer_Len (0.06s)
+=== RUN   TestIntBuffer_GetFingerprint
+--- PASS: TestIntBuffer_GetFingerprint (0.00s)
+=== RUN   TestIntBuffer_GetRegion
+--- PASS: TestIntBuffer_GetRegion (0.00s)
+=== RUN   TestIntBuffer_DeepCopy
+--- PASS: TestIntBuffer_DeepCopy (0.00s)
+=== RUN   TestIntBuffer_Contains
+--- PASS: TestIntBuffer_Contains (0.00s)
+=== RUN   TestIntBuffer_Erase
+--- PASS: TestIntBuffer_Erase (0.00s)
+=== RUN   TestNewGroup
+--- PASS: TestNewGroup (0.00s)
+=== RUN   TestNewInt
+--- PASS: TestNewInt (0.00s)
+=== RUN   TestGroup_NewIntBuffer
+--- PASS: TestGroup_NewIntBuffer (0.08s)
+=== RUN   TestNewInt_Panic
+FATAL 2025/11/10 23:59:26 NewInt: Attempted creation of cyclic outside of group
+--- PASS: TestNewInt_Panic (0.00s)
+=== RUN   TestNewIntFromLargeInt
+--- PASS: TestNewIntFromLargeInt (0.00s)
+=== RUN   TestNewIntFromLargeInt_Panic
+FATAL 2025/11/10 23:59:26 NewIntFromLargeInt: Attempted creation of cyclic outside of group
+--- PASS: TestNewIntFromLargeInt_Panic (0.00s)
+=== RUN   TestNewIntFromBytes
+--- PASS: TestNewIntFromBytes (0.00s)
+=== RUN   TestNewIntFromBytes_Panic
+FATAL 2025/11/10 23:59:26 NewIntFromBytes: Attempted creation of cyclic outside of group
+--- PASS: TestNewIntFromBytes_Panic (0.00s)
+=== RUN   TestNewIntFromString
+--- PASS: TestNewIntFromString (0.00s)
+=== RUN   TestNewIntFromString_Panic
+FATAL 2025/11/10 23:59:26 NewIntFromString: Attempted creation of cyclic outside of group
+--- PASS: TestNewIntFromString_Panic (0.00s)
+=== RUN   TestGroup_NewIntFromBits_Panic
+FATAL 2025/11/10 23:59:26 NewIntFromBits: Attempted creation of cyclic outside of group
+--- PASS: TestGroup_NewIntFromBits_Panic (0.00s)
+=== RUN   TestGroup_NewIntFromBits
+    group_test.go:264: 123456 in GRP: ln9lzlk21/g=
+--- PASS: TestGroup_NewIntFromBits (0.00s)
+=== RUN   TestNewMaxInt
+--- PASS: TestNewMaxInt (0.00s)
+=== RUN   TestNewIntFromUInt
+--- PASS: TestNewIntFromUInt (0.00s)
+=== RUN   TestNewIntFromUInt_Panic
+FATAL 2025/11/10 23:59:26 NewIntFromUInt: Attempted creation of cyclic outside of group
+--- PASS: TestNewIntFromUInt_Panic (0.00s)
+=== RUN   TestGetFingerprint
+--- PASS: TestGetFingerprint (0.00s)
+=== RUN   TestGetFingerprintText
+--- PASS: TestGetFingerprintText (0.00s)
+=== RUN   TestSet
+--- PASS: TestSet (0.00s)
+=== RUN   TestSet_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 10844498364665878520 and cyclicInt has 6767971411992125794
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.(*Group).Set
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:196
+gitlab.com/elixxir/crypto/cyclic.TestSet_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:396
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestSet_Panic (0.00s)
+=== RUN   TestSetLargeInt
+--- PASS: TestSetLargeInt (0.00s)
+=== RUN   TestSetBytes
+--- PASS: TestSetBytes (0.00s)
+=== RUN   TestSetBytes_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 10844498364665878520 and cyclicInt has 6767971411992125794
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.(*Group).SetBytes
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:246
+gitlab.com/elixxir/crypto/cyclic.TestSetBytes_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:468
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestSetBytes_Panic (0.00s)
+=== RUN   TestGroup_SetBits
+--- PASS: TestGroup_SetBits (0.00s)
+=== RUN   TestGroup_SetBits_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 6767971411992125794 and cyclicInt has 10844498364665878520
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.(*Group).SetBits
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:218
+gitlab.com/elixxir/crypto/cyclic.TestGroup_SetBits_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:500
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestGroup_SetBits_Panic (0.00s)
+=== RUN   TestGroup_OverwriteBits
+    group_test.go:520: existing cap: 28
+    group_test.go:522: expected len: 4
+    group_test.go:537: newAlloc cap: 1
+--- PASS: TestGroup_OverwriteBits (0.00s)
+=== RUN   TestGroup_OverwriteBits_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 6767971411992125794 and cyclicInt has 10844498364665878520
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.(*Group).OverwriteBits
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:239
+gitlab.com/elixxir/crypto/cyclic.TestGroup_OverwriteBits_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:569
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestGroup_OverwriteBits_Panic (0.00s)
+=== RUN   TestSetString
+--- PASS: TestSetString (0.00s)
+=== RUN   TestSetString_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 10844498364665878520 and cyclicInt has 6767971411992125794
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.(*Group).SetString
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:253
+gitlab.com/elixxir/crypto/cyclic.TestSetString_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:643
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestSetString_Panic (0.00s)
+=== RUN   TestSetMaxInt
+--- PASS: TestSetMaxInt (0.00s)
+=== RUN   TestSetMaxInt_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 10844498364665878520 and cyclicInt has 6767971411992125794
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.(*Group).SetMaxInt
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:263
+gitlab.com/elixxir/crypto/cyclic.TestSetMaxInt_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:686
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestSetMaxInt_Panic (0.00s)
+=== RUN   TestSetUint64
+--- PASS: TestSetUint64 (0.00s)
+=== RUN   TestSetUint64_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 10844498364665878520 and cyclicInt has 6767971411992125794
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.(*Group).SetUint64
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:270
+gitlab.com/elixxir/crypto/cyclic.TestSetUint64_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:729
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestSetUint64_Panic (0.00s)
+=== RUN   TestMul
+--- PASS: TestMul (0.00s)
+=== RUN   TestFullBytes
+--- PASS: TestFullBytes (0.00s)
+=== RUN   TestMul_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 17664118373302153085 and cyclicInt has 8759536997061466614
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.(*Group).Mul
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:278
+gitlab.com/elixxir/crypto/cyclic.TestMul_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:792
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestMul_Panic (0.00s)
+=== RUN   TestInside
+--- PASS: TestInside (0.00s)
+=== RUN   TestSingleBytesInside
+--- PASS: TestSingleBytesInside (0.00s)
+=== RUN   TestBytesInside
+--- PASS: TestBytesInside (0.00s)
+=== RUN   TestModP
+--- PASS: TestModP (0.00s)
+=== RUN   TestModP_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 17664118373302153085 and cyclicInt has 8759536997061466614
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.Group.ModP
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:307
+gitlab.com/elixxir/crypto/cyclic.TestModP_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:932
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestModP_Panic (0.00s)
+=== RUN   TestInverse
+--- PASS: TestInverse (0.00s)
+=== RUN   TestInverse_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 17664118373302153085 and cyclicInt has 8759536997061466614
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.(*Group).Inverse
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:314
+gitlab.com/elixxir/crypto/cyclic.TestInverse_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:972
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestInverse_Panic (0.00s)
+=== RUN   TestRandom
+--- PASS: TestRandom (0.72s)
+=== RUN   TestRandom_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 12528188767846803037 and cyclicInt has 8759536997061466614
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.(*Group).Random
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:322
+gitlab.com/elixxir/crypto/cyclic.TestRandom_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:1005
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestRandom_Panic (0.00s)
+=== RUN   TestRandom_PanicReadErr
+FATAL 2025/11/10 23:59:26 Could not generate random number in group: testing reader error
+--- PASS: TestRandom_PanicReadErr (0.00s)
+=== RUN   TestGen
+--- PASS: TestGen (0.02s)
+=== RUN   TestGetP
+--- PASS: TestGetP (0.00s)
+=== RUN   TestGetPBytes
+--- PASS: TestGetPBytes (0.00s)
+=== RUN   TestGetG
+--- PASS: TestGetG (0.00s)
+=== RUN   TestGetGCyclic
+--- PASS: TestGetGCyclic (0.00s)
+=== RUN   TestGetPSub1
+--- PASS: TestGetPSub1 (0.00s)
+=== RUN   TestGetPSub1Cyclic
+--- PASS: TestGetPSub1Cyclic (0.00s)
+=== RUN   TestGetPSub1Factor
+--- PASS: TestGetPSub1Factor (0.00s)
+=== RUN   TestGetPSub1FactorCyclic
+--- PASS: TestGetPSub1FactorCyclic (0.00s)
+=== RUN   TestArrayMul
+--- PASS: TestArrayMul (0.00s)
+=== RUN   TestArrayMult_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 17664118373302153085 and cyclicInt has 8759536997061466614
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.Group.MulMulti
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:395
+gitlab.com/elixxir/crypto/cyclic.TestArrayMult_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:1241
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestArrayMult_Panic (0.00s)
+=== RUN   TestExp
+Exp() for Group 4 out of 4 tests passed.
+--- PASS: TestExp (0.00s)
+=== RUN   TestExpG
+--- PASS: TestExpG (0.00s)
+=== RUN   TestExp_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 17664118373302153085 and cyclicInt has 8759536997061466614
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.Group.Exp
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:407
+gitlab.com/elixxir/crypto/cyclic.TestExp_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:1385
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestExp_Panic (0.00s)
+=== RUN   TestRandomCoprime
+--- PASS: TestRandomCoprime (0.03s)
+=== RUN   TestRandomCoprime_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 17664118373302153085 and cyclicInt has 8759536997061466614
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.(*Group).RandomCoprime
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:422
+gitlab.com/elixxir/crypto/cyclic.TestRandomCoprime_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:1443
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestRandomCoprime_Panic (0.00s)
+=== RUN   TestRandomCoprime_PanicReadErr
+FATAL 2025/11/10 23:59:26 Could not generate random Coprime number in group: testing reader error
+--- PASS: TestRandomCoprime_PanicReadErr (0.00s)
+=== RUN   TestRootCoprime_ZVal
+--- PASS: TestRootCoprime_ZVal (0.00s)
+=== RUN   TestRootCoprime
+RootCoprime 2 out of 2 tests passed.
+--- PASS: TestRootCoprime (0.00s)
+=== RUN   TestRootCoprime_Panic
+FATAL 2025/11/10 23:59:26 cyclicInt being used in wrong group! Group fingerprint is 17664118373302153085 and cyclicInt has 8759536997061466614
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.Group.RootCoprime
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:440
+gitlab.com/elixxir/crypto/cyclic.TestRootCoprime_Panic
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:1536
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestRootCoprime_Panic (0.00s)
+=== RUN   TestFindSmallCoprimeInverse
+--- PASS: TestFindSmallCoprimeInverse (60.59s)
+=== RUN   TestFindSmallCoprimeInverse_SmallGroup
+--- PASS: TestFindSmallCoprimeInverse_SmallGroup (0.01s)
+=== RUN   TestFindSmallCoprimeInverse_UnsafeGroup
+--- PASS: TestFindSmallCoprimeInverse_UnsafeGroup (0.01s)
+=== RUN   TestFindSmallCoprimeInverse_Panic
+FATAL 2025/11/11 00:00:27 Requested bits: 7 is greater than or equal to group's prime: 7
+--- PASS: TestFindSmallCoprimeInverse_Panic (0.00s)
+=== RUN   TestFindSmallCoprimeInverse_PanicArgs
+FATAL 2025/11/11 00:00:27 cyclicInt being used in wrong group! Group fingerprint is 17664118373302153085 and cyclicInt has 8759536997061466614
+gitlab.com/elixxir/crypto/cyclic.(*Group).checkInts
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:172
+gitlab.com/elixxir/crypto/cyclic.Group.FindSmallCoprimeInverse
+	/Users/carback1/Code/xx/crypto/cyclic/group.go:463
+gitlab.com/elixxir/crypto/cyclic.TestFindSmallCoprimeInverse_PanicArgs
+	/Users/carback1/Code/xx/crypto/cyclic/group_test.go:1733
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestFindSmallCoprimeInverse_PanicArgs (0.00s)
+=== RUN   TestFindSmallCoprimeInverse_PanicReadErr
+FATAL 2025/11/11 00:00:27 Could not generate random number in group: testing reader error
+--- PASS: TestFindSmallCoprimeInverse_PanicReadErr (0.00s)
+=== RUN   TestGroup_GobEncode_GobDecode
+--- PASS: TestGroup_GobEncode_GobDecode (0.00s)
+=== RUN   TestGroup_MarshalJSON_IsValid
+--- PASS: TestGroup_MarshalJSON_IsValid (0.00s)
+=== RUN   TestGroup_BytesInside
+--- PASS: TestGroup_BytesInside (0.00s)
+=== RUN   TestGetLargeInt
+--- PASS: TestGetLargeInt (0.00s)
+=== RUN   TestGetGroupFingerprint
+--- PASS: TestGetGroupFingerprint (0.00s)
+=== RUN   TestBytes
+--- PASS: TestBytes (0.00s)
+=== RUN   TestLeftpadBytes
+--- PASS: TestLeftpadBytes (0.00s)
+=== RUN   TestBitLen
+--- PASS: TestBitLen (0.00s)
+=== RUN   TestInt_DeepCopy
+--- PASS: TestInt_DeepCopy (0.00s)
+=== RUN   TestCmp
+--- PASS: TestCmp (0.00s)
+=== RUN   TestReset
+--- PASS: TestReset (0.00s)
+=== RUN   TestText
+--- PASS: TestText (0.00s)
+=== RUN   TestTextVerbose
+--- PASS: TestTextVerbose (0.00s)
+=== RUN   TestByteLen
+--- PASS: TestByteLen (0.00s)
+=== RUN   TestGob
+--- PASS: TestGob (0.00s)
+=== RUN   TestGobDecode_Error
+--- PASS: TestGobDecode_Error (0.00s)
+=== RUN   TestInt_Erase
+--- PASS: TestInt_Erase (0.00s)
+=== RUN   TestInt_MarshalJSON_UnmarshalJSON
+--- PASS: TestInt_MarshalJSON_UnmarshalJSON (0.00s)
+=== RUN   TestInt_UnmarshalJSON
+--- PASS: TestInt_UnmarshalJSON (0.00s)
+=== RUN   TestInt_BinaryEncode_BinaryDecode
+--- PASS: TestInt_BinaryEncode_BinaryDecode (0.00s)
+=== RUN   TestInt_BinaryDecode_BuffTooShortErr
+--- PASS: TestInt_BinaryDecode_BuffTooShortErr (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/cyclic	66.877s
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestGeneratePrivateKey
+--- PASS: TestGeneratePrivateKey (0.00s)
+=== RUN   TestGeneratePublicKey
+--- PASS: TestGeneratePublicKey (0.97s)
+=== RUN   TestGenerateSessionKey
+--- PASS: TestGenerateSessionKey (1.47s)
+=== RUN   TestCheckPublicKey
+--- PASS: TestCheckPublicKey (0.16s)
+PASS
+ok  	gitlab.com/elixxir/crypto/diffieHellman	8.474s
+2025/11/10 23:59:27 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:27 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:27 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:27 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:27 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:27 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:27 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestBenger
+--- PASS: TestBenger (0.00s)
+=== RUN   TestEncryptDecrypt
+--- PASS: TestEncryptDecrypt (0.04s)
+=== RUN   TestPanicOnError
+FATAL 2025/11/10 23:59:28 Test
+gitlab.com/elixxir/crypto/dm.TestPanicOnError
+	/Users/carback1/Code/xx/crypto/dm/errors_test.go:24
+testing.tRunner
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/testing/testing.go:1934
+runtime.goexit
+	/opt/homebrew/Cellar/go/1.25.3/libexec/src/runtime/asm_wasm.s:428
+--- PASS: TestPanicOnError (0.00s)
+=== RUN   TestPanicOnRngFailure
+FATAL 2025/11/10 23:59:28 rng failure
+--- PASS: TestPanicOnRngFailure (0.00s)
+=== RUN   TestPanicOnChaChaFailure
+--- PASS: TestPanicOnChaChaFailure (0.00s)
+=== RUN   TestPanicOnNoiseError
+--- PASS: TestPanicOnNoiseError (0.00s)
+=== RUN   TestRecoverOnNoiseError
+--- PASS: TestRecoverOnNoiseError (0.00s)
+=== RUN   TestNoise
+    noiseX_test.go:77: alicePlaintextE eln 22
+    noiseX_test.go:78: aliceMsg1 len 118
+    noiseX_test.go:79: noise overhead is 96
+--- PASS: TestNoise (0.01s)
+=== RUN   TestCrossingWires
+--- PASS: TestCrossingWires (0.01s)
+=== RUN   TestNoisEncryptDecrypt
+--- PASS: TestNoisEncryptDecrypt (0.00s)
+=== RUN   TestScheme_EncryptSelf
+--- PASS: TestScheme_EncryptSelf (0.00s)
+=== RUN   TestMakeSenderSihTag_Consistency
+--- PASS: TestMakeSenderSihTag_Consistency (0.01s)
+=== RUN   TestMakeReceiverSihTag_Consistency
+--- PASS: TestMakeReceiverSihTag_Consistency (0.01s)
+=== RUN   TestMakeSihTag_Differences2
+--- PASS: TestMakeSihTag_Differences2 (6.83s)
+=== RUN   Test_makeSihTag_Consistency
+--- PASS: Test_makeSihTag_Consistency (0.01s)
+=== RUN   Test_makeSihTag_Differences
+--- PASS: Test_makeSihTag_Differences (6.81s)
+PASS
+ok  	gitlab.com/elixxir/crypto/dm	21.898s
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestErrorCases
+--- PASS: TestErrorCases (0.00s)
+=== RUN   TestEncryptCore
+--- PASS: TestEncryptCore (0.00s)
+=== RUN   TestDecryptCore
+--- PASS: TestDecryptCore (0.00s)
+=== RUN   TestEncryptCore_BadArgs
+TestEncryptCore_BadArgs() 4 out of 4 tests passed.
+--- PASS: TestEncryptCore_BadArgs (0.00s)
+=== RUN   TestDecryptCore_BadArgs
+TestEncryptCore_BadArgs() 4 out of 4 tests passed.
+--- PASS: TestDecryptCore_BadArgs (0.00s)
+=== RUN   TestEncDecAES_256Key
+--- PASS: TestEncDecAES_256Key (0.00s)
+=== RUN   TestEncDecAES_2048Key
+--- PASS: TestEncDecAES_2048Key (0.00s)
+=== RUN   TestEncDecAES_BadKey
+--- PASS: TestEncDecAES_BadKey (0.00s)
+=== RUN   TestEncAES_Args
+TestEncAES_Args() 15 out of 15 tests passed.
+--- PASS: TestEncAES_Args (0.00s)
+=== RUN   TestDecAES_Args
+TestDecAES_Keys() 12 out of 12 tests passed.
+--- PASS: TestDecAES_Args (0.00s)
+=== RUN   TestEncAES_IVs
+--- PASS: TestEncAES_IVs (0.00s)
+=== RUN   TestAESEnc_Hash
+--- PASS: TestAESEnc_Hash (0.00s)
+=== RUN   TestEncDecAES_Random
+TestEncDecAES_Random() 10000 out of 10000 tests passed.
+--- PASS: TestEncDecAES_Random (1.11s)
+=== RUN   TestEncDecAES_AllPaddings
+TestEncDecAES_AllPaddings() 10000 out of 10000 tests passed.
+--- PASS: TestEncDecAES_AllPaddings (2.18s)
+=== RUN   TestGenerateConnectionFingerprint
+--- PASS: TestGenerateConnectionFingerprint (0.00s)
+=== RUN   TestDerive_Consistency
+--- PASS: TestDerive_Consistency (0.00s)
+=== RUN   TestDerive_KeyNum
+--- PASS: TestDerive_KeyNum (0.00s)
+=== RUN   TestDerive_Data
+--- PASS: TestDerive_Data (0.00s)
+=== RUN   TestDummyKeyGen_ValidNumKeys
+--- PASS: TestDummyKeyGen_ValidNumKeys (0.00s)
+=== RUN   TestDummyKeyGen_KeysMatch
+--- PASS: TestDummyKeyGen_KeysMatch (0.00s)
+=== RUN   TestDummyKeyGen_CombinedHashCommutes
+--- PASS: TestDummyKeyGen_CombinedHashCommutes (0.00s)
+=== RUN   TestCryptCrypt
+--- PASS: TestCryptCrypt (0.00s)
+=== RUN   TestEncrypt_Consistency
+--- PASS: TestEncrypt_Consistency (0.00s)
+=== RUN   TestIsUnencrypted_EncryptedMessage
+--- PASS: TestIsUnencrypted_EncryptedMessage (0.00s)
+=== RUN   TestIsUnencrypted_UnencryptedMessage
+--- PASS: TestIsUnencrypted_UnencryptedMessage (0.00s)
+=== RUN   TestSetUnencrypted
+--- PASS: TestSetUnencrypted (0.00s)
+=== RUN   TestIsUnencrypted
+--- PASS: TestIsUnencrypted (0.00s)
+=== RUN   TestDeriveKey_Consistency
+--- PASS: TestDeriveKey_Consistency (0.00s)
+=== RUN   TestDeriveKey_Consistency_salt
+--- PASS: TestDeriveKey_Consistency_salt (0.00s)
+=== RUN   TestDeriveKey_Consistency_doubleSalt
+--- PASS: TestDeriveKey_Consistency_doubleSalt (0.00s)
+=== RUN   TestDeriveKeyFingerprint_Consistency
+--- PASS: TestDeriveKeyFingerprint_Consistency (0.00s)
+=== RUN   TestAllDifferent
+--- PASS: TestAllDifferent (0.00s)
+=== RUN   TestNewMessageID_Consistency
+--- PASS: TestNewMessageID_Consistency (0.00s)
+=== RUN   TestNewMessageID_AllInputs
+--- PASS: TestNewMessageID_AllInputs (0.87s)
+=== RUN   TestUnmarshalMessageID_Error
+--- PASS: TestUnmarshalMessageID_Error (0.00s)
+=== RUN   TestUnmarshalMessageID
+--- PASS: TestUnmarshalMessageID (0.00s)
+=== RUN   TestMessageID_String_Consistency
+--- PASS: TestMessageID_String_Consistency (0.00s)
+=== RUN   TestMessageID_StringVerbose_Consistency
+--- PASS: TestMessageID_StringVerbose_Consistency (0.00s)
+=== RUN   TestMessageID_Marshal_Consistency
+--- PASS: TestMessageID_Marshal_Consistency (0.00s)
+=== RUN   TestPadErrorsOnLongMessage
+--- PASS: TestPadErrorsOnLongMessage (0.00s)
+=== RUN   TestPadDoesNotErrorOnValidMessage
+--- PASS: TestPadDoesNotErrorOnValidMessage (0.00s)
+=== RUN   TestPadMaintainsMessageIntegrity
+--- PASS: TestPadMaintainsMessageIntegrity (0.00s)
+=== RUN   TestPaddingStringPrefixIsValid
+--- PASS: TestPaddingStringPrefixIsValid (0.00s)
+=== RUN   TestPaddingStringTerminationIsValid
+--- PASS: TestPaddingStringTerminationIsValid (0.00s)
+=== RUN   TestPaddingStringIsNonZero
+--- PASS: TestPaddingStringIsNonZero (0.00s)
+=== RUN   TestPaddingStringNotTheSame
+--- PASS: TestPaddingStringNotTheSame (0.00s)
+=== RUN   TestNonZeroRandomBytesAlwaysGenNonZeroByte
+--- PASS: TestNonZeroRandomBytesAlwaysGenNonZeroByte (0.01s)
+=== RUN   TestNonZeroRandomBytesPanicsOnImmediateReaderError
+FATAL 2025/11/10 23:59:31 error reading full length of buffer from rand Reader into slice: external system error
+--- PASS: TestNonZeroRandomBytesPanicsOnImmediateReaderError (0.00s)
+=== RUN   TestUnpadSmallEncodedMsg
+--- PASS: TestUnpadSmallEncodedMsg (0.00s)
+=== RUN   TestUnpadEncodedMsgPrefix
+--- PASS: TestUnpadEncodedMsgPrefix (0.00s)
+=== RUN   TestUnpadEncodedMsgTerminator
+--- PASS: TestUnpadEncodedMsgTerminator (0.00s)
+=== RUN   TestUnpadEncodedMsgInvalidMinPaddingString
+--- PASS: TestUnpadEncodedMsgInvalidMinPaddingString (0.00s)
+=== RUN   TestMakeRelationshipFingerprint
+--- PASS: TestMakeRelationshipFingerprint (0.00s)
+=== RUN   TestMakeKeyResidue
+--- PASS: TestMakeKeyResidue (0.00s)
+=== RUN   TestNewKeyResidue_AllInputs
+--- PASS: TestNewKeyResidue_AllInputs (0.00s)
+=== RUN   TestUnmarshalKeyResidue
+--- PASS: TestUnmarshalKeyResidue (0.00s)
+=== RUN   TestUnmarshalKeyResidue_Error
+--- PASS: TestUnmarshalKeyResidue_Error (0.00s)
+=== RUN   TestKeyResidue_String
+--- PASS: TestKeyResidue_String (0.00s)
+=== RUN   TestKeyResidue_StringVerbose
+--- PASS: TestKeyResidue_StringVerbose (0.00s)
+=== RUN   TestKeResidue_Marshal
+--- PASS: TestKeResidue_Marshal (0.00s)
+=== RUN   TestKeyResidue_Marshal_UnmarshalKeyResidue
+--- PASS: TestKeyResidue_Marshal_UnmarshalKeyResidue (0.00s)
+=== RUN   TestGenerateKeyTTL_PanicOnMinMaxEq
+ERROR 2025/11/10 23:59:31 Min must be greater than or equal to max in computeTTL
+--- PASS: TestGenerateKeyTTL_PanicOnMinMaxEq (0.00s)
+=== RUN   TestGenerateKeyTTL_PanicOnMinGreaterThanMax
+ERROR 2025/11/10 23:59:31 Min must be greater than or equal to max in computeTTL
+--- PASS: TestGenerateKeyTTL_PanicOnMinGreaterThanMax (0.00s)
+=== RUN   TestGenerateKeyTTL_ValidTTL
+--- PASS: TestGenerateKeyTTL_ValidTTL (0.00s)
+=== RUN   TestComputeNumKeys_MinThreshold
+--- PASS: TestComputeNumKeys_MinThreshold (0.00s)
+=== RUN   TestGenerateKeyTTL_KeysPerTimeEqZeroShouldPanic
+ERROR 2025/11/10 23:59:31 Keys per time unit must be greater than zero
+--- PASS: TestGenerateKeyTTL_KeysPerTimeEqZeroShouldPanic (0.00s)
+=== RUN   TestGenerateKeyTTL_KeysPerTimeIsLessThanZeroShouldPanic
+ERROR 2025/11/10 23:59:31 Keys per time unit must be greater than zero
+--- PASS: TestGenerateKeyTTL_KeysPerTimeIsLessThanZeroShouldPanic (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/e2e	12.706s
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:27 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestCryptCrypt
+--- PASS: TestCryptCrypt (0.00s)
+=== RUN   TestCrypt_Panic
+ERROR 2025/11/10 23:59:27 Vector is not of sufficient length for encryption/decryption
+--- PASS: TestCrypt_Panic (0.00s)
+=== RUN   TestEncrypt_Consistency
+--- PASS: TestEncrypt_Consistency (0.00s)
+=== RUN   TestPayloadEncryptDecrypt_Consistency
+--- PASS: TestPayloadEncryptDecrypt_Consistency (0.18s)
+=== RUN   TestAuthPayloadEncryptDecrypt
+--- PASS: TestAuthPayloadEncryptDecrypt (0.05s)
+=== RUN   TestMakeAuthKey_Smoke
+--- PASS: TestMakeAuthKey_Smoke (0.04s)
+=== RUN   TestMakeAuthKey_Consistency
+--- PASS: TestMakeAuthKey_Consistency (0.40s)
+=== RUN   TestMakeAuthKey_InputVariance
+--- PASS: TestMakeAuthKey_InputVariance (0.18s)
+=== RUN   TestMakeMac_Consistency
+--- PASS: TestMakeMac_Consistency (0.10s)
+=== RUN   TestVerifyMac
+--- PASS: TestVerifyMac (1.83s)
+=== RUN   TestVerifyMac_Bad
+--- PASS: TestVerifyMac_Bad (1.83s)
+=== RUN   TestMacInputProof
+--- PASS: TestMacInputProof (5.56s)
+=== RUN   TestCreateNegotiationFingerprint_Consistency
+--- PASS: TestCreateNegotiationFingerprint_Consistency (1.99s)
+=== RUN   TestCreateNegotiationFingerprint_Uniqueness
+--- PASS: TestCreateNegotiationFingerprint_Uniqueness (19.79s)
+=== RUN   TestMakeOwnershipProof_Consistency
+--- PASS: TestMakeOwnershipProof_Consistency (0.30s)
+=== RUN   TestMakeOwnershipProof_Verified
+--- PASS: TestMakeOwnershipProof_Verified (6.21s)
+=== RUN   TestMakeOwnershipProof_VerifiedVector
+    ownership_test.go:130: proof: e2335310a889a7917cc88560cb18d561c607b466db106a6b89ea23aa76314e8a
+--- PASS: TestMakeOwnershipProof_VerifiedVector (0.15s)
+=== RUN   TestMakeOwnershipProofFP_Consistency
+--- PASS: TestMakeOwnershipProofFP_Consistency (0.26s)
+=== RUN   TestVerifyOwnershipProof_Bad
+--- PASS: TestVerifyOwnershipProof_Bad (5.03s)
+=== RUN   TestMakeRequestFingerprint_Consistency
+--- PASS: TestMakeRequestFingerprint_Consistency (0.03s)
+=== RUN   TestMakeRequestFingerprint_FirstBitZero
+--- PASS: TestMakeRequestFingerprint_FirstBitZero (0.56s)
+=== RUN   TestSetRequestFingerprint_Consistency
+--- PASS: TestSetRequestFingerprint_Consistency (0.03s)
+PASS
+ok  	gitlab.com/elixxir/crypto/e2e/auth	51.499s
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestMAC_Consistency
+--- PASS: TestMAC_Consistency (0.00s)
+=== RUN   TestMAC_Unique
+--- PASS: TestMAC_Unique (0.01s)
+=== RUN   TestVerifyMAC
+--- PASS: TestVerifyMAC (0.00s)
+=== RUN   TestVerifyMAC_InvalidMacError
+--- PASS: TestVerifyMAC_InvalidMacError (0.00s)
+=== RUN   TestNewRecipientID_Consistency
+--- PASS: TestNewRecipientID_Consistency (0.10s)
+=== RUN   TestNewRecipientID_Unique
+--- PASS: TestNewRecipientID_Unique (5.43s)
+=== RUN   TestNewRequestFingerprint_Consistency
+--- PASS: TestNewRequestFingerprint_Consistency (0.09s)
+=== RUN   TestNewRequestFingerprint_Unique
+--- PASS: TestNewRequestFingerprint_Unique (0.18s)
+=== RUN   TestNewRequestKey_Consistency
+--- PASS: TestNewRequestKey_Consistency (0.18s)
+=== RUN   TestNewRequestKey_Unique
+--- PASS: TestNewRequestKey_Unique (0.36s)
+=== RUN   TestNewRequestPartFingerprint_Consistency
+--- PASS: TestNewRequestPartFingerprint_Consistency (0.18s)
+=== RUN   TestNewRequestPartFingerprint_Unique
+--- PASS: TestNewRequestPartFingerprint_Unique (10.74s)
+=== RUN   TestNewRequestPartKey_Consistency
+--- PASS: TestNewRequestPartKey_Consistency (0.18s)
+=== RUN   TestNewRequestPartKey_Unique
+--- PASS: TestNewRequestPartKey_Unique (8.75s)
+=== RUN   TestNewResponseFingerprint_Consistency
+--- PASS: TestNewResponseFingerprint_Consistency (0.13s)
+=== RUN   TestNewResponseFingerprint_Unique
+--- PASS: TestNewResponseFingerprint_Unique (7.39s)
+=== RUN   TestNewResponseKey_Consistency
+--- PASS: TestNewResponseKey_Consistency (0.12s)
+=== RUN   TestNewResponseKey_Unique
+--- PASS: TestNewResponseKey_Unique (7.40s)
+=== RUN   TestNewTagFP_Consistency
+--- PASS: TestNewTagFP_Consistency (0.00s)
+=== RUN   TestNewTagFP_Unique
+--- PASS: TestNewTagFP_Unique (0.00s)
+=== RUN   TestUnmarshalTagFP
+--- PASS: TestUnmarshalTagFP (0.00s)
+=== RUN   TestTagFP_Bytes
+--- PASS: TestTagFP_Bytes (0.00s)
+=== RUN   TestTagFP_String
+--- PASS: TestTagFP_String (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/e2e/singleUse	47.620s
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:25 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestFingerprint
+--- PASS: TestFingerprint (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/factID	7.704s
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:26 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestNewStreamGenerator
+--- PASS: TestNewStreamGenerator (0.00s)
+=== RUN   TestNewStream
+--- PASS: TestNewStream (0.00s)
+=== RUN   TestGetStream_GrabsAlreadyWaitingStream
+--- PASS: TestGetStream_GrabsAlreadyWaitingStream (0.00s)
+=== RUN   TestClose_WaitingChannelLength
+--- PASS: TestClose_WaitingChannelLength (0.00s)
+=== RUN   TestRead_ClosedChannel
+FATAL 2025/11/10 23:59:27 Stream is closed, cannot read
+--- PASS: TestRead_ClosedChannel (0.00s)
+=== RUN   TestClose_ClosedChannel
+FATAL 2025/11/10 23:59:27 Stream is closed, cannot close
+--- PASS: TestClose_ClosedChannel (0.00s)
+=== RUN   TestRead_NotByteAligned
+--- PASS: TestRead_NotByteAligned (0.00s)
+=== RUN   TestRead_ByteAligned
+--- PASS: TestRead_ByteAligned (0.00s)
+=== RUN   TestRead_ReadMoreThanSource
+--- PASS: TestRead_ReadMoreThanSource (0.00s)
+=== RUN   TestRead_MultipleStreams_DifferentOutputs
+--- PASS: TestRead_MultipleStreams_DifferentOutputs (0.00s)
+=== RUN   TestRead_DelinkedSource
+--- PASS: TestRead_DelinkedSource (0.00s)
+=== RUN   TestRead_ReadLessThanSource
+--- PASS: TestRead_ReadLessThanSource (0.00s)
+=== RUN   TestRead_MockRNG
+--- PASS: TestRead_MockRNG (0.00s)
+=== RUN   TestStream_SetSeed
+--- PASS: TestStream_SetSeed (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/fastRNG	8.038s
+2025/11/10 23:59:32 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:32 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:32 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:32 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:32 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:32 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:32 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestEncryptPart_Consistency
+--- PASS: TestEncryptPart_Consistency (0.00s)
+=== RUN   TestEncryptPart_DecryptPart
+--- PASS: TestEncryptPart_DecryptPart (0.00s)
+=== RUN   TestEncryptPart_DecryptPart_InvalidMacError
+--- PASS: TestEncryptPart_DecryptPart_InvalidMacError (0.00s)
+=== RUN   TestNewID_SameFiles_ASCII
+--- PASS: TestNewID_SameFiles_ASCII (0.00s)
+=== RUN   TestNewID_DifferentFiles_ASCII
+--- PASS: TestNewID_DifferentFiles_ASCII (0.00s)
+=== RUN   TestNewID_SameFiles_Binary
+--- PASS: TestNewID_SameFiles_Binary (0.00s)
+=== RUN   TestNewID_DifferentFiles_Binary
+--- PASS: TestNewID_DifferentFiles_Binary (0.00s)
+=== RUN   TestID_Marshal_UnmarshalID
+--- PASS: TestID_Marshal_UnmarshalID (0.00s)
+=== RUN   Test_UnmarshalID_LengthError
+--- PASS: Test_UnmarshalID_LengthError (0.00s)
+=== RUN   TestID_String
+--- PASS: TestID_String (0.00s)
+=== RUN   TestID_JSON_Marshal_Unmarshal
+--- PASS: TestID_JSON_Marshal_Unmarshal (0.00s)
+=== RUN   TestID_UnmarshalJSON_LengthError
+--- PASS: TestID_UnmarshalJSON_LengthError (0.00s)
+=== RUN   TestID_UnmarshalJSON_JsonError
+--- PASS: TestID_UnmarshalJSON_JsonError (0.00s)
+=== RUN   TestGenerateFingerprint
+--- PASS: TestGenerateFingerprint (0.00s)
+=== RUN   TestGenerateFingerprints
+--- PASS: TestGenerateFingerprints (0.00s)
+=== RUN   TestNewTransferKey_Consistency
+--- PASS: TestNewTransferKey_Consistency (0.00s)
+=== RUN   TestTransferKey_Bytes_UnmarshalTransferKey
+--- PASS: TestTransferKey_Bytes_UnmarshalTransferKey (0.00s)
+=== RUN   TestTransferKey_String
+--- PASS: TestTransferKey_String (0.00s)
+=== RUN   Test_partKey_Bytes_unmarshalPartKey
+--- PASS: Test_partKey_Bytes_unmarshalPartKey (0.00s)
+=== RUN   Test_partKey_String
+--- PASS: Test_partKey_String (0.00s)
+=== RUN   TestTransferKey_JSON_Marshal_Unmarshal
+--- PASS: TestTransferKey_JSON_Marshal_Unmarshal (0.00s)
+=== RUN   TestCreateTransferMAC_Consistency
+--- PASS: TestCreateTransferMAC_Consistency (0.00s)
+=== RUN   TestVerifyTransferMAC
+--- PASS: TestVerifyTransferMAC (0.00s)
+=== RUN   TestVerifyTransferMAC_BadMacError
+--- PASS: TestVerifyTransferMAC_BadMacError (0.00s)
+=== RUN   Test_createPartMAC_Consistency
+--- PASS: Test_createPartMAC_Consistency (0.00s)
+=== RUN   Test_verifyPartMac
+--- PASS: Test_verifyPartMac (0.00s)
+=== RUN   Test_verifyPartMAC_BadMacError
+--- PASS: Test_verifyPartMAC_BadMacError (0.00s)
+=== RUN   TestNewTransferID_Consistency
+--- PASS: TestNewTransferID_Consistency (0.00s)
+=== RUN   TestTransferID_Bytes_UnmarshalTransferID
+--- PASS: TestTransferID_Bytes_UnmarshalTransferID (0.00s)
+=== RUN   TestTransferID_String
+--- PASS: TestTransferID_String (0.00s)
+=== RUN   TestTransferID_JSON_Marshal_Unmarshal
+--- PASS: TestTransferID_JSON_Marshal_Unmarshal (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/fileTransfer	4.113s
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestEncryptDecrypt
+--- PASS: TestEncryptDecrypt (0.00s)
+=== RUN   TestNewID_Consistency
+--- PASS: TestNewID_Consistency (0.01s)
+=== RUN   TestNewID_Unique
+--- PASS: TestNewID_Unique (0.03s)
+=== RUN   TestNewIdPreimage_Consistency
+--- PASS: TestNewIdPreimage_Consistency (0.01s)
+=== RUN   TestNewIdPreimage_ReaderError
+--- PASS: TestNewIdPreimage_ReaderError (0.00s)
+=== RUN   TestNewIdPreimage_ReadLengthError
+--- PASS: TestNewIdPreimage_ReadLengthError (0.00s)
+=== RUN   TestIdPreimage_Bytes
+--- PASS: TestIdPreimage_Bytes (0.00s)
+=== RUN   TestIdPreimage_String
+--- PASS: TestIdPreimage_String (0.00s)
+=== RUN   TestNewKey_Consistency
+--- PASS: TestNewKey_Consistency (0.00s)
+=== RUN   TestNewKey_Unique
+--- PASS: TestNewKey_Unique (0.01s)
+=== RUN   TestKey_Bytes
+--- PASS: TestKey_Bytes (0.00s)
+=== RUN   TestKey_String
+--- PASS: TestKey_String (0.00s)
+=== RUN   TestNewKeyPreimage_Consistency
+--- PASS: TestNewKeyPreimage_Consistency (0.00s)
+=== RUN   TestNewKeyPreimage_ReaderError
+--- PASS: TestNewKeyPreimage_ReaderError (0.00s)
+=== RUN   TestNewKeyPreimage_ReadLengthError
+--- PASS: TestNewKeyPreimage_ReadLengthError (0.00s)
+=== RUN   TestKeyPreimage_Bytes
+--- PASS: TestKeyPreimage_Bytes (0.00s)
+=== RUN   TestKeyPreimage_String
+--- PASS: TestKeyPreimage_String (0.00s)
+=== RUN   TestNewKeyFingerprint_Consistency
+--- PASS: TestNewKeyFingerprint_Consistency (0.00s)
+=== RUN   TestNewKeyFingerprint_Unique
+--- PASS: TestNewKeyFingerprint_Unique (0.00s)
+=== RUN   TestCheckKeyFingerprint
+--- PASS: TestCheckKeyFingerprint (0.00s)
+=== RUN   TestNewKdfKey_Consistency
+--- PASS: TestNewKdfKey_Consistency (0.00s)
+=== RUN   TestNewKdfKey_Unique
+--- PASS: TestNewKdfKey_Unique (0.00s)
+=== RUN   TestCryptKey_Bytes
+--- PASS: TestCryptKey_Bytes (0.00s)
+=== RUN   TestCryptKey_String
+--- PASS: TestCryptKey_String (0.00s)
+=== RUN   TestComputeEpoch
+--- PASS: TestComputeEpoch (0.00s)
+=== RUN   TestNewMAC_Consistency
+--- PASS: TestNewMAC_Consistency (0.00s)
+=== RUN   TestNewMAC_Unique
+--- PASS: TestNewMAC_Unique (0.01s)
+=== RUN   TestCheckMAC
+--- PASS: TestCheckMAC (0.00s)
+=== RUN   TestNewMembership
+--- PASS: TestNewMembership (0.01s)
+=== RUN   TestNewMembership_MinParticipantsError
+--- PASS: TestNewMembership_MinParticipantsError (0.00s)
+=== RUN   TestNewMembership_MaxParticipantsError
+--- PASS: TestNewMembership_MaxParticipantsError (0.00s)
+=== RUN   TestNewMembership_DuplicateLeaderIdError
+--- PASS: TestNewMembership_DuplicateLeaderIdError (0.00s)
+=== RUN   TestNewMembership_DuplicateMemberIdError
+--- PASS: TestNewMembership_DuplicateMemberIdError (0.00s)
+=== RUN   TestMembership_Digest_Consistency
+--- PASS: TestMembership_Digest_Consistency (0.00s)
+=== RUN   TestMembership_Digest_Unique
+--- PASS: TestMembership_Digest_Unique (0.01s)
+=== RUN   TestMembership_Digest_NilMembership
+--- PASS: TestMembership_Digest_NilMembership (0.00s)
+=== RUN   TestMembership_String
+--- PASS: TestMembership_String (0.00s)
+=== RUN   TestMembership_String_NoParticipants
+--- PASS: TestMembership_String_NoParticipants (0.00s)
+=== RUN   TestMembership_Serialize_DeserializeMembership
+--- PASS: TestMembership_Serialize_DeserializeMembership (0.00s)
+=== RUN   TestDeserializeMembership_MinMembersError
+--- PASS: TestDeserializeMembership_MinMembersError (0.00s)
+=== RUN   TestDeserializeMembership_MaxMembersError
+--- PASS: TestDeserializeMembership_MaxMembersError (0.00s)
+=== RUN   TestDeserializeMembership_MemberDeserializeError
+--- PASS: TestDeserializeMembership_MemberDeserializeError (0.00s)
+=== RUN   TestMembership_DeepCopy
+--- PASS: TestMembership_DeepCopy (0.00s)
+=== RUN   TestMember_Serialize_DeserializeMember
+--- PASS: TestMember_Serialize_DeserializeMember (0.00s)
+=== RUN   TestMember_Serialize_DeserializeMember_NilMember
+--- PASS: TestMember_Serialize_DeserializeMember_NilMember (0.00s)
+=== RUN   TestDeserializeMember_UnmarshalIdError
+    membership_test.go:401: {<nil>, <nil> in GRP: AAAAAAAAAA...}
+--- PASS: TestDeserializeMember_UnmarshalIdError (0.00s)
+=== RUN   TestDeserializeMember_DecodeDhKeyError
+--- PASS: TestDeserializeMember_DecodeDhKeyError (0.00s)
+=== RUN   TestMember_DeepCopy
+--- PASS: TestMember_DeepCopy (0.00s)
+=== RUN   TestMember_DeepCopy_NilMember
+--- PASS: TestMember_DeepCopy_NilMember (0.00s)
+=== RUN   TestMember_Equal
+--- PASS: TestMember_Equal (0.00s)
+=== RUN   TestMember_String_Consistency
+--- PASS: TestMember_String_Consistency (0.00s)
+=== RUN   TestMember_String_NilMember
+--- PASS: TestMember_String_NilMember (0.00s)
+=== RUN   TestMember_GoString_Consistency
+--- PASS: TestMember_GoString_Consistency (0.00s)
+=== RUN   TestMember_GoString_NilMember
+--- PASS: TestMember_GoString_NilMember (0.00s)
+=== RUN   Test_contact2Member
+--- PASS: Test_contact2Member (0.00s)
+=== RUN   Test_contact2Member_NilMemberFields
+--- PASS: Test_contact2Member_NilMemberFields (0.00s)
+=== RUN   TestNewMessageID_Consistency
+--- PASS: TestNewMessageID_Consistency (0.00s)
+=== RUN   TestNewMessageID_Unique
+--- PASS: TestNewMessageID_Unique (0.00s)
+=== RUN   TestMessageID_Bytes
+--- PASS: TestMessageID_Bytes (0.00s)
+=== RUN   TestMessageID_String
+--- PASS: TestMessageID_String (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/group	7.463s
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestNewCMixHash
+--- PASS: TestNewCMixHash (0.00s)
+=== RUN   TestHMAC
+--- PASS: TestHMAC (0.00s)
+=== RUN   TestHMAC_LeadingOne
+--- PASS: TestHMAC_LeadingOne (0.00s)
+=== RUN   TestExpandKey
+TestExpandKey(): 4 out of 4 tests passed
+--- PASS: TestExpandKey (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/hash	7.165s
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestCrypt_EncryptDecrypt
+--- PASS: TestCrypt_EncryptDecrypt (0.00s)
+=== RUN   TestCipher_Encrypt_PlaintextTooLarge
+--- PASS: TestCipher_Encrypt_PlaintextTooLarge (0.00s)
+=== RUN   TestCipher_MarshalJSON_UnmarshalJSON
+--- PASS: TestCipher_MarshalJSON_UnmarshalJSON (0.01s)
+=== RUN   Test_appendPadding_discardPadding
+--- PASS: Test_appendPadding_discardPadding (0.00s)
+=== RUN   Test_appendPadding_SmallData
+--- PASS: Test_appendPadding_SmallData (0.00s)
+=== RUN   Test_discardPadding
+--- PASS: Test_discardPadding (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/indexedDb	6.992s
+2025/11/10 23:59:34 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:34 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:34 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:34 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:34 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:34 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:34 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestChSmoke
+--- PASS: TestChSmoke (0.05s)
+=== RUN   TestDMSmoke
+--- PASS: TestDMSmoke (0.02s)
+=== RUN   TestMakeID_Unique
+--- PASS: TestMakeID_Unique (0.02s)
+=== RUN   TestMakeID_Channels_Unique
+--- PASS: TestMakeID_Channels_Unique (0.00s)
+=== RUN   TestMakeID_Constancy
+--- PASS: TestMakeID_Constancy (0.00s)
+=== RUN   TestID_Equals
+--- PASS: TestID_Equals (0.03s)
+=== RUN   TestID_Bytes
+--- PASS: TestID_Bytes (0.00s)
+=== RUN   TestID_DeepCopy
+--- PASS: TestID_DeepCopy (0.00s)
+=== RUN   TestID_Marshal_UnmarshalID
+--- PASS: TestID_Marshal_UnmarshalID (0.00s)
+=== RUN   TestUnmarshalID
+--- PASS: TestUnmarshalID (0.00s)
+=== RUN   TestID_MarshalJSON_UnmarshalJSON
+--- PASS: TestID_MarshalJSON_UnmarshalJSON (0.00s)
+=== RUN   TestID_MarshalJSON_Consistency
+--- PASS: TestID_MarshalJSON_Consistency (0.00s)
+=== RUN   TestMutateTimestampDeltaAverage
+--- PASS: TestMutateTimestampDeltaAverage (0.01s)
+=== RUN   TestVetTimestamp_Happy
+--- PASS: TestVetTimestamp_Happy (0.01s)
+=== RUN   TestVetTimestamp_BeforePeriod
+--- PASS: TestVetTimestamp_BeforePeriod (0.02s)
+=== RUN   TestVetTimestamp_AfterPeriod
+--- PASS: TestVetTimestamp_AfterPeriod (0.01s)
+PASS
+ok  	gitlab.com/elixxir/crypto/message	5.791s
+?   	gitlab.com/elixxir/crypto/nike	[no test files]
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:35 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestNike
+--- PASS: TestNike (0.30s)
+=== RUN   TestPrivateKeyMarshaling
+--- PASS: TestPrivateKeyMarshaling (0.15s)
+=== RUN   TestPublicKeyMarshaling
+--- PASS: TestPublicKeyMarshaling (0.29s)
+=== RUN   TestPublicKey_Reset
+--- PASS: TestPublicKey_Reset (0.07s)
+=== RUN   TestPrivateKey_Reset
+--- PASS: TestPrivateKey_Reset (0.08s)
+=== RUN   TestPrivateKey_Scheme
+--- PASS: TestPrivateKey_Scheme (0.08s)
+=== RUN   TestPublicKey_Scheme
+--- PASS: TestPublicKey_Scheme (0.07s)
+PASS
+ok  	gitlab.com/elixxir/crypto/nike/dh	7.426s
+2025/11/10 23:59:37 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:37 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:37 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:37 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:37 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:37 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:37 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestFromEdwards
+--- PASS: TestFromEdwards (0.03s)
+=== RUN   TestNike
+--- PASS: TestNike (0.00s)
+=== RUN   TestPrivateKeyMarshaling
+--- PASS: TestPrivateKeyMarshaling (0.00s)
+=== RUN   TestPublicKeyMarshaling
+--- PASS: TestPublicKeyMarshaling (0.00s)
+=== RUN   TestPrivateKey_Reset
+--- PASS: TestPrivateKey_Reset (0.00s)
+=== RUN   TestPublicKey_Reset
+--- PASS: TestPublicKey_Reset (0.00s)
+=== RUN   TestPrivateKey_Scheme
+--- PASS: TestPrivateKey_Scheme (0.00s)
+=== RUN   TestPublicKey_Scheme
+--- PASS: TestPublicKey_Scheme (0.00s)
+=== RUN   TestDerivePublicKey
+--- PASS: TestDerivePublicKey (0.00s)
+=== RUN   TestEdwardsUtils
+--- PASS: TestEdwardsUtils (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/nike/ecdh	7.267s
+2025/11/10 23:59:38 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:38 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:38 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:38 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:38 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:38 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:38 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestSignVerifyIdentity
+--- PASS: TestSignVerifyIdentity (3.54s)
+=== RUN   TestNotificationTag_String
+--- PASS: TestNotificationTag_String (0.00s)
+=== RUN   TestSignVerifyToken
+--- PASS: TestSignVerifyToken (2.45s)
+PASS
+ok  	gitlab.com/elixxir/crypto/notifications	12.971s
+2025/11/10 23:59:39 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:39 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:39 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:39 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:39 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:39 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:39 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestJointVerify
+--- PASS: TestJointVerify (0.18s)
+=== RUN   TestJointVerify_BadVerificationSig
+--- PASS: TestJointVerify_BadVerificationSig (0.01s)
+=== RUN   TestJointVerify_BadUploadSig
+--- PASS: TestJointVerify_BadUploadSig (0.17s)
+=== RUN   TestSignVerifyUpload
+--- PASS: TestSignVerifyUpload (0.17s)
+=== RUN   TestSignUpload_Consistency
+--- PASS: TestSignUpload_Consistency (0.16s)
+=== RUN   TestSignVerifyVerification
+--- PASS: TestSignVerifyVerification (0.17s)
+=== RUN   TestSignVerification_Consistency
+GyO2ON3/FJECK/M1/qRoCH15HCbz1xGEI1qXvq9Zp/WZsk5/RtoSOJRA4E7oJoIOdBgjOG+xD+YPvZhPINda6gM0KJxhFr4Y8IUTko5mB0Fl/uGZZK/YWjUDYCrIlpUx994FMt97QhW7oQiftrhu1bTuMgOwLK7rSaFh0iz8Vp9j4aZSGlAtYANHc9kyBITd9GJOPZpFwDMLx9PtTGAiu9b8Fz2fq5KUANzCgtWqbfwwHCoO5+ue2yYNSYc3fedQ8uWP03WAhpodZ/0HKq/dFt238tbTTRYb5MXIs6CV0pwDevfP7F5O1CesZmG/7ySRvfYWeSi58T7UgMkJpI4xuLGo3NlqgGvp8nATX1/GEhYLdO8rPPk0cc4vdvw+aUqSZzuMcR/UioagdOUMYO59/ne/jiIe7kYlGiTe50bKjh8INiprKRTBad1OWRaRWj9YfE2yCqebvkQQ/+2lgzSYbYu1U0+93j+kChmCcoXH8RbCIazT9AEbMBNF5bvbubA52ql6o1tBF4fqBnpNGK6ad7Zn0tr68vmHrgL+2nR+L0lrW5VFUfpsGVOl4ULPO5czKK5yh7WNpuRjgQzAzj/0ZwT5rsZ4CmsFCxqaMeRB4YdZOgbcJmzqkWvsU7Yrd9OGISKvTQM+7i7ZjKY+RyyWbGA2VHwe9bDaDgQ7fDZuQ3M=
+s9Mr4BOjTMVp279sRKRk2tUZ3C/SIY61TdtfdAnJnx1oUs9ROnmmmhFBh+wbwgmewPKYgicRGiEjIjFb1dXMrUWkx7Bp+uj4OJ6kQon/No8iPbt5noMddUSgCvRWSo0507Hz4Vl/Pxf5hxmRsO1tSEJ07R10hO4zTd7PP++rHib0LRl2OzkCno8CR5ML3eIKb50RI0pv17Fxmr0f5wm1uM48FTGUpjcDTXyscyZ//U75YLyFX7HLDgWM1D0a3Hf1o8O5AeSN9iHUxYsunREGBSHKh2LkhXHwwmL1K62KL/tF71/RYjt91TfJEJ4UE24xFcbYMFdL7A+gQoOHskCj3vVQVPz+emneAPgBFFzRer89t4AqccJybrNOgJ+A3M+ZRwQcLxdJg76uxwftSjnFPGflxsrT3Uv3U4z4sHDNiMTQO0n93rtOvRffgKDFI8+4IRfNC+gGSY5tT75tTAi0h8fxNfJLJkBmStr5Y/7en/f5DG7r5JbpLF+XDeL2T1eLr1KZ3BsEdEhZMapp7vxrRnyeCyaCLJWuCm0jowWRD4ULPI5L6F3mCMiiHAR13t55xI6AvYttrrx8jRLRgEKoJr9mKxPljxOK0p3x+cvXkDqcaCbM8VGlplZdpvLQTj8MckA4Xvkb7SWLKwwl1rO+4dfOv+GDADSNbO+nlHluhcw=
+WKEshXROPArO2gjK7zWu37WJNZBzP3jqI3QaVRXHCBH0lN5MqVKEvUqDmvyHW1OvPuQl7pcW5pVFAqHXR4eV/66eI4PhCHhZegb93eyAKA35hW2DTNnQvBzF4GI71CAV2oUx19sJBjPUHxtUh8JKjwT+jF4yUnb2PRzxgA/y8YcmrU38+lkjT83pOs4zTJ3sn3WWRkha+Ti8X4v7w3gh+UtAVWs8f29UDswznEfyeDwVTEdz7NLcP4jcJr2lvoK11HhwVIc1e1RUnkTbO7BynP4wCiNAbmoKMU5AGcU27uNTK+FhxA7rhdMYTfynRTtkQARfNjiLqYsYR9Bs/CSGvhnhxFNrjd59QdlNGsqW4sJ55SUemGed4b+roR+c/zrYq7PO8W7r83Q0KkNap0r9TRb3NpgoT8KsalvTO4Ojfx1Ou2AIkfBTVCLwvCgAt+VzfxrIZ0ZFV4pWq/6Q7qkgO5YPt7VpfCW3qWr9iF91IMN6z1vKN9MSmWAp/P6rp9wULl+KYbAzE9X97bdh4ROKQZEzmyM9qDleIMB8Oa4kZbJwHWqD04kcMIV9JF5y87oLDBCK7u8QyDEaKHpPhV1IPMf0DuiyxoCTygATZyL+tUcpZYCzSiZw5uTrd+4fuZZ/QRQX7wG9XYCzjNNNqLyzf67hyzB6TglwqdPBd/dKNYU=
+--- PASS: TestSignVerification_Consistency (0.16s)
+PASS
+ok  	gitlab.com/elixxir/crypto/partnerships/crust	6.747s
+2025/11/10 23:59:41 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:41 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:41 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:41 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:41 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:41 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:42 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestCreateClientHMAC
+--- PASS: TestCreateClientHMAC (0.00s)
+=== RUN   TestVerifyClientHMAC
+--- PASS: TestVerifyClientHMAC (0.00s)
+=== RUN   TestGenerateBaseKey
+--- PASS: TestGenerateBaseKey (0.06s)
+=== RUN   TestSignVerify
+--- PASS: TestSignVerify (0.17s)
+PASS
+ok  	gitlab.com/elixxir/crypto/registration	4.535s
+2025/11/10 23:59:41 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:41 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:41 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:41 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:41 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:41 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:41 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestPublicKey_EncryptOAEP_PrivateKey_DecryptOAEP
+--- PASS: TestPublicKey_EncryptOAEP_PrivateKey_DecryptOAEP (1.02s)
+=== RUN   TestPrivateKey_PublicKey_EncryptOAEP_Consistency
+    encrypt_test.go:122: Javascript environment; skipping this test.
+--- PASS: TestPrivateKey_PublicKey_EncryptOAEP_Consistency (0.00s)
+=== RUN   TestEncryptDecryptPKCS1v15
+--- PASS: TestEncryptDecryptPKCS1v15 (0.81s)
+=== RUN   TestGoRsaRetriever_NewRsa
+--- PASS: TestGoRsaRetriever_NewRsa (0.00s)
+=== RUN   TestNewID
+--- PASS: TestNewID (1.29s)
+=== RUN   TestEncryptDecryptRSA
+--- PASS: TestEncryptDecryptRSA (0.08s)
+=== RUN   TestPrivateKey_EncryptOAEPMulticast_RSATooLong
+--- PASS: TestPrivateKey_EncryptOAEPMulticast_RSATooLong (0.01s)
+=== RUN   TestPemSmokePKCS1
+--- PASS: TestPemSmokePKCS1 (0.00s)
+=== RUN   TestPemSmokePKCS8
+--- PASS: TestPemSmokePKCS8 (0.00s)
+=== RUN   TestEmptyPem
+--- PASS: TestEmptyPem (0.00s)
+=== RUN   TestJunkPem
+--- PASS: TestJunkPem (0.00s)
+=== RUN   TestScheme_GenerateDefault
+--- PASS: TestScheme_GenerateDefault (0.20s)
+=== RUN   TestScheme_GetDefaultKeySize
+--- PASS: TestScheme_GetDefaultKeySize (0.00s)
+=== RUN   TestScheme_GetSoftMinKeySize
+--- PASS: TestScheme_GetSoftMinKeySize (0.00s)
+=== RUN   Test_SignJS_VerifyGo_PSS
+--- PASS: Test_SignJS_VerifyGo_PSS (0.68s)
+=== RUN   Test_SignJS_VerifyGo_PSS_Non128MultipleKeySize
+--- PASS: Test_SignJS_VerifyGo_PSS_Non128MultipleKeySize (0.10s)
+=== RUN   Test_SignGo_VerifyJS_PSS
+--- PASS: Test_SignGo_VerifyJS_PSS (1.53s)
+=== RUN   Test_SignGo_VerifyJS_PKCS1v152
+--- PASS: Test_SignGo_VerifyJS_PKCS1v152 (1.92s)
+=== RUN   Test_SignJS_VerifyGO_PKCS1v152
+--- PASS: Test_SignJS_VerifyGO_PKCS1v152 (0.52s)
+=== RUN   TestSignVerifyPSS
+    signVerify_test.go:42: Javascript environment; using SHA-256.
+--- PASS: TestSignVerifyPSS (0.66s)
+=== RUN   TestPrivate_SignVerifyPKCS1v15
+--- PASS: TestPrivate_SignVerifyPKCS1v15 (0.43s)
+=== RUN   Test_subtleCrypto_callCatch
+--- PASS: Test_subtleCrypto_callCatch (0.00s)
+=== RUN   TestMarshalUnMarshalWire
+    wire_test.go:41: Javascript environment; using SHA-256.
+--- PASS: TestMarshalUnMarshalWire (0.02s)
+=== RUN   TestPublic_GetMarshalWireLength
+--- PASS: TestPublic_GetMarshalWireLength (0.00s)
+=== RUN   TestScheme_UnmarshalPublicKeyWire_Error
+--- PASS: TestScheme_UnmarshalPublicKeyWire_Error (0.00s)
+=== RUN   TestWireLength
+--- PASS: TestWireLength (0.02s)
+PASS
+ok  	gitlab.com/elixxir/crypto/rsa	12.552s
+2025/11/10 23:59:43 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:43 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:43 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:43 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:43 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:43 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:43 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestSealedInit
+--- PASS: TestSealedInit (0.00s)
+=== RUN   TestSealedFuncs
+--- PASS: TestSealedFuncs (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/sealedBloomfilter	4.512s
+2025/11/10 23:59:42 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:42 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:42 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:42 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:42 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:42 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:42 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestShuffleSwap
+    shuffleSwap_test.go:60: Probabilities that each number ended up in each slot:
+    shuffleSwap_test.go:73: 0.2497	0.2494	0.2491	0.2517	
+    shuffleSwap_test.go:73: 0.2490	0.2524	0.2480	0.2506	
+    shuffleSwap_test.go:73: 0.2501	0.2479	0.2524	0.2496	
+    shuffleSwap_test.go:73: 0.2512	0.2503	0.2505	0.2481	
+    shuffleSwap_test.go:75: Total deviation from expected probabilities: 1836
+    shuffleSwap_test.go:85: Shuffle() 1 out of 1 tests passed.
+        
+--- PASS: TestShuffleSwap (2.66s)
+=== RUN   TestShuffleSwapLen1
+--- PASS: TestShuffleSwapLen1 (0.00s)
+=== RUN   TestShuffle32
+    shuffle_test.go:67: Probabilities that each number ended up in each slot:
+    shuffle_test.go:80: 0.2495	0.2513	0.2494	0.2498	
+    shuffle_test.go:80: 0.2485	0.2520	0.2477	0.2519	
+    shuffle_test.go:80: 0.2508	0.2488	0.2510	0.2494	
+    shuffle_test.go:80: 0.2512	0.2480	0.2519	0.2490	
+    shuffle_test.go:82: Total deviation from expected probabilities: 1990
+    shuffle_test.go:92: Shuffle() 1 out of 1 tests passed.
+        
+--- PASS: TestShuffle32 (0.79s)
+=== RUN   TestShuffleLen1_32
+--- PASS: TestShuffleLen1_32 (0.00s)
+=== RUN   TestShuffleCorePanic32
+FATAL 2025/11/10 23:59:46 Could not generate random number in Shuffle: testing reader error
+--- PASS: TestShuffleCorePanic32 (0.00s)
+=== RUN   TestShuffle16
+    shuffle_test.go:158: Probabilities that each number ended up in each slot:
+    shuffle_test.go:171: 0.2509	0.2480	0.2500	0.2511	
+    shuffle_test.go:171: 0.2486	0.2510	0.2509	0.2494	
+    shuffle_test.go:171: 0.2520	0.2497	0.2476	0.2507	
+    shuffle_test.go:171: 0.2485	0.2513	0.2514	0.2487	
+    shuffle_test.go:173: Total deviation from expected probabilities: 1884
+    shuffle_test.go:183: Shuffle() 1 out of 1 tests passed.
+        
+--- PASS: TestShuffle16 (0.83s)
+=== RUN   TestShuffleLen1_16
+--- PASS: TestShuffleLen1_16 (0.00s)
+=== RUN   TestShuffleCorePanic16
+FATAL 2025/11/10 23:59:47 Could not generate random number in Shuffle: testing reader error
+--- PASS: TestShuffleCorePanic16 (0.00s)
+=== RUN   TestShuffle
+    shuffle_test.go:249: Probabilities that each number ended up in each slot:
+    shuffle_test.go:262: 0.2500	0.2470	0.2534	0.2496	
+    shuffle_test.go:262: 0.2477	0.2516	0.2506	0.2501	
+    shuffle_test.go:262: 0.2522	0.2491	0.2482	0.2505	
+    shuffle_test.go:262: 0.2501	0.2523	0.2479	0.2498	
+    shuffle_test.go:264: Total deviation from expected probabilities: 2156
+    shuffle_test.go:274: Shuffle() 1 out of 1 tests passed.
+        
+--- PASS: TestShuffle (0.85s)
+=== RUN   TestShuffleLen1
+--- PASS: TestShuffleLen1 (0.00s)
+=== RUN   TestShuffleCorePanic
+FATAL 2025/11/10 23:59:47 Could not generate random number in Shuffle: testing reader error
+--- PASS: TestShuffleCorePanic (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/shuffle	8.946s
+2025/11/10 23:59:43 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:43 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:43 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:43 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:43 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:43 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+2025/11/10 23:59:43 ERROR: could not unmarshal event: unknown IPAddressSpace value: Loopback
+=== RUN   TestCompressed
+--- PASS: TestCompressed (0.00s)
+=== RUN   TestHash
+--- PASS: TestHash (0.06s)
+=== RUN   TestHash_Consistency
+--- PASS: TestHash_Consistency (0.00s)
+=== RUN   TestHashFromMessageHash
+--- PASS: TestHashFromMessageHash (0.02s)
+=== RUN   TestHashFromMessageHash_Consistency
+--- PASS: TestHashFromMessageHash_Consistency (0.00s)
+=== RUN   TestMakePreimage
+--- PASS: TestMakePreimage (0.00s)
+=== RUN   TestMakePreimage_TagDefault
+--- PASS: TestMakePreimage_TagDefault (0.00s)
+=== RUN   TestMakePreimage_Unique
+--- PASS: TestMakePreimage_Unique (0.01s)
+=== RUN   TestForMe
+--- PASS: TestForMe (0.04s)
+=== RUN   TestForMeFromMessageHash
+--- PASS: TestForMeFromMessageHash (0.02s)
+=== RUN   TestGetMessageHash_Unique
+--- PASS: TestGetMessageHash_Unique (0.00s)
+PASS
+ok  	gitlab.com/elixxir/crypto/sih	4.596s
