@@ -98,17 +98,22 @@ func (p *PrivateKey) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements json.Unmarshaler for PrivateKey.
 // Deserializes a PEM-encoded string back to a PrivateKey.
+// For backwards compatibility, also handles the old embedded object format.
 func (p *PrivateKey) UnmarshalJSON(data []byte) error {
+	// Try new format (string/PEM) first
 	var pemStr string
-	if err := json.Unmarshal(data, &pemStr); err != nil {
-		return err
+	if err := json.Unmarshal(data, &pemStr); err == nil {
+		loaded, err := LoadPrivateKeyFromPem([]byte(pemStr))
+		if err != nil {
+			return err
+		}
+		*p = *loaded
+		return nil
 	}
-	loaded, err := LoadPrivateKeyFromPem([]byte(pemStr))
-	if err != nil {
-		return err
-	}
-	*p = *loaded
-	return nil
+
+	// Fall back to old format (embedded object)
+	type rawKey PrivateKey
+	return json.Unmarshal(data, (*rawKey)(p))
 }
 
 /* NOTE: This is included for completeness, but since we don't use
@@ -207,17 +212,22 @@ func (p *PublicKey) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements json.Unmarshaler for PublicKey.
 // Deserializes a PEM-encoded string back to a PublicKey.
+// For backwards compatibility, also handles the old embedded object format.
 func (p *PublicKey) UnmarshalJSON(data []byte) error {
+	// Try new format (string/PEM) first
 	var pemStr string
-	if err := json.Unmarshal(data, &pemStr); err != nil {
-		return err
+	if err := json.Unmarshal(data, &pemStr); err == nil {
+		loaded, err := LoadPublicKeyFromPem([]byte(pemStr))
+		if err != nil {
+			return err
+		}
+		*p = *loaded
+		return nil
 	}
-	loaded, err := LoadPublicKeyFromPem([]byte(pemStr))
-	if err != nil {
-		return err
-	}
-	*p = *loaded
-	return nil
+
+	// Fall back to old format (embedded object)
+	type rawKey PublicKey
+	return json.Unmarshal(data, (*rawKey)(p))
 }
 
 // GenerateKey generates an RSA keypair of the given bit size using the
