@@ -16,7 +16,7 @@ import (
 	"encoding/base64"
 	"encoding/binary"
 	"encoding/gob"
-	"encoding/json"
+	json "github.com/goccy/go-json"
 	"github.com/pkg/errors"
 	"gitlab.com/xx_network/crypto/large"
 )

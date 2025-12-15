@@ -8,7 +8,7 @@
 package fileTransfer
 
 import (
-	"encoding/json"
+	json "github.com/goccy/go-json"
 	"reflect"
 	"testing"
 )

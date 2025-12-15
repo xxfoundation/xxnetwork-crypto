@@ -10,7 +10,7 @@ package e2e
 import (
 	"bytes"
 	"encoding/base64"
-	"encoding/json"
+	json "github.com/goccy/go-json"
 	"math/rand"
 	"strings"
 	"testing"

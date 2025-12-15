@@ -7,6 +7,7 @@ require (
 	git.xx.network/elixxir/ctidh_cgo v0.0.1
 	github.com/Max-Sum/base32768 v0.0.0-20230304063302-18e6ce5945fd
 	github.com/cloudflare/circl v1.3.6
+	github.com/goccy/go-json v0.10.5
 	github.com/liyue201/goqr v0.0.0-20200803022322-df443203d4ea
 	github.com/multiformats/go-multihash v0.2.3
 	github.com/pkg/errors v0.9.1
@@ -17,7 +18,7 @@ require (
 	gitlab.com/elixxir/bloomfilter v0.0.1
 	gitlab.com/elixxir/primitives v0.0.4
 	gitlab.com/elixxir/wasm-utils v0.1.2
-	gitlab.com/xx_network/crypto v0.0.6
+	gitlab.com/xx_network/crypto v0.0.10
 	gitlab.com/xx_network/primitives v0.0.5
 	gitlab.com/yawning/nyquist.git v0.0.0-20221003103146-de5645224a22
 	golang.org/x/crypto v0.16.0

@@ -17,7 +17,7 @@ package fileTransfer
 
 import (
 	"encoding/base64"
-	"encoding/json"
+	json "github.com/goccy/go-json"
 	"github.com/pkg/errors"
 	"gitlab.com/xx_network/crypto/csprng"
 )

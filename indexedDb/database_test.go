@@ -10,7 +10,7 @@ package indexedDb
 import (
 	"bytes"
 	"encoding/binary"
-	"encoding/json"
+	json "github.com/goccy/go-json"
 	"gitlab.com/xx_network/crypto/csprng"
 	"io"
 	"reflect"

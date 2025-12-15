@@ -10,7 +10,7 @@ package indexedDb
 import (
 	cryptoCipher "crypto/cipher"
 	"encoding/binary"
-	"encoding/json"
+	json "github.com/goccy/go-json"
 	"io"
 
 	"github.com/Max-Sum/base32768"

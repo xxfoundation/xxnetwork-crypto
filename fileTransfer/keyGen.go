@@ -18,7 +18,7 @@ package fileTransfer
 import (
 	"encoding/base64"
 	"encoding/binary"
-	"encoding/json"
+	json "github.com/goccy/go-json"
 	"github.com/pkg/errors"
 	"gitlab.com/elixxir/crypto/hash"
 	"gitlab.com/xx_network/crypto/csprng"

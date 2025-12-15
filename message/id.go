@@ -11,7 +11,7 @@ import (
 	"crypto/hmac"
 	"encoding/base64"
 	"encoding/binary"
-	"encoding/json"
+	json "github.com/goccy/go-json"
 
 	"github.com/pkg/errors"
 	"gitlab.com/elixxir/crypto/hash"

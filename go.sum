@@ -11,6 +11,8 @@ github.com/cloudflare/circl v1.3.6/go.mod h1:5XYMA4rFBvNIrhs50XuiBJ15vF2pZn4nnUK
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/goccy/go-json v0.10.5 h1:Fq85nIqj+gXn/S5ahsiTlK3TmC85qgirsdTP/+DeaC4=
+github.com/goccy/go-json v0.10.5/go.mod h1:oq7eo15ShAhp70Anwd5lgX2pLfOS3QCiwU/PULtXL6M=
 github.com/golang/protobuf v1.5.0/go.mod h1:FsONVRAS9T7sI+LIUmWTfcYkHO4aIWwzhcaSAoJOfIk=
 github.com/golang/protobuf v1.5.2 h1:ROPKBNFfQgOUMifHyP+KYbvpjbdoFNs+aK7DXlji0Tw=
 github.com/golang/protobuf v1.5.2/go.mod h1:XVQd3VNwM+JqD3oG2Ue2ip4fOMUkwXdXDdiuN0vRsmY=
@@ -64,8 +66,12 @@ gitlab.com/elixxir/primitives v0.0.4 h1:bgvaOv835kBjr7ZqBzhyYq1LEHFSg6KAiKR5OXf3
 gitlab.com/elixxir/primitives v0.0.4/go.mod h1:/Eue23ILU8q1wONloYa0QSGaaeCBnAW7RfwrAnqfzWo=
 gitlab.com/elixxir/wasm-utils v0.1.2 h1:tYl3hH2dHIQXdc/HEKUDUL8nT6bJfLzs+14e2iQrpBI=
 gitlab.com/elixxir/wasm-utils v0.1.2/go.mod h1:SOr/S+JkPc+11k4RqxPm0bLvsiHV50uTxrbyRQLyM44=
-gitlab.com/xx_network/crypto v0.0.6 h1:+C44rBhclcbWrGa5EOic5yDF3NrXAbXScCb/mXmm3Ro=
-gitlab.com/xx_network/crypto v0.0.6/go.mod h1:C69/+XTiqJvKkYzcyA47+LdxvAofl9AzR/Nyo36y9hs=
+gitlab.com/xx_network/crypto v0.0.8 h1:bfvtnnKDHSrqRtMBOIZdajV8ISXiTrPK4BZwA7/Ad8I=
+gitlab.com/xx_network/crypto v0.0.8/go.mod h1:/Jj3H7gVrc7aGuYh7XvPnWkpbU2w7XAt9VuPJz6ORyg=
+gitlab.com/xx_network/crypto v0.0.9 h1:K/gH2vUxZCwjgwd7lJSmX5etAQbmO6FAh+TMaC99CFE=
+gitlab.com/xx_network/crypto v0.0.9/go.mod h1:/Jj3H7gVrc7aGuYh7XvPnWkpbU2w7XAt9VuPJz6ORyg=
+gitlab.com/xx_network/crypto v0.0.10 h1:Mf30W5v1h+FXgRrr+MOtKnWXj4h+6CrBP/ckmTx4q+o=
+gitlab.com/xx_network/crypto v0.0.10/go.mod h1:/Jj3H7gVrc7aGuYh7XvPnWkpbU2w7XAt9VuPJz6ORyg=
 gitlab.com/xx_network/primitives v0.0.5 h1:jPq3EnoghvrfcZixnYSWXyk9n8IU1XYXizQjlqdABmY=
 gitlab.com/xx_network/primitives v0.0.5/go.mod h1:yB8Sk1aqB8KJTq6SASA+XeA2gqWxvkcnGbShY3ISLVk=
 gitlab.com/yawning/bsaes.git v0.0.0-20190805113838-0a714cd429ec h1:FpfFs4EhNehiVfzQttTuxanPIT43FtkkCFypIod8LHo=

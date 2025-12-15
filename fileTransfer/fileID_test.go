@@ -10,7 +10,7 @@ package fileTransfer
 import (
 	"bytes"
 	_ "embed"
-	"encoding/json"
+	json "github.com/goccy/go-json"
 	"math/rand"
 	"reflect"
 	"testing"

@@ -10,7 +10,7 @@ package backup
 import (
 	"bytes"
 	"crypto/hmac"
-	"encoding/json"
+	json "github.com/goccy/go-json"
 
 	"github.com/pkg/errors"
 	"gitlab.com/elixxir/crypto/cyclic"
