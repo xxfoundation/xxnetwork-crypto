@@ -24,6 +24,7 @@ import (
 	"io"
 	"math/big"
 
+	json "github.com/goccy/go-json"
 	jww "github.com/spf13/jwalterweatherman"
 
 	"gitlab.com/xx_network/crypto/large"
@@ -86,6 +87,28 @@ func (p *PrivateKey) GetDq() *large.Int {
 // GetPublic returns the public key in *rsa.PublicKey format.
 func (p *PrivateKey) GetPublic() *PublicKey {
 	return &PublicKey{p.PublicKey}
+}
+
+// MarshalJSON implements json.Marshaler for PrivateKey.
+// Serializes the key as a PEM-encoded string.
+func (p *PrivateKey) MarshalJSON() ([]byte, error) {
+	pemBytes := CreatePrivateKeyPem(p)
+	return json.Marshal(string(pemBytes))
+}
+
+// UnmarshalJSON implements json.Unmarshaler for PrivateKey.
+// Deserializes a PEM-encoded string back to a PrivateKey.
+func (p *PrivateKey) UnmarshalJSON(data []byte) error {
+	var pemStr string
+	if err := json.Unmarshal(data, &pemStr); err != nil {
+		return err
+	}
+	loaded, err := LoadPrivateKeyFromPem([]byte(pemStr))
+	if err != nil {
+		return err
+	}
+	*p = *loaded
+	return nil
 }
 
 /* NOTE: This is included for completeness, but since we don't use
@@ -173,6 +196,28 @@ func (p *PublicKey) GetE() int {
 // GetGoRSA returns the public key in the standard Go crypto/rsa format.
 func (p *PublicKey) GetGoRSA() *gorsa.PublicKey {
 	return &p.PublicKey
+}
+
+// MarshalJSON implements json.Marshaler for PublicKey.
+// Serializes the key as a PEM-encoded string.
+func (p *PublicKey) MarshalJSON() ([]byte, error) {
+	pemBytes := CreatePublicKeyPem(p)
+	return json.Marshal(string(pemBytes))
+}
+
+// UnmarshalJSON implements json.Unmarshaler for PublicKey.
+// Deserializes a PEM-encoded string back to a PublicKey.
+func (p *PublicKey) UnmarshalJSON(data []byte) error {
+	var pemStr string
+	if err := json.Unmarshal(data, &pemStr); err != nil {
+		return err
+	}
+	loaded, err := LoadPublicKeyFromPem([]byte(pemStr))
+	if err != nil {
+		return err
+	}
+	*p = *loaded
+	return nil
 }
 
 // GenerateKey generates an RSA keypair of the given bit size using the

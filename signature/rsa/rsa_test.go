@@ -14,6 +14,7 @@ import (
 	"crypto/sha256"
 	"testing"
 
+	json "github.com/goccy/go-json"
 	"gitlab.com/xx_network/crypto/testkeys"
 	"golang.org/x/crypto/blake2b"
 )
@@ -245,5 +246,199 @@ func TestRSABytesFromBytes(t *testing.T) {
 		nil)
 	if err != nil {
 		t.Fatal(err)
+	}
+}
+
+// TestPrivateKey_JSONMarshalUnmarshal tests JSON marshaling and unmarshaling
+// of PrivateKey using goccy/go-json.
+func TestPrivateKey_JSONMarshalUnmarshal(t *testing.T) {
+	// Load pre-generated test key
+	pemBytes, err := testkeys.LoadTestRSAKeyPem()
+	if err != nil {
+		t.Fatalf("Failed to load test RSA key PEM: %v", err)
+	}
+	original, err := LoadPrivateKeyFromPem(pemBytes)
+	if err != nil {
+		t.Fatalf("Failed to parse test RSA key: %v", err)
+	}
+
+	// Marshal to JSON
+	jsonData, err := json.Marshal(original)
+	if err != nil {
+		t.Fatalf("Failed to marshal PrivateKey to JSON: %v", err)
+	}
+
+	// Unmarshal back to PrivateKey
+	var restored PrivateKey
+	err = json.Unmarshal(jsonData, &restored)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal PrivateKey from JSON: %v", err)
+	}
+
+	// Verify the restored key matches the original
+	if !bytes.Equal(original.N.Bytes(), restored.N.Bytes()) {
+		t.Error("Restored PrivateKey N does not match original")
+	}
+	if !bytes.Equal(original.D.Bytes(), restored.D.Bytes()) {
+		t.Error("Restored PrivateKey D does not match original")
+	}
+	if original.E != restored.E {
+		t.Error("Restored PrivateKey E does not match original")
+	}
+
+	// Test that the restored key can sign and verify
+	message := []byte("test message for signing")
+	h := sha256.New()
+	h.Write(message)
+	hashed := h.Sum(nil)
+
+	signature, err := Sign(rand.Reader, &restored, crypto.SHA256, hashed, nil)
+	if err != nil {
+		t.Fatalf("Failed to sign with restored key: %v", err)
+	}
+
+	err = Verify(original.GetPublic(), crypto.SHA256, hashed, signature, nil)
+	if err != nil {
+		t.Fatalf("Failed to verify signature with original public key: %v", err)
+	}
+}
+
+// TestPublicKey_JSONMarshalUnmarshal tests JSON marshaling and unmarshaling
+// of PublicKey using goccy/go-json.
+func TestPublicKey_JSONMarshalUnmarshal(t *testing.T) {
+	// Load pre-generated test key
+	pemBytes, err := testkeys.LoadTestRSAKeyPem()
+	if err != nil {
+		t.Fatalf("Failed to load test RSA key PEM: %v", err)
+	}
+	privKey, err := LoadPrivateKeyFromPem(pemBytes)
+	if err != nil {
+		t.Fatalf("Failed to parse test RSA key: %v", err)
+	}
+	original := privKey.GetPublic()
+
+	// Marshal to JSON
+	jsonData, err := json.Marshal(original)
+	if err != nil {
+		t.Fatalf("Failed to marshal PublicKey to JSON: %v", err)
+	}
+
+	// Unmarshal back to PublicKey
+	var restored PublicKey
+	err = json.Unmarshal(jsonData, &restored)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal PublicKey from JSON: %v", err)
+	}
+
+	// Verify the restored key matches the original
+	if !bytes.Equal(original.N.Bytes(), restored.N.Bytes()) {
+		t.Error("Restored PublicKey N does not match original")
+	}
+	if original.E != restored.E {
+		t.Error("Restored PublicKey E does not match original")
+	}
+
+	// Test that the restored key can verify signatures
+	message := []byte("test message for verification")
+	h := sha256.New()
+	h.Write(message)
+	hashed := h.Sum(nil)
+
+	signature, err := Sign(rand.Reader, privKey, crypto.SHA256, hashed, nil)
+	if err != nil {
+		t.Fatalf("Failed to sign: %v", err)
+	}
+
+	err = Verify(&restored, crypto.SHA256, hashed, signature, nil)
+	if err != nil {
+		t.Fatalf("Failed to verify with restored public key: %v", err)
+	}
+}
+
+// TestPrivateKey_JSONInStruct tests that PrivateKey can be serialized
+// as part of a larger struct.
+func TestPrivateKey_JSONInStruct(t *testing.T) {
+	type KeyHolder struct {
+		Name string      `json:"name"`
+		Key  *PrivateKey `json:"key"`
+	}
+
+	// Load pre-generated test key
+	pemBytes, err := testkeys.LoadTestRSAKeyPem()
+	if err != nil {
+		t.Fatalf("Failed to load test RSA key PEM: %v", err)
+	}
+	privKey, err := LoadPrivateKeyFromPem(pemBytes)
+	if err != nil {
+		t.Fatalf("Failed to parse test RSA key: %v", err)
+	}
+
+	original := KeyHolder{
+		Name: "test-key",
+		Key:  privKey,
+	}
+
+	// Marshal to JSON
+	jsonData, err := json.Marshal(original)
+	if err != nil {
+		t.Fatalf("Failed to marshal struct with PrivateKey: %v", err)
+	}
+
+	// Unmarshal back
+	var restored KeyHolder
+	err = json.Unmarshal(jsonData, &restored)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal struct with PrivateKey: %v", err)
+	}
+
+	if restored.Name != original.Name {
+		t.Errorf("Name mismatch: got %s, want %s", restored.Name, original.Name)
+	}
+	if !bytes.Equal(original.Key.N.Bytes(), restored.Key.N.Bytes()) {
+		t.Error("Restored PrivateKey N does not match original")
+	}
+}
+
+// TestPublicKey_JSONInStruct tests that PublicKey can be serialized
+// as part of a larger struct.
+func TestPublicKey_JSONInStruct(t *testing.T) {
+	type KeyHolder struct {
+		Name string     `json:"name"`
+		Key  *PublicKey `json:"key"`
+	}
+
+	// Load pre-generated test key
+	pemBytes, err := testkeys.LoadTestRSAKeyPem()
+	if err != nil {
+		t.Fatalf("Failed to load test RSA key PEM: %v", err)
+	}
+	privKey, err := LoadPrivateKeyFromPem(pemBytes)
+	if err != nil {
+		t.Fatalf("Failed to parse test RSA key: %v", err)
+	}
+
+	original := KeyHolder{
+		Name: "test-public-key",
+		Key:  privKey.GetPublic(),
+	}
+
+	// Marshal to JSON
+	jsonData, err := json.Marshal(original)
+	if err != nil {
+		t.Fatalf("Failed to marshal struct with PublicKey: %v", err)
+	}
+
+	// Unmarshal back
+	var restored KeyHolder
+	err = json.Unmarshal(jsonData, &restored)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal struct with PublicKey: %v", err)
+	}
+
+	if restored.Name != original.Name {
+		t.Errorf("Name mismatch: got %s, want %s", restored.Name, original.Name)
+	}
+	if !bytes.Equal(original.Key.N.Bytes(), restored.Key.N.Bytes()) {
+		t.Error("Restored PublicKey N does not match original")
 	}
 }
