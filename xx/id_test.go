@@ -11,27 +11,19 @@ import (
 	"testing"
 
 	oldRsa "gitlab.com/xx_network/crypto/signature/rsa"
+	"gitlab.com/xx_network/crypto/testkeys"
 )
-
-type CountingReader struct {
-	count uint8
-}
-
-// Read just counts until 254 then starts over again
-func (c *CountingReader) Read(b []byte) (int, error) {
-	for i := 0; i < len(b); i++ {
-		c.count = (c.count + 1) % 255
-		b[i] = c.count
-	}
-	return len(b), nil
-}
 
 // Tests that the oldRsa package adheres to the GoRsa interface.
 func TestGoRsaRetriever_OldRsa(t *testing.T) {
-	rng := &CountingReader{}
-	pk, err := oldRsa.GenerateKey(rng, 1024)
+	// Load pre-generated test key
+	pemBytes, err := testkeys.LoadTestRSAKeyPem()
 	if err != nil {
-		t.Fatalf("Failed to generate key: %+v", err)
+		t.Fatalf("Failed to load test RSA key PEM: %+v", err)
+	}
+	pk, err := oldRsa.LoadPrivateKeyFromPem(pemBytes)
+	if err != nil {
+		t.Fatalf("Failed to parse test RSA key: %+v", err)
 	}
 
 	var _ GoRsa = pk.GetPublic()

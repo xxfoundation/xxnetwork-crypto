@@ -12,7 +12,7 @@ import (
 	"crypto/ed25519"
 	"crypto/rand"
 	"encoding/base64"
-	"encoding/json"
+	json "github.com/goccy/go-json"
 	"errors"
 	"io"
 )

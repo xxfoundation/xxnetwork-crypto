@@ -10,7 +10,7 @@ package large
 import (
 	"bytes"
 	"encoding/gob"
-	"encoding/json"
+	json "github.com/goccy/go-json"
 	"math/big"
 	"math/rand"
 	"reflect"

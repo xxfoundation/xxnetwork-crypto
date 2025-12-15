@@ -8,6 +8,7 @@
 package testkeys
 
 import (
+	"os"
 	"path/filepath"
 	"runtime"
 )
@@ -25,4 +26,14 @@ func GetTestCertPath() string {
 
 func GetTestKeyPath() string {
 	return filepath.Join(getDirForFile(), "cmix.rip.key")
+}
+
+// GetTestRSAKeyPath returns the path to the test RSA private key file.
+func GetTestRSAKeyPath() string {
+	return filepath.Join(getDirForFile(), "test_rsa.key")
+}
+
+// LoadTestRSAKeyPem loads and returns the PEM bytes for the pre-generated test RSA private key.
+func LoadTestRSAKeyPem() ([]byte, error) {
+	return os.ReadFile(GetTestRSAKeyPath())
 }
