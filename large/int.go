@@ -8,9 +8,11 @@
 package large
 
 import (
+	"encoding/base64"
 	"fmt"
 	"math/big"
 
+	json "github.com/goccy/go-json"
 	jww "github.com/spf13/jwalterweatherman"
 )
 
@@ -422,19 +424,43 @@ func (z *Int) GobEncode() ([]byte, error) {
 ////////////////////////////////////////////////////////////////////////////////
 
 // MarshalJSON implements the json.Marshaler interface.
+// Serializes as base64-encoded bytes for compatibility with goccy/go-json.
 func (z *Int) MarshalJSON() ([]byte, error) {
 	bigInt := big.Int(*z)
-	return bigInt.MarshalJSON()
+	// Use base64 encoding of the bytes instead of numeric string
+	b64 := base64.StdEncoding.EncodeToString(bigInt.Bytes())
+	return json.Marshal(b64)
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
-func (z *Int) UnmarshalJSON(b []byte) error {
+// For backwards compatibility, handles both new base64 format and old numeric string format.
+func (z *Int) UnmarshalJSON(data []byte) error {
+	// Try to unmarshal as a string first
+	var str string
+	if err := json.Unmarshal(data, &str); err == nil {
+		// Check if it's a numeric string (old format from big.Int.MarshalJSON)
+		if bigInt, success := new(big.Int).SetString(str, 10); success {
+			*z = Int(*bigInt)
+			return nil
+		}
+		// Not a numeric string, try base64 (new format)
+		decoded, err := base64.StdEncoding.DecodeString(str)
+		if err == nil {
+			bigInt := new(big.Int).SetBytes(decoded)
+			*z = Int(*bigInt)
+			return nil
+		}
+		// Neither numeric nor valid base64
+		return fmt.Errorf("large.Int: cannot unmarshal %q: not a valid number or base64", str)
+	}
+
+	// Fall back to unquoted numeric format (raw JSON number)
 	bigInt := big.Int(*z)
-	err := bigInt.UnmarshalJSON(b)
+	err := bigInt.UnmarshalJSON(data)
 	if err != nil {
 		return err
 	}
-	*z = (Int)(bigInt)
+	*z = Int(bigInt)
 	return nil
 }
 

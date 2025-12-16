@@ -1041,3 +1041,117 @@ func TestInt_UnmarshalJSON_InvalidIntError(t *testing.T) {
 			"\nexpected: %d\nreceived: %d", NewInt(5), outInt)
 	}
 }
+
+// Tests JSON marshalling with a large Int value.
+func TestInt_MarshalJSON_LargeValue(t *testing.T) {
+	// Create a large Int from a hex string
+	largeInt := NewIntFromString("123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0", 16)
+	if largeInt == nil {
+		t.Fatal("Failed to create large Int from string")
+	}
+
+	data, err := json.Marshal(largeInt)
+	if err != nil {
+		t.Fatalf("Failed to JSON marshal large Int: %+v", err)
+	}
+
+	outInt := NewInt(0)
+	err = json.Unmarshal(data, outInt)
+	if err != nil {
+		t.Fatalf("Failed to JSON unmarshal large Int: %+v", err)
+	}
+
+	if largeInt.Cmp(outInt) != 0 {
+		t.Errorf("Failed to JSON marshal and unmarshal large Int."+
+			"\nexpected: %s\nreceived: %s", largeInt.TextVerbose(16, 0), outInt.TextVerbose(16, 0))
+	}
+}
+
+// Tests JSON marshalling with zero value.
+func TestInt_MarshalJSON_ZeroValue(t *testing.T) {
+	zeroInt := NewInt(0)
+
+	data, err := json.Marshal(zeroInt)
+	if err != nil {
+		t.Fatalf("Failed to JSON marshal zero Int: %+v", err)
+	}
+
+	outInt := NewInt(42) // Start with non-zero
+	err = json.Unmarshal(data, outInt)
+	if err != nil {
+		t.Fatalf("Failed to JSON unmarshal zero Int: %+v", err)
+	}
+
+	if zeroInt.Cmp(outInt) != 0 {
+		t.Errorf("Failed to JSON marshal and unmarshal zero Int."+
+			"\nexpected: %d\nreceived: %d", zeroInt, outInt)
+	}
+}
+
+// Tests backwards compatibility: UnmarshalJSON should handle the old numeric string format.
+func TestInt_UnmarshalJSON_BackwardsCompatible(t *testing.T) {
+	// Old format: numeric string like "12345"
+	oldFormatData := []byte("12345")
+
+	outInt := NewInt(0)
+	err := outInt.UnmarshalJSON(oldFormatData)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal old format numeric string: %+v", err)
+	}
+
+	expected := NewInt(12345)
+	if expected.Cmp(outInt) != 0 {
+		t.Errorf("Failed to unmarshal old format numeric string."+
+			"\nexpected: %d\nreceived: %d", expected, outInt)
+	}
+}
+
+// Tests backwards compatibility with quoted numeric string (old JSON format).
+func TestInt_UnmarshalJSON_BackwardsCompatibleQuoted(t *testing.T) {
+	// Old format: quoted numeric string like "\"12345\""
+	oldFormatData := []byte("\"12345\"")
+
+	outInt := NewInt(0)
+	err := outInt.UnmarshalJSON(oldFormatData)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal old format quoted numeric string: %+v", err)
+	}
+
+	expected := NewInt(12345)
+	if expected.Cmp(outInt) != 0 {
+		t.Errorf("Failed to unmarshal old format quoted numeric string."+
+			"\nexpected: %d\nreceived: %d", expected, outInt)
+	}
+}
+
+// Tests that Int can be JSON marshalled as part of a struct.
+func TestInt_MarshalJSON_InStruct(t *testing.T) {
+	type TestStruct struct {
+		Name  string `json:"name"`
+		Value *Int   `json:"value"`
+	}
+
+	original := TestStruct{
+		Name:  "test",
+		Value: NewInt(42),
+	}
+
+	data, err := json.Marshal(original)
+	if err != nil {
+		t.Fatalf("Failed to JSON marshal struct with Int: %+v", err)
+	}
+
+	var restored TestStruct
+	restored.Value = NewInt(0)
+	err = json.Unmarshal(data, &restored)
+	if err != nil {
+		t.Fatalf("Failed to JSON unmarshal struct with Int: %+v", err)
+	}
+
+	if restored.Name != original.Name {
+		t.Errorf("Name mismatch: expected %s, got %s", original.Name, restored.Name)
+	}
+	if original.Value.Cmp(restored.Value) != 0 {
+		t.Errorf("Value mismatch: expected %d, got %d", original.Value, restored.Value)
+	}
+}
