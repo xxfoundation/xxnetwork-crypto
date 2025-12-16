@@ -16,8 +16,6 @@ import (
 	"syscall/js"
 
 	"github.com/pkg/errors"
-
-	"gitlab.com/elixxir/wasm-utils/utils"
 )
 
 // ErrInvalidHash represents a failure to use a valid hashing algorithm.
@@ -209,6 +207,6 @@ func makeRsaPssParams(saltLength int) map[string]any {
 func makeRsaOaepParams(label []byte) map[string]any {
 	return map[string]any{
 		"name":  "RSA-OAEP",
-		"label": utils.CopyBytesToJS(label),
+		"label": copyBytesToJS(label),
 	}
 }

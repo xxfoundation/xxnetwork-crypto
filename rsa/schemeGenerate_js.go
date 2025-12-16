@@ -14,8 +14,6 @@ import (
 
 	"github.com/pkg/errors"
 	jww "github.com/spf13/jwalterweatherman"
-
-	"gitlab.com/elixxir/wasm-utils/utils"
 )
 
 // Generate generates an RSA keypair of the given bit size using the random
@@ -71,7 +69,7 @@ func makeRsaHashedKeyGenParams(scheme string, modulusLength int,
 	return map[string]any{
 		"name":           scheme,
 		"modulusLength":  modulusLength,
-		"publicExponent": utils.CopyBytesToJS(publicExponent),
+		"publicExponent": copyBytesToJS(publicExponent),
 		"hash":           hash,
 	}
 }

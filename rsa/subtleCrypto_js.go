@@ -12,8 +12,6 @@ import (
 
 	"github.com/pkg/errors"
 	jww "github.com/spf13/jwalterweatherman"
-
-	"gitlab.com/elixxir/wasm-utils/utils"
 )
 
 var sc subtleCrypto
@@ -38,16 +36,16 @@ func init() {
 func (sc *subtleCrypto) encrypt(algorithm map[string]any, key js.Value,
 	plaintext []byte) (ciphertext []byte, err error) {
 	promise, err := sc.callCatch("encrypt",
-		algorithm, key, utils.CopyBytesToJS(plaintext))
+		algorithm, key, copyBytesToJS(plaintext))
 	if err != nil {
 		return nil, err
 	}
-	result, awaitErr := utils.Await(promise)
+	result, awaitErr := await(promise)
 	if awaitErr != nil {
 		return nil, js.Error{Value: awaitErr[0]}
 	}
 
-	return utils.CopyBytesToGo(utils.Uint8Array.New(result[0])), nil
+	return copyBytesToGo(uint8Array.New(result[0])), nil
 }
 
 // decrypt decrypts data using SubtleCrypto.
@@ -56,16 +54,16 @@ func (sc *subtleCrypto) encrypt(algorithm map[string]any, key js.Value,
 func (sc *subtleCrypto) decrypt(algorithm map[string]any, key js.Value,
 	ciphertext []byte) (plaintext []byte, err error) {
 	promise, err := sc.callCatch("decrypt",
-		algorithm, key, utils.CopyBytesToJS(ciphertext))
+		algorithm, key, copyBytesToJS(ciphertext))
 	if err != nil {
 		return nil, err
 	}
-	result, awaitErr := utils.Await(promise)
+	result, awaitErr := await(promise)
 	if awaitErr != nil {
 		return nil, js.Error{Value: awaitErr[0]}
 	}
 
-	return utils.CopyBytesToGo(utils.Uint8Array.New(result[0])), nil
+	return copyBytesToGo(uint8Array.New(result[0])), nil
 }
 
 // sign generates a digital signature using SubtleCrypto.
@@ -74,16 +72,16 @@ func (sc *subtleCrypto) decrypt(algorithm map[string]any, key js.Value,
 func (sc *subtleCrypto) sign(algorithm map[string]any, key js.Value,
 	data []byte) (signature []byte, err error) {
 	promise, err := sc.callCatch("sign",
-		algorithm, key, utils.CopyBytesToJS(data))
+		algorithm, key, copyBytesToJS(data))
 	if err != nil {
 		return nil, err
 	}
-	result, awaitErr := utils.Await(promise)
+	result, awaitErr := await(promise)
 	if awaitErr != nil {
 		return nil, js.Error{Value: awaitErr[0]}
 	}
 
-	return utils.CopyBytesToGo(utils.Uint8Array.New(result[0])), nil
+	return copyBytesToGo(uint8Array.New(result[0])), nil
 }
 
 // verify verifies a digital signature using SubtleCrypto.
@@ -92,11 +90,11 @@ func (sc *subtleCrypto) sign(algorithm map[string]any, key js.Value,
 func (sc *subtleCrypto) verify(algorithm map[string]any, key js.Value,
 	signature, data []byte) (valid bool, err error) {
 	promise, err := sc.callCatch("verify",
-		algorithm, key, utils.CopyBytesToJS(signature), utils.CopyBytesToJS(data))
+		algorithm, key, copyBytesToJS(signature), copyBytesToJS(data))
 	if err != nil {
 		return false, err
 	}
-	result, awaitErr := utils.Await(promise)
+	result, awaitErr := await(promise)
 	if awaitErr != nil {
 		return false, js.Error{Value: awaitErr[0]}
 	}
@@ -110,16 +108,16 @@ func (sc *subtleCrypto) verify(algorithm map[string]any, key js.Value,
 func (sc *subtleCrypto) digest(algorithm map[string]any, data []byte) (
 	digest []byte, err error) {
 	promise, err := sc.callCatch("digest",
-		algorithm, utils.CopyBytesToJS(data))
+		algorithm, copyBytesToJS(data))
 	if err != nil {
 		return nil, err
 	}
-	result, awaitErr := utils.Await(promise)
+	result, awaitErr := await(promise)
 	if awaitErr != nil {
 		return nil, js.Error{Value: awaitErr[0]}
 	}
 
-	return utils.CopyBytesToGo(utils.Uint8Array.New(result[0])), nil
+	return copyBytesToGo(uint8Array.New(result[0])), nil
 }
 
 // generateKey generates a new key (for symmetric algorithms) or key pair (for
@@ -133,7 +131,7 @@ func (sc *subtleCrypto) generateKey(algorithm map[string]any, extractable bool,
 	if err != nil {
 		return js.Undefined(), err
 	}
-	result, awaitErr := utils.Await(promise)
+	result, awaitErr := await(promise)
 	if awaitErr != nil {
 		return js.Undefined(), js.Error{Value: awaitErr[0]}
 	}
@@ -149,11 +147,11 @@ func (sc *subtleCrypto) importKey(format string, keyData []byte,
 	algorithm map[string]any, extractable bool, keyUsages ...any) (
 	key js.Value, err error) {
 	promise, err := sc.callCatch("importKey",
-		format, utils.CopyBytesToJS(keyData), algorithm, extractable, keyUsages)
+		format, copyBytesToJS(keyData), algorithm, extractable, keyUsages)
 	if err != nil {
 		return js.Undefined(), err
 	}
-	result, awaitErr := utils.Await(promise)
+	result, awaitErr := await(promise)
 	if awaitErr != nil {
 		return js.Undefined(), js.Error{Value: awaitErr[0]}
 	}
@@ -170,12 +168,12 @@ func (sc *subtleCrypto) exportKey(format string, key js.Value) (
 	if err != nil {
 		return nil, err
 	}
-	result, awaitErr := utils.Await(promise)
+	result, awaitErr := await(promise)
 	if awaitErr != nil {
 		return nil, js.Error{Value: awaitErr[0]}
 	}
 
-	return utils.CopyBytesToGo(utils.Uint8Array.New(result[0])), nil
+	return copyBytesToGo(uint8Array.New(result[0])), nil
 }
 
 // callCatch does a JavaScript call to the method m of SubtleCrypto with the
